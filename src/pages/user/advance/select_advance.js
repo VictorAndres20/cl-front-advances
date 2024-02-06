@@ -23,7 +23,8 @@ export default function SelectAdvance({ hook }){
                                 >
                                     {formatToUSD(a.value)}
                                 </Button>
-                                <span>{formatToUSD(a.cost)}</span>
+                                <span style={{ marginTop: '5px' }}>Costo:</span>
+                                <span style={{ margin: '5px 0' }}>{formatToUSD(a.cost)}</span>
                             </div>
                         );
                     })
