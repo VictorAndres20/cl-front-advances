@@ -1,11 +1,10 @@
 import {crypt, decrypt} from './crypt';
 
-const TOKEN_KEY = 'qwer';
-const COMPANY_KEY = 'asdf';
-const FINANCIAL_TYPE = 'poiu';
-const FINANCIAL_TYPE_NAME = 'alskd';
-const USER_ID_KEY = 'zxcv';
-const ROL_ID_KEY = 'uiop';
+const TOKEN_KEY = 'advqwer';
+const COMPANY_KEY = 'advasdf';
+const COMPANY_NAME_KEY = 'advnatf';
+const USER_ID_KEY = 'advzxcv';
+const ROL_ID_KEY = 'advuiop';
 
 export const putValue = (key, value) => {
     window.localStorage.setItem(key, crypt(value.toString()));
@@ -41,20 +40,12 @@ export const getCompany = () => {
     return Number(getValue(COMPANY_KEY));
 }
 
-export const putFinancialType = (id) => {
-    putValue(FINANCIAL_TYPE, id);
+export const putCompanyName = (id) => {
+    putValue(COMPANY_NAME_KEY, id);
 }
 
-export const getFinancialType = () => {
-    return getValue(FINANCIAL_TYPE);
-}
-
-export const putFinancialTypeName = (name) => {
-    putValue(FINANCIAL_TYPE_NAME, name);
-}
-
-export const getFinancialTypeName = () => {
-    return getValue(FINANCIAL_TYPE_NAME);
+export const getCompanyName = () => {
+    return getValue(COMPANY_NAME_KEY);
 }
 
 export const putUserId = (id) => {

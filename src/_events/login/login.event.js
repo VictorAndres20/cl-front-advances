@@ -1,4 +1,8 @@
-import { putToken } from "../../_utils/storage_handler";
+import { putCompany, putCompanyName, putRol, putToken, putUserId } from "../../_utils/storage_handler";
+import {
+    loginUser,
+    loginEmployee,
+} from '../../_services/login.service';
 
 export const baseEntity = {
     identification: '',
@@ -12,8 +16,22 @@ export const validateLoginModel = ({ identification, password }) => {
 
 export const loginEvent = async (body) => {
     validateLoginModel(body);
-    //TODO Use service
-    let res = null;
-    putToken('1');
+    let res = await loginEmployee(body);
+    putStorage(res);
     return res;
+}
+
+export const loginUserEvent = async (body) => {
+    validateLoginModel(body);
+    let res = await loginUser(body);
+    putStorage(res);
+    return res;
+}
+
+export const putStorage = (res) => {
+    putCompany(res.data.company_id);
+    putCompanyName(res.data.company_name);
+    putUserId(res.data.uuid);
+    putRol(res.data.rol);
+    putToken(res.data.token);
 }
