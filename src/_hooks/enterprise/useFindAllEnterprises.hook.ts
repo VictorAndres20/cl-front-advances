@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import { findAllEnterpriseEvent } from "../../_events/enterprise/find.event";
 import { message } from "antd";
+import { EnterpriseType } from "../../_events/enterprise/type";
 
 export const useFindAllEnterprises = () => {
 
-    const [ data, setData ] = useState([]);
+    const [ data, setData ] = useState<EnterpriseType[]>([]);
 
     const loadData = () => {
         findAllEnterpriseEvent()

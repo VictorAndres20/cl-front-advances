@@ -29,7 +29,7 @@ export default function FormModal({ id, reload }: { id?: number, reload: Functio
                     'Crear nuevo'
                 }
             </Button>
-            <Modal title="Formulario" open={isModalOpen} footer={<Button onClick={handleCancel}>Cancelar</Button>}>
+            <Modal title="Formulario" open={isModalOpen} footer={<Button onClick={handleCancel}>Cancelar</Button>} onCancel={handleCancel}>
                 <Row>
                     <Col lg={24} xs={24}>
                         <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Nombre de la empresa</div>
