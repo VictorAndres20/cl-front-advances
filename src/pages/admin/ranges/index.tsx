@@ -1,11 +1,14 @@
 import { Col, Row } from "antd";
+import AdminTitle from "../../../widgets /titles/admin_title";
+import Table from "./table";
 
-export default function RangesPage(){
+export default function RangePage(){
 
     return(
         <Row>
             <Col lg={24} xs={24}>
-                Ranges
+                <AdminTitle text={'Rangos de empleados'} />
+                <Table />
             </Col>
         </Row>
     );

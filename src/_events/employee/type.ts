@@ -6,7 +6,7 @@ export interface EmployeeType {
     id: string,
     phone: string,
     salary: number,
-    password: string,
+    password?: string,
     state: number,
     range?: string | RangeType,
 }

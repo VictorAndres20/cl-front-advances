@@ -4,6 +4,7 @@ import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTab
 import FormModal from "./form_modal";
 import { useFindAllUsers } from "../../../_hooks/user/useFindAllUsers.hook";
 import { UserType } from "../../../_events/user/type";
+import BasicBadge from "../../../widgets /badges/basic_badge";
 
 export default function Table(){
 
@@ -15,7 +16,7 @@ export default function Table(){
             title: 'Nombre',
             dataIndex: 'name',
             key: 'name',
-            width: '30%',
+            width: '20%',
             ...searchBox.getColumnSearchProps('name'),
         },
         {
@@ -29,8 +30,26 @@ export default function Table(){
             title: 'Usuario',
             dataIndex: 'login',
             key: 'login',
-            width: '20%',
+            width: '10%',
             ...searchBox.getColumnSearchProps('login'),
+        },
+        {
+            title: 'Empresa',
+            dataIndex: 'enterprise',
+            key: 'enterprise',
+            width: '20%',
+            render: (text: string, param: UserType, key: number) => (
+                <span key={`enter_user_${key}`}>{typeof param.enterprise === 'object' ? param.enterprise?.name : 'N.A'}</span>
+            )
+        },
+        {
+            title: 'Rol',
+            dataIndex: 'rol',
+            key: 'rol',
+            width: '10%',
+            render: (text: string, param: UserType, key: number) => (
+                <span key={`rol_user_${key}`}>{typeof param.rol === 'object' ? param.rol?.name : 'N.A'}</span>
+            )
         },
         {
             title: 'Activo',
@@ -38,7 +57,7 @@ export default function Table(){
             key: 'active',
             width: '10%',
             render: (text: string, param: UserType, key: number) => (
-                <span key={`active_user_${key}`}>{param.active}</span>
+                <span key={`active_user_${key}`}>{param.active === 1 ? <BasicBadge text="Activo" color="success" /> : <BasicBadge text="Inactivo" color="danger" /> }</span>
             )
         },
         {
@@ -57,7 +76,7 @@ export default function Table(){
             <div style={{ width: '90%', display: 'flex', flexDirection: 'row-reverse' }}>
                 <FormModal reload={dataHook.loadData} />
             </div>
-            <BasicDatatable columns={columns} data={dataHook.data} pagination={false} />
+            <BasicDatatable columns={columns} data={dataHook.data} pagination={true} />
         </div>
     );
 }

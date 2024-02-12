@@ -1,26 +1,27 @@
 import { useState } from "react"
-import { buildEmptyEnterprise } from "../../_events/enterprise/model"
-import { createEnterpriseEvent } from "../../_events/enterprise/create.event";
-import { EnterpriseType } from "../../_events/enterprise/type";
+import { createEmployeeEvent } from "../../_events/employee/create.event";
 import { message } from "antd";
+import { EmployeeType } from "../../_events/employee/type";
+import { buildEmptyEmployee } from "../../_events/employee/model";
+import { getCompany } from "../../_utils/storage_handler";
 
-export const useCreateEnterprise = (reload: Function = () => {}) => {
+export const useCreateEmployee = (reload: Function = () => {}) => {
 
-    const [ entity, setEntity ] = useState<EnterpriseType>(buildEmptyEnterprise());
+    const [ entity, setEntity ] = useState<EmployeeType>(buildEmptyEmployee());
     const [ loading, setLoading ] = useState<boolean>(false);
 
     const cleanEntity = () => {
-        setEntity(buildEmptyEnterprise());
+        setEntity(buildEmptyEmployee());
     }
 
     const create = () => {
         setLoading(true);
-        createEnterpriseEvent(entity)
+        createEmployeeEvent(entity)
         .then(() => {
             message.success("Creado");
             cleanEntity();
             setLoading(false);
-            reload();
+            reload(getCompany());
         })
         .catch((err) => {
             message.error(err.message);

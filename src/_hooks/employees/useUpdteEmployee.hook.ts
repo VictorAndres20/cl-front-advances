@@ -1,31 +1,32 @@
 import { useState } from "react"
+import { editEmployeeEvent, editPasswordEmployeeEvent } from "../../_events/employee/create.event";
 import { message } from "antd";
-import { buildEmptyUser, transformEntityUser } from "../../_events/user/model";
-import { UserType } from "../../_events/user/type";
-import { editPasswordUserEvent, editUserEvent } from "../../_events/user/create.event";
-import { findUserByIdEvent } from "../../_events/user/find.event";
+import { findEmployeeByIdEvent } from "../../_events/employee/find.event";
+import { EmployeeType } from "../../_events/employee/type";
+import { buildEmptyEmployee, transformEntityEmployee } from "../../_events/employee/model";
+import { getCompany } from "../../_utils/storage_handler";
 
-export interface UpdateUserHook {
+export interface UpdateEmployeeHook {
     loading: boolean, 
-    entity: UserType, 
-    setEntity: ((data: UserType) => void), 
-    update: ((id: any) => void), 
+    entity: EmployeeType,
+    setEntity: ((data: EmployeeType) => void), 
+    update: ((id: any) => void),
     loadEntity: ((id: string) => void), 
     updatePassword: ((id: string) => void)
 }
 
-export const useUpdateUser = (reload: Function = () => {}): UpdateUserHook => {
+export const useUpdateEmployee = (reload: Function = () => {}): UpdateEmployeeHook => {
 
-    const [ entity, setEntity ] = useState<UserType>(buildEmptyUser());
-    const [ loading, setLoading ] = useState(false);
+    const [ entity, setEntity ] = useState<EmployeeType>(buildEmptyEmployee());
+    const [ loading, setLoading ] = useState<boolean>(false);
 
-    const update = (id: any) => {
+    const update = (id: string) => {
         setLoading(true);
-        editUserEvent(id, entity)
+        editEmployeeEvent(id, entity)
         .then(() => {
             message.success("Actualizado");
             setLoading(false);
-            reload();
+            reload(getCompany());
         })
         .catch(err => {
             message.error(err.message);
@@ -35,7 +36,7 @@ export const useUpdateUser = (reload: Function = () => {}): UpdateUserHook => {
 
     const updatePassword = (id: string) => {
         setLoading(true);
-        editPasswordUserEvent(id, entity)
+        editPasswordEmployeeEvent(id, entity)
         .then(() => {
             message.success("Actualizado");
             setLoading(false);
@@ -48,9 +49,9 @@ export const useUpdateUser = (reload: Function = () => {}): UpdateUserHook => {
 
     const loadEntity = (id: string) => {
         setLoading(true);
-        findUserByIdEvent(id)
+        findEmployeeByIdEvent(id)
         .then(json => {
-            setEntity(transformEntityUser(json.data));
+            setEntity(transformEntityEmployee(json.data));
             setLoading(false);
         })
         .catch(err => {

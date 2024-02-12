@@ -1,6 +1,7 @@
 import {
     createEmployee,
     editEmployee,
+    editPasswordEmployee,
 } from '../../_services/employee.service';
 import { validateEmployee } from './model';
 import { EmployeeType } from './type';
@@ -13,6 +14,10 @@ export const createEmployeeEvent = async (body: EmployeeType) => {
 export const editEmployeeEvent = async (id: string, body: EmployeeType) => {
     validateEmployee(body);
     return await editEmployee(id, body);
+}
+
+export const editPasswordEmployeeEvent = async (id: string, body: EmployeeType) => {
+    return await editPasswordEmployee(id, body);
 }
 
 

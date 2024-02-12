@@ -1,15 +1,15 @@
 import { Button, Col, Input, Modal, Row } from "antd";
 import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
-import { useCreateUser } from "../../../_hooks/user/useCreateUser.hook";
-import { useUpdateUser } from "../../../_hooks/user/useUpdateUser.hook";
-import EnterpriseSelect from "../../../widgets /selects/enterprise_select";
+import { useCreateEmployee } from "../../../_hooks/employees/useCreateEmployee.hook";
+import { useUpdateEmployee } from "../../../_hooks/employees/useUpdteEmployee.hook";
+import RangeEnterpriseSelect from "../../../widgets /selects/range_enterprise_select";
 import ChangePasswordForm from "./change_password_form";
 
 export default function FormModal({ id, reload }: { id?: string, reload: Function }){
 
-    const createHook = useCreateUser(reload);
-    const updateHook = useUpdateUser(reload);
+    const createHook = useCreateEmployee(reload);
+    const updateHook = useUpdateEmployee(reload);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     const showModal = () => {
@@ -52,69 +52,87 @@ export default function FormModal({ id, reload }: { id?: string, reload: Functio
                                 }
                             }}
                         />
-                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Correo</div>
+                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Número de identificación</div>
                         <Input 
-                            value={ id ? updateHook.entity.email ?? '' : createHook.entity.email ?? '' }
+                            value={ id ? updateHook.entity.id : createHook.entity.id }
                             onChange={(e) => {
                                 if(id){
                                     updateHook.setEntity({
                                         ...updateHook.entity,
-                                        email: e.target.value
+                                        id: e.target.value
                                     });
                                 } else {
                                     createHook.setEntity({
                                         ...createHook.entity,
-                                        email: e.target.value
+                                        id: e.target.value
                                     });
                                 }
                             }}
                         />
-                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Usuario</div>
+                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Número de teléfono</div>
                         <Input 
-                            value={ id ? updateHook.entity.login ?? '' : createHook.entity.login ?? '' }
+                            type="number"
+                            value={ id ? updateHook.entity.phone : createHook.entity.phone }
                             onChange={(e) => {
                                 if(id){
                                     updateHook.setEntity({
                                         ...updateHook.entity,
-                                        login: e.target.value
+                                        phone: e.target.value
                                     });
                                 } else {
                                     createHook.setEntity({
                                         ...createHook.entity,
-                                        login: e.target.value
+                                        phone: e.target.value
+                                    });
+                                }
+                            }}
+                        />
+                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Salario (quincenal o mensual?)</div>
+                        <Input 
+                            type="number"
+                            value={ id ? updateHook.entity.salary : createHook.entity.salary }
+                            onChange={(e) => {
+                                if(id){
+                                    updateHook.setEntity({
+                                        ...updateHook.entity,
+                                        salary: Number(e.target.value)
+                                    });
+                                } else {
+                                    createHook.setEntity({
+                                        ...createHook.entity,
+                                        salary: Number(e.target.value)
                                     });
                                 }
                             }}
                         />
                         {
-                           ! id &&
-                           <div>
+                            ! id && 
+                            <div>
                                 <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Contraseña</div>
                                 <Input.Password 
-                                    value={ createHook.entity.password ?? '' }
+                                    value={ createHook.entity.password }
                                     onChange={(e) => {
-                                        let newData = {
+                                        createHook.setEntity({
                                             ...createHook.entity,
                                             password: e.target.value
-                                        };
-                                        createHook.setEntity(newData);
+                                        });
                                     }}
                                 />
-                           </div>  
+                            </div>
                         }
-                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Empresa</div>
-                        <EnterpriseSelect 
-                            value={ id ? (typeof updateHook.entity.enterprise === 'number' ? updateHook.entity.enterprise : 0) : (typeof createHook.entity.enterprise === 'number' ? createHook.entity.enterprise : 0) }
+                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Rango asociado</div>
+                        <RangeEnterpriseSelect 
+                            value={ id ?  (typeof updateHook.entity.range !== 'object' ? updateHook.entity.range : undefined) ?? '' : (typeof createHook.entity.range !== 'object' ? createHook.entity.range : undefined) ?? '' }
                             onChange={(e) => {
                                 if(id){
                                     updateHook.setEntity({
                                         ...updateHook.entity,
-                                        enterprise: e
+                                        range: e
                                     });
                                 } else {
                                     createHook.setEntity({
                                         ...createHook.entity,
-                                        enterprise: e
+                                        range: e
                                     });
                                 }
                             }}

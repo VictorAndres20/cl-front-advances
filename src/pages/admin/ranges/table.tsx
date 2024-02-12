@@ -1,37 +1,39 @@
 import { TableColumnsType } from "antd";
-import { EnterpriseType } from "../../../_events/enterprise/type";
-import { useFindAllEnterprises } from "../../../_hooks/enterprise/useFindAllEnterprises.hook";
+import { useFindAllRange } from "../../../_hooks/range/useFindAllRange.hook";
 import { BasicDatatable } from "../../../widgets /antd_table/basic_datatable";
 import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTableSearchBox.hook";
 import FormModal from "./form_modal";
+import { RangeType } from "../../../_events/range/type";
 
 export default function Table(){
 
-    const dataHook = useFindAllEnterprises();
-    const searchBox = useBasicTableSearchBox<EnterpriseType>();
+    const dataHook = useFindAllRange();
+    const searchBox = useBasicTableSearchBox<RangeType>();
     
-    const columns: TableColumnsType<EnterpriseType> = [
+    const columns: TableColumnsType<RangeType> = [
         {
-        title: 'Nombre',
-        dataIndex: 'name',
-        key: 'name',
+        title: 'Id',
+        dataIndex: 'id',
+        key: 'id',
         width: '30%',
-        ...searchBox.getColumnSearchProps('name'),
+        ...searchBox.getColumnSearchProps('id'),
         },
         {
-        title: 'Dirección',
-        dataIndex: 'address',
-        key: 'address',
+        title: 'Empresa',
+        dataIndex: 'enterprise',
+        key: 'enterprise',
         width: '20%',
-        ...searchBox.getColumnSearchProps('address'),
+        render: (text: string, param: RangeType, key: number) => (
+            <span key={`range_enterprise_${key}`}>{typeof param.enterprise === 'object' ? param.enterprise.name : 'NA'}</span>
+        )
         },
         {
             title: 'Acciones',
             dataIndex: 'uuid',
             key: 'uuid',
             width: '10%',
-            render: (text: string, param: EnterpriseType, key: number) => (
-                <FormModal key={`form_edit_enterprise_${key}`} id={param.id} reload={dataHook.loadData} />
+            render: (text: string, param: RangeType, key: number) => (
+                <FormModal key={`edit_range_${key}`} id={param.uuid} reload={dataHook.loadData} />
             )
         },
     ];

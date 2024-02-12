@@ -1,21 +1,21 @@
 import { useState } from "react"
-import { buildEmptyEnterprise } from "../../_events/enterprise/model"
-import { createEnterpriseEvent } from "../../_events/enterprise/create.event";
-import { EnterpriseType } from "../../_events/enterprise/type";
+import { createRangeEvent } from "../../_events/range/create.event";
 import { message } from "antd";
+import { buildRangeWithLoggedEnterprise } from "../../_events/range/model";
+import { RangeType } from "../../_events/range/type";
 
-export const useCreateEnterprise = (reload: Function = () => {}) => {
+export const useCreateRange = (reload: Function = () => {}) => {
 
-    const [ entity, setEntity ] = useState<EnterpriseType>(buildEmptyEnterprise());
+    const [ entity, setEntity ] = useState<RangeType>(buildRangeWithLoggedEnterprise());
     const [ loading, setLoading ] = useState<boolean>(false);
 
     const cleanEntity = () => {
-        setEntity(buildEmptyEnterprise());
+        setEntity(buildRangeWithLoggedEnterprise());
     }
 
     const create = () => {
         setLoading(true);
-        createEnterpriseEvent(entity)
+        createRangeEvent(entity)
         .then(() => {
             message.success("Creado");
             cleanEntity();

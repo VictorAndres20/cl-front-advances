@@ -1,3 +1,4 @@
+import { getCompany } from "../../_utils/storage_handler";
 import { RangeType } from "./type";
 
 export const validateRange = (body: RangeType) => {
@@ -14,12 +15,23 @@ export const transformEntityRange = (entity: RangeType) => {
     return newEnt;
 }
 
-export const buildEmptyRange = () => {
+export const buildEmptyRange = (): RangeType => {
     return {
         uuid: '',
         id: '',
-        enterprise: '',
+        enterprise: 0,
     };
+}
+
+export const buildRangeWithEnterprise = (enterprise: number): RangeType => {
+    return {
+        ...buildEmptyRange(),
+        enterprise,
+    };
+}
+
+export const buildRangeWithLoggedEnterprise = (): RangeType => {
+    return buildRangeWithEnterprise(getCompany());
 }
 
 

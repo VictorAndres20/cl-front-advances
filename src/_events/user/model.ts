@@ -12,6 +12,7 @@ export const validateUser = (body: UserType) => {
 
 export const transformEntityUser = (entity: UserType) => {
     let newEnt = {...entity}
+    delete newEnt.password;
     if(typeof newEnt.enterprise === 'object'){
         newEnt.enterprise = newEnt.enterprise?.id;
     }

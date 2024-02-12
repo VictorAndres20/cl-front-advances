@@ -2,6 +2,7 @@ import {
     findAllEmployee,
     findEmployeeById,
     findAllEmployeePaged,
+    findAllEmployeeByEnterprise,
 } from '../../_services/employee.service';
 
 export const findAllEmployeeEvent = async () => {
@@ -14,6 +15,10 @@ export const findEmployeeByIdEvent = async (id: string) => {
 
 export const findAllEmployeePagedEvent = async (page: number, limit: number = 8) => {
     return await findAllEmployeePaged(page, limit);
+}
+
+export const findAllEmployeeByEnterpriseEvent = async (enterprise: number) => {
+    return await findAllEmployeeByEnterprise(enterprise);
 }
 
 

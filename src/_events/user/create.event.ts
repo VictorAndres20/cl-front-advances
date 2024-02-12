@@ -1,6 +1,7 @@
 import {
     createUser,
     editUser,
+    editPasswordUser
 } from '../../_services/user.service';
 import { validateUser } from './model';
 import { UserType } from './type';
@@ -11,9 +12,12 @@ export const createUserEvent = async (body: UserType) => {
 }
 
 export const editUserEvent = async (id: string, body: UserType) => {
-    delete body.password;
     validateUser(body);
     return await editUser(id, body);
+}
+
+export const editPasswordUserEvent = async (id: string, body: UserType) => {
+    return await editPasswordUser(id, body);
 }
 
 

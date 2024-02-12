@@ -9,12 +9,16 @@ export const useCreateUser = (reload: Function = () => {}) => {
     const [ entity, setEntity ] = useState<UserType>(buildEmptyUser());
     const [ loading, setLoading ] = useState<boolean>(false);
 
+    const cleanEntity = () => {
+        setEntity(buildEmptyUser());
+    }
+
     const create = () => {
         setLoading(true);
         createUserEvent(entity)
         .then(() => {
             message.success("Creado");
-            setEntity(buildEmptyUser());
+            cleanEntity();
             setLoading(false);
             reload();
         })
@@ -25,6 +29,6 @@ export const useCreateUser = (reload: Function = () => {}) => {
     }
 
     return {
-        loading, entity, setEntity, create
+        loading, entity, setEntity, create, cleanEntity
     }
 }

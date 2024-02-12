@@ -1,13 +1,14 @@
 import { Button, Col, Input, Modal, Row } from "antd";
 import { useState } from "react";
-import { useCreateEnterprise } from "../../../_hooks/enterprise/useCreateEnterprise.hook";
+import { useCreateRange } from "../../../_hooks/range/useCreateRange.hook";
 import { EditOutlined } from "@ant-design/icons";
-import { useUpdateEnterprise } from "../../../_hooks/enterprise/useUpdateEnterprise.hook";
+import { useUpdateRange } from "../../../_hooks/range/useUpdateRange.hook";
+import { getCompanyName } from "../../../_utils/storage_handler";
 
-export default function FormModal({ id, reload }: { id?: number, reload: Function }){
+export default function FormModal({ id, reload }: { id?: string, reload: Function }){
 
-    const createHook = useCreateEnterprise(reload);
-    const updateHook = useUpdateEnterprise(reload);
+    const createHook = useCreateRange(reload);
+    const updateHook = useUpdateRange(reload);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     const showModal = () => {
@@ -33,40 +34,25 @@ export default function FormModal({ id, reload }: { id?: number, reload: Functio
             <Modal title="Formulario" open={isModalOpen} footer={<Button onClick={handleCancel}>Cancelar</Button>} onCancel={handleCancel}>
                 <Row>
                     <Col lg={24} xs={24}>
-                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Nombre de la empresa</div>
+                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Id del rango</div>
                         <Input 
-                            value={ id ? updateHook.entity.name : createHook.entity.name }
+                            value={ id ? updateHook.entity.id : createHook.entity.id }
                             onChange={(e) => {
                                 if(id){
                                     updateHook.setEntity({
                                         ...updateHook.entity,
-                                        name: e.target.value
+                                        id: e.target.value
                                     });
                                 } else {
                                     createHook.setEntity({
                                         ...createHook.entity,
-                                        name: e.target.value
+                                        id: e.target.value
                                     });
                                 }
                             }}
                         />
-                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>Dirección</div>
-                        <Input 
-                            value={ id ? updateHook.entity.address ?? '' : createHook.entity.address ?? '' }
-                            onChange={(e) => {
-                                if(id){
-                                    updateHook.setEntity({
-                                        ...updateHook.entity,
-                                        address: e.target.value
-                                    });
-                                } else {
-                                    createHook.setEntity({
-                                        ...createHook.entity,
-                                        address: e.target.value
-                                    });
-                                }
-                            }}
-                        />
+                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Empresa asociada</div>
+                        <span>{getCompanyName()}</span>
                         <div className="flex-col flex-center" style={{ margin: '25px 0' }}>
                             {
                                 createHook.loading || updateHook.loading ?
