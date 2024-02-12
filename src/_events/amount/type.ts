@@ -4,3 +4,7 @@ export interface Amount {
     cost: number,
     active?: number,
 }
+
+export interface AmountCreateTransaction extends Amount {
+    range: string
+}

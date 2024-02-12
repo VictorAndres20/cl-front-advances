@@ -10,15 +10,15 @@ export default function Confirmation({ hook }: { hook: GenerateAdvacneHook }){
             <table style={{ width: '100%' }}>
                 <tr>
                     <td style={{ fontSize: '0.95em', width: '60%', borderBottom: '1px solid #ccc' }}>Valor anticipo</td>
-                    <td style={{ fontSize: '0.95em', width: '40%', borderBottom: '1px solid #ccc' }}>{formatToUSD(hook.amount?.value ?? 0)}</td>
+                    <td style={{ fontSize: '0.95em', width: '40%', borderBottom: '1px solid #ccc' }}>{formatToUSD(hook.advance?.value ?? 0)}</td>
                 </tr>
                 <tr>
                     <td style={{ fontSize: '0.95em', width: '60%', borderBottom: '3px solid #ccc' }}>Costo</td>
-                    <td style={{ fontSize: '0.95em', width: '40%', borderBottom: '3px solid #ccc' }}>{formatToUSD(hook.amount?.cost ?? 0 )}</td>
+                    <td style={{ fontSize: '0.95em', width: '40%', borderBottom: '3px solid #ccc' }}>{formatToUSD(hook.advance?.cost ?? 0 )}</td>
                 </tr>
                 <tr>
                     <td style={{ fontSize: '0.95em', fontWeight: 'bold', width: '60%' }}>Neto a recibir</td>
-                    <td style={{ fontSize: '0.95em', fontWeight: 'bold', width: '40%' }}>{formatToUSD((hook?.amount?.value ?? 0) - (hook?.amount?.cost ?? 0))}</td>
+                    <td style={{ fontSize: '0.95em', fontWeight: 'bold', width: '40%' }}>{formatToUSD((hook?.advance?.value ?? 0) - (hook?.advance?.cost ?? 0))}</td>
                 </tr>
             </table>
             {
@@ -32,7 +32,7 @@ export default function Confirmation({ hook }: { hook: GenerateAdvacneHook }){
                         <Button
                             style={{ width: '90%' }}
                             onClick={() => {
-                                hook.setAmount(null);
+                                hook.updateAmountToAdvance(null);
                             }}
                         >
                             Cancelar

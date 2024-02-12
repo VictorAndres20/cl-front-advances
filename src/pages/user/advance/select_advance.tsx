@@ -19,7 +19,7 @@ export default function SelectAdvance({ hook }: { hook: GenerateAdvacneHook }){
                                     style={{ width: '90%' }}
                                     type={ hook.amount?.uuid === a.uuid ? "primary" : "dashed" }
                                     onClick={() => {
-                                        hook.setAmount(a);
+                                        hook.updateAmountToAdvance(a);
                                     }}
                                 >
                                     {formatToUSD(a.value)}

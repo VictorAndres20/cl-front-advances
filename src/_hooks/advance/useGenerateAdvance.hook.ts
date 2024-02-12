@@ -1,18 +1,28 @@
 import { message } from "antd";
 import { useState } from "react";
 import { Amount } from "../../_events/amount/type";
+import { AdvanceType } from "../../_events/advance/type";
+import { buildAdvanceValueCostEmployee, buildEmptyAdvance } from "../../_events/advance/model";
 
 export interface GenerateAdvacneHook {
     amount?: Amount | null, 
-    setAmount: Function, 
-    generate: Function, 
+    advance: AdvanceType,
+    updateAmountToAdvance: ((amount: Amount | null) => void), 
+    generate: (() => void), 
     loading: Boolean
 }
 
 export const useGenerateAdvacne = (): GenerateAdvacneHook => {
 
     const [ amount, setAmount ] = useState<Amount | null>(null);
+    const [ advance, setAdvance ] = useState<AdvanceType>(buildEmptyAdvance());
     const [ loading, setLoading ] = useState(false);
+
+    const updateAmountToAdvance = (amount: Amount | null) => {
+        setAmount(amount);
+        if(amount) setAdvance(buildAdvanceValueCostEmployee(amount.value, amount.cost));
+        else setAdvance(buildEmptyAdvance());
+    }
 
     const generate = () => {
         //TODO event
@@ -21,6 +31,6 @@ export const useGenerateAdvacne = (): GenerateAdvacneHook => {
     }
 
     return {
-        amount, setAmount, generate, loading
+        amount, advance, updateAmountToAdvance, generate, loading
     }
 }

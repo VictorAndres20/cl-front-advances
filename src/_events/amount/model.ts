@@ -1,7 +1,15 @@
-import { Amount } from "./type";
+import { Amount, AmountCreateTransaction } from "./type";
 
 export const validateAmount = (body: Amount) => {
-    //const {  } = body;
+    const { value, cost } = body;
+    if(value === 0 || value === undefined) throw new Error(`Valor vacío`);
+    if(cost === 0 || cost === undefined) throw new Error(`Costo vacío`);
+}
+
+export const validateTransactionAmount = (body: AmountCreateTransaction) => {
+    const { range } = body;
+    validateAmount(body);
+    if(range === '' || range === undefined) throw new Error(`Rango vacío`);
 }
 
 export const transformEntityAmount = (entity: Amount) => {
@@ -14,7 +22,7 @@ export const buildEmptyAmount = (): Amount => {
         uuid: '',
         value: 0,
         cost: 0,
-        active: 0,
+        active: 1,
     };
 }
 
