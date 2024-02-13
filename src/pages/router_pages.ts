@@ -2,13 +2,14 @@ import AuthWrapper from "../hoc/auth_wrapper";
 import AdminTemplate from "./admin/admin_template";
 import AdvancesPage from "./admin/advances";
 import AdvancesInboxPage from "./admin/advances_inbox";
+import AmountsPage from "./admin/amounts";
 import EmployeesPage from "./admin/employees";
 import EnterprisesPage from "./admin/enterprises";
 import LoginAdminPage from "./admin/login";
 import RangesPage from "./admin/ranges";
 import UsersPage from "./admin/users";
 import LoginPage from "./login";
-import { admin_path, advance_path, advances_inbox_path, advances_path, content_path, employees_path, enterprises_path, history_path, login_admin_path, login_page_path, ranges_path, users_path } from "./path_pages";
+import { admin_path, advance_path, advances_inbox_path, advances_path, amounts_path, content_path, employees_path, enterprises_path, history_path, login_admin_path, login_page_path, ranges_path, users_path } from "./path_pages";
 import AdvancePage from "./user/advance";
 import HistoryPage from "./user/history";
 import UserTemplate from "./user/user_template";
@@ -43,6 +44,10 @@ export const router_pages: RouterPage[] = [
             {
                 path: `${ranges_path.path}`, 
                 component: RangesPage,
+            },
+            {
+                path: `${amounts_path.path}`, 
+                component: AmountsPage,
             },
             {
                 path: `${employees_path.path}`, 

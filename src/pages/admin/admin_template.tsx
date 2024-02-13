@@ -1,6 +1,6 @@
 import { Menu } from "antd";
 import { Link, Outlet } from "react-router-dom";
-import { advances_inbox_path, advances_path, employees_path, enterprises_path, ranges_path, users_path } from "../path_pages";
+import { advances_inbox_path, advances_path, amounts_path, employees_path, enterprises_path, ranges_path, users_path } from "../path_pages";
 import { ClusterOutlined, DollarOutlined, IdcardOutlined, LogoutOutlined, ScheduleOutlined, ShopOutlined, SolutionOutlined, TeamOutlined } from "@ant-design/icons";
 import { useLogout } from "../../_hooks/login/useLogout.hook";
 
@@ -29,6 +29,12 @@ const items = [
                     <Link to={ranges_path.full_path}><ClusterOutlined /> Rangos</Link>
                 ),
                 key: 'ranges',
+            },
+            {
+                label: (
+                    <Link to={amounts_path.full_path}><ClusterOutlined /> Montos</Link>
+                ),
+                key: 'amounts',
             },
             {
                 label: (

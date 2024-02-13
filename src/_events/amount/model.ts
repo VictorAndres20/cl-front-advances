@@ -1,19 +1,15 @@
-import { Amount, AmountCreateTransaction } from "./type";
+import { Amount } from "./type";
 
 export const validateAmount = (body: Amount) => {
-    const { value, cost } = body;
+    const { value, cost, range } = body;
     if(value === 0 || value === undefined) throw new Error(`Valor vacío`);
     if(cost === 0 || cost === undefined) throw new Error(`Costo vacío`);
-}
-
-export const validateTransactionAmount = (body: AmountCreateTransaction) => {
-    const { range } = body;
-    validateAmount(body);
     if(range === '' || range === undefined) throw new Error(`Rango vacío`);
 }
 
 export const transformEntityAmount = (entity: Amount) => {
-    let newEnt = {...entity}
+    let newEnt = {...entity};
+    if(typeof newEnt.range === 'object') newEnt.range = newEnt.range?.uuid;
     return newEnt;
 }
 

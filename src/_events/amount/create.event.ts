@@ -1,10 +1,9 @@
 import {
     createAmount,
     editAmount,
-    createAmountTransaction,
 } from '../../_services/amount.service';
-import { validateAmount, validateTransactionAmount } from './model';
-import { Amount, AmountCreateTransaction } from './type';
+import { validateAmount } from './model';
+import { Amount } from './type';
 
 export const createAmountEvent = async (body: Amount) => {
     validateAmount(body);
@@ -14,11 +13,6 @@ export const createAmountEvent = async (body: Amount) => {
 export const editAmountEvent = async (id: string, body: Amount) => {
     validateAmount(body);
     return await editAmount(id, body);
-}
-
-export const createAmountTransactionEvent = async (body: AmountCreateTransaction) => {
-    validateTransactionAmount(body);
-    return await createAmountTransaction(body);
 }
 
 

@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Popconfirm } from "antd";
 import { formatToUSD } from "../../../_utils/format_currency";
 import { GenerateAdvacneHook } from "../../../_hooks/advance/useGenerateAdvance.hook";
 
@@ -39,15 +39,23 @@ export default function Confirmation({ hook }: { hook: GenerateAdvacneHook }){
                         </Button>
                     </div>
                     <div className="flex-col flex-center" style={{ width: '50%' }}>
+                        <Popconfirm
+                            title="Crear solicitud"
+                            description="¿Estás seguro de crear la solicitud?"
+                            onConfirm={() => {
+                                hook.generate();
+                            }}
+                            onCancel={() => {}}
+                            okText="Sí"
+                            cancelText="No"
+                        >
                         <Button
                             style={{ width: '90%' }}
                             type="primary"
-                            onClick={() => {
-                                hook.generate();
-                            }}
                         >
                             Confirmar
                         </Button>
+                        </Popconfirm>
                     </div>
                 </div>
             }

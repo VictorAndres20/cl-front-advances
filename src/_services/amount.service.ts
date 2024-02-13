@@ -1,4 +1,4 @@
-import { AmountCreateTransaction } from '../_events/amount/type';
+import { Amount } from '../_events/amount/type';
 import { handleFetch, GET_OPTIONS, POST_OPTIONS, PUT_OPTIONS } from './base.service';
 
 
@@ -12,7 +12,7 @@ export const findAmountById = async (id: any) => {
     return await handleFetch(`${BASE_PATH}/id/${id}`, GET_OPTIONS, null);
 }
 
-export const createAmount = async (body: any) => {
+export const createAmount = async (body: Amount) => {
     return await handleFetch(`${BASE_PATH}/create`, POST_OPTIONS, body);
 }
 
@@ -22,10 +22,6 @@ export const editAmount = async (id: any, body: any) => {
 
 export const findAllAmountPaged = async (page: any, limit: any) => {
     return await handleFetch(`${BASE_PATH}/all-paged/${page}/${limit}`, GET_OPTIONS, null);
-}
-
-export const createAmountTransaction = async (body: AmountCreateTransaction) => {
-    return await handleFetch(`${BASE_PATH}/create-transaction`, POST_OPTIONS, body);
 }
 
 export const findAllAmountByEnterprise = async (enterprise: number) => {

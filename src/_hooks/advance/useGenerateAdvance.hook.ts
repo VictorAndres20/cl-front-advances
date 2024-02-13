@@ -3,6 +3,9 @@ import { useState } from "react";
 import { Amount } from "../../_events/amount/type";
 import { AdvanceType } from "../../_events/advance/type";
 import { buildAdvanceValueCostEmployee, buildEmptyAdvance } from "../../_events/advance/model";
+import { createAdvanceEvent } from "../../_events/advance/create.event";
+import { useNavigate } from "react-router-dom";
+import { history_path } from "../../pages/path_pages";
 
 export interface GenerateAdvacneHook {
     amount?: Amount | null, 
@@ -13,6 +16,8 @@ export interface GenerateAdvacneHook {
 }
 
 export const useGenerateAdvacne = (): GenerateAdvacneHook => {
+
+    const navigate = useNavigate();
 
     const [ amount, setAmount ] = useState<Amount | null>(null);
     const [ advance, setAdvance ] = useState<AdvanceType>(buildEmptyAdvance());
@@ -25,9 +30,18 @@ export const useGenerateAdvacne = (): GenerateAdvacneHook => {
     }
 
     const generate = () => {
-        //TODO event
         setLoading(true);
-        message.success('Coming soon...');
+        createAdvanceEvent(advance)
+        .then(json => {
+            setLoading(false);
+            updateAmountToAdvance(null);
+            message.success('Anticipo generado');
+            navigate(history_path.full_path);
+        })
+        .catch(err => {
+            setLoading(false);
+            message.error(err.message);
+        });
     }
 
     return {

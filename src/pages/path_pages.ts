@@ -36,6 +36,11 @@ export const ranges_path: PathType = {
     full_path: `${admin_path.full_path}/ranges`,
 }
 
+export const amounts_path: PathType = {
+    path: 'amounts',
+    full_path: `${admin_path.full_path}/amounts`,
+}
+
 export const employees_path: PathType = {
     path: 'employees',
     full_path: `${admin_path.full_path}/employees`,

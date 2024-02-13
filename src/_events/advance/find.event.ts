@@ -2,6 +2,8 @@ import {
     findAllAdvance,
     findAdvanceById,
     findAllAdvancePaged,
+    findAllAdvanceByEmployeePaged,
+    findAllAdvanceByEnterprise
 } from '../../_services/advance.service';
 
 export const findAllAdvanceEvent = async () => {
@@ -14,6 +16,14 @@ export const findAdvanceByIdEvent = async (id: string) => {
 
 export const findAllAdvancePagedEvent = async (page: number, limit: number = 8) => {
     return await findAllAdvancePaged(page, limit);
+}
+
+export const findAllAdvanceByEmployeePagedEvent = async (page: number, limit: number = 8, employee: string) => {
+    return await findAllAdvanceByEmployeePaged(page, limit, employee);
+}
+
+export const findAllAdvanceByEnterpriseEvent = async (enterprise: number) => {
+    return await findAllAdvanceByEnterprise(enterprise);
 }
 
 

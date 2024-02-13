@@ -1,13 +1,14 @@
 import { TableColumnsType } from "antd";
-import { useFindAllRange } from "../../../_hooks/range/useFindAllRange.hook";
 import { BasicDatatable } from "../../../widgets /antd_table/basic_datatable";
 import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTableSearchBox.hook";
 import FormModal from "./form_modal";
 import { RangeType } from "../../../_events/range/type";
+import { useFindAllRangeByEnterprise } from "../../../_hooks/range/useFindAllRangeByEnterprise.hook";
+import { getCompany } from "../../../_utils/storage_handler";
 
 export default function Table(){
 
-    const dataHook = useFindAllRange();
+    const dataHook = useFindAllRangeByEnterprise(getCompany());
     const searchBox = useBasicTableSearchBox<RangeType>();
     
     const columns: TableColumnsType<RangeType> = [
@@ -28,12 +29,32 @@ export default function Table(){
         )
         },
         {
+            title: 'Montos',
+            dataIndex: 'amounts',
+            key: 'amounts',
+            width: '10%',
+            render: (text: string, param: RangeType, key: number) => (
+                <ul key={`amounts_range_${key}`}>
+                    { 
+                        param.amounts &&
+                        param.amounts.map((amount, key) => {
+                            return(
+                                <li key={`li_amount_${key}`}>
+                                    {amount.value} ({amount.cost})
+                                </li>
+                            );
+                        })
+                    }
+                </ul>
+            )
+        },
+        {
             title: 'Acciones',
             dataIndex: 'uuid',
             key: 'uuid',
             width: '10%',
             render: (text: string, param: RangeType, key: number) => (
-                <FormModal key={`edit_range_${key}`} id={param.uuid} reload={dataHook.loadData} />
+                <FormModal key={`edit_range_${key}`} id={param.uuid} reload={() => dataHook.loadData(getCompany())} />
             )
         },
     ];
@@ -41,7 +62,7 @@ export default function Table(){
     return(
         <div style={{ width: '100%' }}>
             <div style={{ width: '90%', display: 'flex', flexDirection: 'row-reverse' }}>
-                <FormModal reload={dataHook.loadData} />
+                <FormModal reload={() => dataHook.loadData(getCompany())} />
             </div>
             <BasicDatatable columns={columns} data={dataHook.data} pagination={true} />
         </div>
