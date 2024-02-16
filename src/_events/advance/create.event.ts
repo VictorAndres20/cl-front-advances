@@ -1,6 +1,7 @@
 import {
     createAdvance,
     editAdvance,
+    approveAdvance
 } from '../../_services/advance.service';
 import { validateAdvance } from './model';
 import { AdvanceType } from './type';
@@ -13,6 +14,10 @@ export const createAdvanceEvent = async (body: AdvanceType) => {
 export const editAdvanceEvent = async (id: string, body: AdvanceType) => {
     validateAdvance(body);
     return await editAdvance(id, body);
+}
+
+export const approveAdvanceEvent = async (id: string) => {
+    return await approveAdvance(id);
 }
 
 

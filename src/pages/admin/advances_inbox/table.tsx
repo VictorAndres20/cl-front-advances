@@ -1,15 +1,17 @@
-import { TableColumnsType } from "antd";
+import { Button, TableColumnsType, message } from "antd";
 import { BasicDatatable } from "../../../widgets /antd_table/basic_datatable";
 import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTableSearchBox.hook";
 import { getCompany } from "../../../_utils/storage_handler";
 import BasicBadge from "../../../widgets /badges/basic_badge";
 import { AdvanceType } from "../../../_events/advance/type";
-import { useFindAllAdvancesByEnterprise } from "../../../_hooks/advance/useFindAllAdvancesByEnterprise.hook";
+import { useFindAllAdvancesPendingByEnterprise } from "../../../_hooks/advance/useFindAllAdvancesPendingByEnterprise.hook";
+import { useApproveAdvance } from "../../../_hooks/advance/useApproveAdvance.hook";
 
 export default function Table(){
 
-    const dataHook = useFindAllAdvancesByEnterprise(getCompany());
+    const dataHook = useFindAllAdvancesPendingByEnterprise(getCompany());
     const searchBox = useBasicTableSearchBox<AdvanceType>();
+    const approveAdvance = useApproveAdvance();
     
     const columns: TableColumnsType<AdvanceType> = [
         {
@@ -49,6 +51,36 @@ export default function Table(){
             width: '10%',
             render: (text: string, param: AdvanceType, key: number) => (
                 <span key={`amount_active_${key}`}>{(typeof param.state === 'object' && param.state.cod === 'PEND') ? <BasicBadge text="PENDIENTE" color="warning" /> : (typeof param.state === 'object' && param.state.cod === 'APPR') ? <BasicBadge text="Aprobado" color="success" /> : <BasicBadge text="No aprobado" color="danger" />}</span>
+            )
+        },
+        {
+            title: 'Acción',
+            dataIndex: 'uuid',
+            key: 'uuid',
+            width: '10%',
+            render: (text: string, param: AdvanceType, key: number) => (
+                <div className="flex-row">
+                    <Button
+                        style={{ margin: '0 5px' }}
+                        type="primary"
+                        onClick={() => {
+                            approveAdvance.approve(param.uuid ?? '', () => {
+                                dataHook.loadData(getCompany());
+                            })
+                        }}
+                    >
+                        Aprobar
+                    </Button>
+                    <Button
+                        style={{ margin: '0 5px' }}
+                        danger
+                        onClick={() => {
+                            message.error('Not allowed');
+                        }}
+                    >
+                        Rechazar
+                    </Button>
+                </div>
             )
         },
     ];

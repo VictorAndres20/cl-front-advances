@@ -3,7 +3,8 @@ import {
     findAdvanceById,
     findAllAdvancePaged,
     findAllAdvanceByEmployeePaged,
-    findAllAdvanceByEnterprise
+    findAllAdvanceByEnterprise,
+    findAllPendingAdvanceByEnterprise
 } from '../../_services/advance.service';
 
 export const findAllAdvanceEvent = async () => {
@@ -24,6 +25,10 @@ export const findAllAdvanceByEmployeePagedEvent = async (page: number, limit: nu
 
 export const findAllAdvanceByEnterpriseEvent = async (enterprise: number) => {
     return await findAllAdvanceByEnterprise(enterprise);
+}
+
+export const findAllPendingAdvanceByEnterpriseEvent = async (enterprise: number) => {
+    return await findAllPendingAdvanceByEnterprise(enterprise);
 }
 
 
