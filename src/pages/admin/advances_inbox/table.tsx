@@ -1,4 +1,4 @@
-import { Button, TableColumnsType, message } from "antd";
+import { Button, TableColumnsType } from "antd";
 import { BasicDatatable } from "../../../widgets /antd_table/basic_datatable";
 import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTableSearchBox.hook";
 import { getCompany } from "../../../_utils/storage_handler";
@@ -6,12 +6,14 @@ import BasicBadge from "../../../widgets /badges/basic_badge";
 import { AdvanceType } from "../../../_events/advance/type";
 import { useFindAllAdvancesPendingByEnterprise } from "../../../_hooks/advance/useFindAllAdvancesPendingByEnterprise.hook";
 import { useApproveAdvance } from "../../../_hooks/advance/useApproveAdvance.hook";
+import { useDeclineAdvance } from "../../../_hooks/advance/useDeclineAdvance.hook";
 
 export default function Table(){
 
     const dataHook = useFindAllAdvancesPendingByEnterprise(getCompany());
     const searchBox = useBasicTableSearchBox<AdvanceType>();
     const approveAdvance = useApproveAdvance();
+    const declineAvance = useDeclineAdvance();
     
     const columns: TableColumnsType<AdvanceType> = [
         {
@@ -75,7 +77,9 @@ export default function Table(){
                         style={{ margin: '0 5px' }}
                         danger
                         onClick={() => {
-                            message.error('Not allowed');
+                            declineAvance.decline(param.uuid ?? '', () => {
+                                dataHook.loadData(getCompany());
+                            })
                         }}
                     >
                         Rechazar

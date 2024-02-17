@@ -18,18 +18,18 @@ export const validateLoginModel = ({ identification, password }: LoginType) => {
 export const loginEvent = async (body: LoginType) => {
     validateLoginModel(body);
     let res = await loginEmployee(body);
-    putStorage(res);
+    await putStorage(res);
     return res;
 }
 
 export const loginUserEvent = async (body: LoginType) => {
     validateLoginModel(body);
     let res = await loginUser(body);
-    putStorage(res);
+    await putStorage(res);
     return res;
 }
 
-export const putStorage = (res: any) => {
+export const putStorage = async (res: any) => {
     putCompany(res.data.company_id);
     putCompanyName(res.data.company_name);
     putUserId(res.data.uuid);

@@ -52,21 +52,12 @@ export default function Table(){
             )
         },
         {
-            title: 'Activo',
+            title: 'Estado',
             dataIndex: 'active',
             key: 'active',
             width: '10%',
             render: (text: string, param: UserType, key: number) => (
                 <span key={`active_user_${key}`}>{param.active === 1 ? <BasicBadge text="Activo" color="success" /> : <BasicBadge text="Inactivo" color="danger" /> }</span>
-            )
-        },
-        {
-            title: 'Acciones',
-            dataIndex: 'uuid',
-            key: 'uuid',
-            width: '10%',
-            render: (text: string, param: UserType, key: number) => (
-                <FormModal key={`form_edit_user_${key}`} id={param.uuid} reload={dataHook.loadData} />
             )
         },
     ];

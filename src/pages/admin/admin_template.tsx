@@ -3,6 +3,8 @@ import { Link, Outlet } from "react-router-dom";
 import { advances_inbox_path, advances_path, amounts_path, employees_path, enterprises_path, ranges_path, users_path } from "../path_pages";
 import { ClusterOutlined, DollarOutlined, IdcardOutlined, LogoutOutlined, ScheduleOutlined, ShopOutlined, SolutionOutlined, TeamOutlined } from "@ant-design/icons";
 import { useLogout } from "../../_hooks/login/useLogout.hook";
+import { roles } from "../../_config/roles";
+import { getRol } from "../../_utils/storage_handler";
 
 const items = [
     {
@@ -10,12 +12,14 @@ const items = [
             <Link to={enterprises_path.full_path}><ShopOutlined /> Empresas</Link>
         ),
         key: 'enterprises',
+        roles: [roles.root],
     },
     {
         label: (
             <Link to={users_path.full_path}><IdcardOutlined /> Usuarios</Link>
         ),
         key: 'users',
+        roles: [roles.root],
     },
     {
         label: (
@@ -23,6 +27,7 @@ const items = [
         ),
         key: 'group1',
         type: 'divider',
+        roles: [roles.root, roles.admin],
         children: [
             {
                 label: (
@@ -50,6 +55,7 @@ const items = [
         ),
         key: 'group2',
         type: 'divider',
+        roles: [roles.root, roles.admin],
         children: [
             {
                 label: (
@@ -68,6 +74,7 @@ const items = [
     {
         label: 'Salir',
         key: 'logout',
+        roles: [roles.root, roles.admin],
         icon: <LogoutOutlined />,
     },
   ];
@@ -87,7 +94,7 @@ export default function AdminTemplate(){
     return(
         <div>
             <div style={{ backgroundColor: '#0BA8E8', height: '3px' }}></div>
-            <Menu onClick={clickMenu} defaultSelectedKeys={[`${currentPaths[currentPaths.length - 1]}`]} mode="horizontal" items={items} theme="dark" />
+            <Menu onClick={clickMenu} defaultSelectedKeys={[`${currentPaths[currentPaths.length - 1]}`]} mode="horizontal" items={items.filter( i => i.roles.some( r => r === getRol()) )} theme="dark" />
             <div style={{ backgroundColor: '#0BA8E8', height: '3px', marginBottom: '20px' }}></div>
             <Outlet />
         </div>

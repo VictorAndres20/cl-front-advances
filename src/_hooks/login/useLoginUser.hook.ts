@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { enterprises_path } from "../../pages/path_pages";
+import { enterprises_path, ranges_path } from "../../pages/path_pages";
 import { loginUserEvent } from "../../_events/login/login.event";
 import { message } from "antd";
 import { baseEntity } from '../../_events/login/login.event';
@@ -17,7 +17,10 @@ export const useLoginUser = () => {
     const login = () => {
         loginUserEvent(entity)
         .then(json => {
-            if(json.data.rol === roles.root) navigate(enterprises_path.full_path);
+            const rol = json.data.rol;
+            if(rol === roles.root) navigate(enterprises_path.full_path);
+            else if(rol === roles.admin) navigate(ranges_path.full_path);
+            else message.error(`No route for rol ${rol}`);
         })
         .catch(err => {
             message.error(err.message);

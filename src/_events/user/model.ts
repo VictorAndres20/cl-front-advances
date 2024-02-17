@@ -6,8 +6,8 @@ export const validateUser = (body: UserType) => {
     if(email === '' || email === undefined) throw new Error(`Email vacío`);
     if(login === '' || login === undefined) throw new Error(`Login vacío`);
     if(!body.uuid && (password === '' || password === undefined)) throw new Error(`Contraseña vacío`);
-    if(enterprise === 0 || enterprise === undefined) throw new Error(`Empresa vacío`);
     if(rol === '' || rol === undefined) throw new Error(`Rol vacío`);
+    if(enterprise === 0 || enterprise === undefined) throw new Error(`Empresa vacío`);
 }
 
 export const transformEntityUser = (entity: UserType) => {

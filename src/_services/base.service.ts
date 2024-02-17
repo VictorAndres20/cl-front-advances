@@ -1,32 +1,29 @@
 import { MAIN_API_HOST } from '../_config/api';
 import { getToken } from '../_utils/storage_handler';
 
-export const HEADERS_OPTIONS = {
+export const buildHeadersOptions = () => ({
     'Content-Type': 'application/json',
     "Authorization":`Bearer ${getToken()}`
-};
+});
 
 export const GET_OPTIONS = {
-    method: "GET",
-    headers: HEADERS_OPTIONS
+    method: "GET"
 };
 
 export const POST_OPTIONS = {
-    method: "POST",
-    headers: HEADERS_OPTIONS
+    method: "POST"
 };
 
 export const PUT_OPTIONS = {
-    method: "PUT",
-    headers: HEADERS_OPTIONS
+    method: "PUT"
 };
 
 export const DELETE_OPTIONS = {
-    method: "DELETE",
-    headers: HEADERS_OPTIONS
+    method: "DELETE"
 };
 
-export const sendFetch = (path: string, options: any, body: any = null): any => {
+export const sendFetch = (path: string, optionsParam: any, body: any = null): any => {
+    const options = { ...optionsParam, headers: buildHeadersOptions() };
     if(body !== null) options.body = JSON.stringify(body);
     return new Promise((resolve, reject) => {
         fetch(`${MAIN_API_HOST}${path}`,options)

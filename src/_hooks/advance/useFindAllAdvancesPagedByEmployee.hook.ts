@@ -12,6 +12,7 @@ export interface AdvancePagedType {
 export interface FindAllAdvancePagedByEmployeeHook {
     data: AdvancePagedType, 
     page: number, 
+    limit: number,
     setPage: ((page: number) => void)
 }
 
@@ -20,7 +21,7 @@ export const useFindAllAdvancesPagedByEmployee = (): FindAllAdvancePagedByEmploy
     const employee = getUserId();
     const [ data, setData ] = useState<AdvancePagedType>({ list: [], total: 0 });
     const [ page, setPage ] = useState<number>(0);
-    const limit = 8;
+    const limit = 4;
 
     useEffect(() => {
         findAllAdvanceByEmployeePagedEvent(page, limit, employee ?? '')
@@ -37,6 +38,6 @@ export const useFindAllAdvancesPagedByEmployee = (): FindAllAdvancePagedByEmploy
 
 
     return{
-        data, page, setPage
+        data, page, setPage, limit
     }
 }

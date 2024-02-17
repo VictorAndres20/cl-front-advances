@@ -5,6 +5,7 @@ import { useCreateUser } from "../../../_hooks/user/useCreateUser.hook";
 import { useUpdateUser } from "../../../_hooks/user/useUpdateUser.hook";
 import EnterpriseSelect from "../../../widgets /selects/enterprise_select";
 import ChangePasswordForm from "./change_password_form";
+import UserRolSelect from "../../../widgets /selects/user_rol_select";
 
 export default function FormModal({ id, reload }: { id?: string, reload: Function }){
 
@@ -102,6 +103,23 @@ export default function FormModal({ id, reload }: { id?: string, reload: Functio
                                 />
                            </div>  
                         }
+                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Rol</div>
+                        <UserRolSelect 
+                            value={ id ? (typeof updateHook.entity.rol === 'string' ? updateHook.entity.rol : '') : (typeof createHook.entity.rol === 'string' ? createHook.entity.rol : '') }
+                            onChange={(e) => {
+                                if(id){
+                                    updateHook.setEntity({
+                                        ...updateHook.entity,
+                                        rol: e ? e : ''
+                                    });
+                                } else {
+                                    createHook.setEntity({
+                                        ...createHook.entity,
+                                        rol: e ? e : ''
+                                    });
+                                }
+                            }}
+                        />
                         <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Empresa</div>
                         <EnterpriseSelect 
                             value={ id ? (typeof updateHook.entity.enterprise === 'number' ? updateHook.entity.enterprise : 0) : (typeof createHook.entity.enterprise === 'number' ? createHook.entity.enterprise : 0) }

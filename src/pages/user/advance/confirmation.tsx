@@ -8,6 +8,7 @@ export default function Confirmation({ hook }: { hook: GenerateAdvacneHook }){
         <div style={{ margin: '20px 0', padding: '10px 50px', border: '1px solid #000', borderRadius: '10px' }}>
             <div style={{ fontSize: '1.2em', fontWeight: 'bold', marginBottom: '5px' }}>Confirmación</div> 
             <table style={{ width: '100%' }}>
+                <tbody>
                 <tr>
                     <td style={{ fontSize: '0.95em', width: '60%', borderBottom: '1px solid #ccc' }}>Valor anticipo</td>
                     <td style={{ fontSize: '0.95em', width: '40%', borderBottom: '1px solid #ccc' }}>{formatToUSD(hook.advance?.value ?? 0)}</td>
@@ -17,9 +18,10 @@ export default function Confirmation({ hook }: { hook: GenerateAdvacneHook }){
                     <td style={{ fontSize: '0.95em', width: '40%', borderBottom: '3px solid #ccc' }}>{formatToUSD(hook.advance?.cost ?? 0 )}</td>
                 </tr>
                 <tr>
-                    <td style={{ fontSize: '0.95em', fontWeight: 'bold', width: '60%' }}>Neto a recibir</td>
-                    <td style={{ fontSize: '0.95em', fontWeight: 'bold', width: '40%' }}>{formatToUSD((hook?.advance?.value ?? 0) - (hook?.advance?.cost ?? 0))}</td>
+                    <td style={{ fontSize: '0.95em', width: '60%' }}></td>
+                    <td style={{ fontSize: '0.95em', width: '40%' }}>{formatToUSD((hook.advance?.cost ?? 0) + (hook.advance?.value ?? 0) )}</td>
                 </tr>
+                </tbody>
             </table>
             {
                 hook.loading ?
@@ -61,6 +63,9 @@ export default function Confirmation({ hook }: { hook: GenerateAdvacneHook }){
             }
             <div>
                 <ul>
+                    <li style={{ margin: '10px -35px', fontWeight: 'bold' }}>
+                        AL PRESIONAR CONFIRMAR ESTAS AUTORIZANDO IRREVOCABLEMENTE EL DESCUENTO EN LA SIGUIENTE QUINCENA POR UN VALOR DE {formatToUSD((hook?.advance?.value ?? 0) + (hook?.advance?.cost ?? 0))} 
+                    </li>
                     <li style={{ margin: '10px -35px' }}>
                         MONTO A DESCONTAR EN SIGUINETE QUINCENA ES EL VALOR DEL ANTICIPO ANTES DEL COSTO
                     </li>

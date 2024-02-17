@@ -1,6 +1,7 @@
-import { Col } from "antd";
+import { Col, Pagination } from "antd";
 import { useFindAllAdvancesPagedByEmployee } from "../../../_hooks/advance/useFindAllAdvancesPagedByEmployee.hook";
 import { AdvanceType } from "../../../_events/advance/type";
+import { CheckCircleOutlined, CloseCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 
 const fontSize = '0.8em';
 
@@ -17,9 +18,10 @@ export default function InfoAdvances(){
                         <div style={{ fontSize, fontWeight: 'bold' }}>
                             Transferencia
                         </div>
-                        <div style={{ fontSize }}>
-                            Estado: {typeof advance.state === 'object' ? advance.state?.cod : 'NA'}
+                        <div style={{ fontSize, fontWeight: 'bold', color: 'orange' }}>
+                            PENDIENTE
                         </div>
+                        <LoadingOutlined style={{ color: 'orange', fontSize: '2em', marginTop: '10px' }} />
                     </div>
                 );
             } else if(state === 'APPR'){
@@ -28,9 +30,10 @@ export default function InfoAdvances(){
                         <div style={{ fontSize, fontWeight: 'bold' }}>
                             Transferencia
                         </div>
-                        <div style={{ fontSize }}>
-                            Estado: {state}
+                        <div style={{ fontSize, fontWeight: 'bold', color: 'green' }}>
+                            APROBADO
                         </div>
+                        <CheckCircleOutlined style={{ color: 'green', fontSize: '2em', marginTop: '10px' }} /> 
                         <div style={{ fontSize, marginTop: '10px' }}>
                             {typeof advance.approved_date === 'string' ? advance.approved_date.split("T")[0] : ''}
                         </div>
@@ -45,9 +48,10 @@ export default function InfoAdvances(){
                         <div style={{ fontSize, fontWeight: 'bold' }}>
                             Transferencia
                         </div>
-                        <div style={{ fontSize }}>
-                            Estado: {state}
+                        <div style={{ fontSize, fontWeight: 'bold', color: 'red' }}>
+                            RECHAZADO
                         </div>
+                        <CloseCircleOutlined style={{ color: 'red', fontSize: '2em', marginTop: '10px' }} />
                         <div style={{ fontSize, marginTop: '10px' }}>
                             {typeof advance.declined_date === 'string' ? advance.declined_date.split("T")[0] : ''}
                         </div>
@@ -64,6 +68,11 @@ export default function InfoAdvances(){
 
     return(
         <Col lg={24} xs={24}>
+            <Pagination current={dataHook.page + 1} total={dataHook.data.total} pageSize={dataHook.limit} 
+                onChange={(p) => {
+                    dataHook.setPage(p - 1);
+                }}
+            />
             {
                 dataHook.data.list.length === 0 ?
                     <div>Sin adelantos solicitados</div>
@@ -81,9 +90,6 @@ export default function InfoAdvances(){
                                 <div style={{ fontSize }}>
                                     Costo: {advance.cost}
                                 </div>
-                                <div style={{ fontSize, fontWeight: 'bold' }}>
-                                    Neto: {advance.value - advance.cost}
-                                </div>
                                 <div style={{ fontSize, marginTop: '10px' }}>
                                     {typeof advance.created_date === 'string' ? advance.created_date.split("T")[0] : ''}
                                 </div>
@@ -96,6 +102,12 @@ export default function InfoAdvances(){
                     );
                 })
             }
+            <Pagination current={dataHook.page + 1} total={dataHook.data.total} pageSize={dataHook.limit}
+                onChange={(p) => {
+                    dataHook.setPage(p - 1);
+                }}
+                style={{ marginBottom: '30px' }}
+            />
         </Col>
     );
 }
