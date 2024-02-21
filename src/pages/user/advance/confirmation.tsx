@@ -23,6 +23,17 @@ export default function Confirmation({ hook }: { hook: GenerateAdvacneHook }){
                 </tr>
                 </tbody>
             </table>
+            <div>
+            <div style={{ margin: '10px -35px', fontWeight: 'bold' }}>
+                AL PRESIONAR CONFIRMAR ESTAS AUTORIZANDO IRREVOCABLEMENTE EL DESCUENTO EN LA SIGUIENTE QUINCENA POR UN VALOR DE  
+                <span style={{ fontSize: '1.4em', marginLeft: '7px', borderBottom: '1px solid #000' }}>{formatToUSD((hook?.advance?.value ?? 0) + (hook?.advance?.cost ?? 0))}</span>
+            </div>
+            <div style={{ margin: '10px -35px', fontWeight: 'bold' }}>En caso de retiro, la autorizacion comprende todo concepto incluido en la liquidacion final de acreencias laborales.</div>
+            <div>
+                Desembolso se realizará en las proximas 24 horas.
+                Dinero solo se puede desembolsar en tu cuenta de nómina
+            </div>
+            </div>
             {
                 hook.loading ?
                 <div className="flex-col flex-center" style={{ width: '100%' }}>
@@ -61,22 +72,6 @@ export default function Confirmation({ hook }: { hook: GenerateAdvacneHook }){
                     </div>
                 </div>
             }
-            <div>
-                <ul>
-                    <li style={{ margin: '10px -35px', fontWeight: 'bold' }}>
-                        AL PRESIONAR CONFIRMAR ESTAS AUTORIZANDO IRREVOCABLEMENTE EL DESCUENTO EN LA SIGUIENTE QUINCENA POR UN VALOR DE {formatToUSD((hook?.advance?.value ?? 0) + (hook?.advance?.cost ?? 0))} 
-                    </li>
-                    <li style={{ margin: '10px -35px' }}>
-                        MONTO A DESCONTAR EN SIGUINETE QUINCENA ES EL VALOR DEL ANTICIPO ANTES DEL COSTO
-                    </li>
-                    <li style={{ margin: '10px -35px' }}>
-                        DESEMBOLSO SE REALIZA EN LAS SIGUIENTES 24 HORAS
-                    </li>
-                    <li style={{ margin: '10px -35px' }}>
-                        EL DINERO SOLO SE PUEDE TRANSFERIR A TU CUENTA DE NÓMINA
-                    </li>
-                </ul>
-            </div>
         </div>
     );
 }

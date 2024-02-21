@@ -31,7 +31,7 @@ export default function InfoAdvances(){
                             Transferencia
                         </div>
                         <div style={{ fontSize, fontWeight: 'bold', color: 'green' }}>
-                            APROBADO
+                            REALIZADO
                         </div>
                         <CheckCircleOutlined style={{ color: 'green', fontSize: '2em', marginTop: '10px' }} /> 
                         <div style={{ fontSize, marginTop: '10px' }}>
