@@ -2,12 +2,14 @@ import { Col, Pagination } from "antd";
 import { useFindAllAdvancesPagedByEmployee } from "../../../_hooks/advance/useFindAllAdvancesPagedByEmployee.hook";
 import { AdvanceType } from "../../../_events/advance/type";
 import { CheckCircleOutlined, CloseCircleOutlined, LoadingOutlined } from "@ant-design/icons";
+import { useDownloadAdvancePdf } from "../../../_hooks/advance/useDownloadAdvancePdf.hook";
 
 const fontSize = '0.8em';
 
 export default function InfoAdvances(){
 
     const dataHook = useFindAllAdvancesPagedByEmployee();
+    const pdf = useDownloadAdvancePdf();
 
     const renderState = (advance: AdvanceType) => {
         if(typeof advance.state === 'object'){
@@ -95,6 +97,13 @@ export default function InfoAdvances(){
                                 </div>
                                 <div style={{ fontSize }}>
                                     {typeof advance.created_date === 'string' ? advance.created_date.split("T")[1].split(".")[0] : ''}
+                                </div>
+                                <div style={{ cursor: 'pointer', fontSize: '0.7em', color: 'blue', textDecoration: 'underline', marginTop: '10px' }}
+                                    onClick={() => {
+                                        pdf.download(advance.uuid ?? '')
+                                    }}
+                                >
+                                    comprobante
                                 </div>
                             </div>
                             {renderState(advance)}

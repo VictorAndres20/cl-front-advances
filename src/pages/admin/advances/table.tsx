@@ -1,17 +1,31 @@
-import { TableColumnsType } from "antd";
+import { Button, TableColumnsType } from "antd";
 import { BasicDatatable } from "../../../widgets /antd_table/basic_datatable";
 import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTableSearchBox.hook";
 import { getCompany } from "../../../_utils/storage_handler";
 import BasicBadge from "../../../widgets /badges/basic_badge";
 import { AdvanceType } from "../../../_events/advance/type";
 import { useFindAllAdvancesByEnterprise } from "../../../_hooks/advance/useFindAllAdvancesByEnterprise.hook";
+import { useDownloadAdvancePdf } from "../../../_hooks/advance/useDownloadAdvancePdf.hook";
 
 export default function Table(){
 
     const dataHook = useFindAllAdvancesByEnterprise(getCompany());
+    const pdf = useDownloadAdvancePdf();
     const searchBox = useBasicTableSearchBox<AdvanceType>();
     
     const columns: TableColumnsType<AdvanceType> = [
+        {
+            title: '',
+            dataIndex: 'uuid',
+            key: 'uuid',
+            width: '3%',
+            render: (text: string, param: AdvanceType, key: number) => (
+                <Button
+                    key={`advance_pdf_${key}`}
+                    onClick={() => pdf.download(param.uuid ?? '')}
+                >PDF</Button>
+            )
+        },
         {
             title: 'Empleado',
             dataIndex: 'employee',
