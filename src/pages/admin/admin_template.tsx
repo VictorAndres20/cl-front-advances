@@ -55,7 +55,7 @@ const items = [
         ),
         key: 'group2',
         type: 'divider',
-        roles: [roles.root, roles.admin],
+        roles: [roles.root],
         children: [
             {
                 label: (

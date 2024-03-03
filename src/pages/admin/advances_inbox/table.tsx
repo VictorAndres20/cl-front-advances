@@ -1,16 +1,15 @@
 import { Button, TableColumnsType } from "antd";
 import { BasicDatatable } from "../../../widgets /antd_table/basic_datatable";
 import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTableSearchBox.hook";
-import { getCompany } from "../../../_utils/storage_handler";
 import BasicBadge from "../../../widgets /badges/basic_badge";
 import { AdvanceType } from "../../../_events/advance/type";
-import { useFindAllAdvancesPendingByEnterprise } from "../../../_hooks/advance/useFindAllAdvancesPendingByEnterprise.hook";
 import { useApproveAdvance } from "../../../_hooks/advance/useApproveAdvance.hook";
 import { useDeclineAdvance } from "../../../_hooks/advance/useDeclineAdvance.hook";
+import { useFindAllPendingAdvances } from "../../../_hooks/advance/useFindAllPendingAdvance.hook";
 
 export default function Table(){
 
-    const dataHook = useFindAllAdvancesPendingByEnterprise(getCompany());
+    const dataHook = useFindAllPendingAdvances();
     const searchBox = useBasicTableSearchBox<AdvanceType>();
     const approveAdvance = useApproveAdvance();
     const declineAvance = useDeclineAdvance();
@@ -67,7 +66,7 @@ export default function Table(){
                         type="primary"
                         onClick={() => {
                             approveAdvance.approve(param.uuid ?? '', () => {
-                                dataHook.loadData(getCompany());
+                                dataHook.loadData();
                             })
                         }}
                     >
@@ -78,7 +77,7 @@ export default function Table(){
                         danger
                         onClick={() => {
                             declineAvance.decline(param.uuid ?? '', () => {
-                                dataHook.loadData(getCompany());
+                                dataHook.loadData();
                             })
                         }}
                     >
