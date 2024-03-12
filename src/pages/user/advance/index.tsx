@@ -9,9 +9,12 @@ export default function AdvancePage(){
 
     return(
         <Row>
-            <Col lg={24} xs={24}>
-                <SelectAdvance hook={generateHook} />
-            </Col>
+            {
+                ! generateHook.amount &&
+                <Col lg={24} xs={24}>
+                    <SelectAdvance hook={generateHook} />
+                </Col>
+            }
             {
                 generateHook.amount &&
                 <Col lg={24} xs={24}>

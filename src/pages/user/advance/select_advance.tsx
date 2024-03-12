@@ -8,28 +8,30 @@ export default function SelectAdvance({ hook }: { hook: GenerateAdvacneHook }){
     const amountsHook = useFindAvalibaleAmounts();
 
     return(
-        <div>
-            <div style={{ fontSize: '1.3em', fontWeight: 'bold', margin: '10px 0' }}>¿Cuánto deseas adelantar?</div>
-            <div className="flex-row" style={{ width: '100%' }}>
-                {
-                    amountsHook.amounts.map((a, key) => {
-                        return(
-                            <div style={{ width: '33%' }} className="flex-col flex-center" key={`amount_list_${key}`}>
-                                <Button
-                                    style={{ width: '90%' }}
-                                    type={ hook.amount?.uuid === a.uuid ? "primary" : "dashed" }
-                                    onClick={() => {
-                                        hook.updateAmountToAdvance(a);
-                                    }}
-                                >
-                                    {formatToUSD(a.value)}
-                                </Button>
-                                <span style={{ marginTop: '5px' }}>Costo:</span>
-                                <span style={{ margin: '5px 0' }}>{formatToUSD(a.cost)}</span>
-                            </div>
-                        );
-                    })
-                }
+        <div style={{ width: '100%', marginTop: '30px' }}>
+            <div style={{ backgroundColor: '#A6ABB8', width: '100%', padding: '10px 0', borderRadius: '20px' }}>
+                <div className="flex-col flex-center" style={{ fontSize: '1.3em', fontWeight: 'bold', margin: '10px 0', width: '100%', color: '#fff' }}>¿Cuánto deseas adelantar?</div>
+                <div className="flex-col">
+                    {
+                        amountsHook.amounts.map((a, key) => {
+                            return(
+                                <div style={{ margin: '20px 0' }} className="flex-row flex-center" key={`amount_list_${key}`}>
+                                    <Button
+                                        style={{ width: '120px' }}
+                                        type={ hook.amount?.uuid === a.uuid ? "primary" : "dashed" }
+                                        onClick={() => {
+                                            hook.updateAmountToAdvance(a);
+                                        }}
+                                    >
+                                        {formatToUSD(a.value)}
+                                    </Button>
+                                    <span style={{ margin: '0 10px' }}>Costo:</span>
+                                    <span >{formatToUSD(a.cost)}</span>
+                                </div>
+                            );
+                        })
+                    }
+                </div>
             </div>
         </div>
     );
