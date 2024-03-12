@@ -25,13 +25,12 @@ export default function Confirmation({ hook }: { hook: GenerateAdvacneHook }){
             </table>
             <div>
             <div style={{ margin: '10px -35px', fontWeight: 'bold' }}>
-                AL PRESIONAR CONFIRMAR ESTAS AUTORIZANDO IRREVOCABLEMENTE EL DESCUENTO EN LA SIGUIENTE QUINCENA POR UN VALOR DE  
+                AL PRESIONAR CONFIRMAR ESTÁS AUTORIZANDO EXPRESA E IRREVOCABLEMENTE EL DESCUENTO EN EL SALARIO DE LA QUINCENA CORRIENTE POR UN VALOR DE  
                 <span style={{ fontSize: '1.4em', marginLeft: '7px', borderBottom: '1px solid #000' }}>{formatToUSD((hook?.advance?.value ?? 0) + (hook?.advance?.cost ?? 0))}</span>
             </div>
-            <div style={{ margin: '10px -35px', fontWeight: 'bold' }}>En caso de retiro, la autorizacion comprende todo concepto incluido en la liquidacion final de acreencias laborales.</div>
+            <div style={{ margin: '10px -35px', fontWeight: 'bold' }}>En caso de retiro, la Empresa también se entenderá expresa e irrevocablemente autorizada para descontar dicha suma de los salarios, prestaciones sociales, vacaciones, indemnizaciones, beneficios o auxilios legales o extralegales y cualquier otra acreencia laboral que tuvieras a tu favor.</div>
             <div>
-                Desembolso se realizará en las proximas 24 horas.
-                Dinero solo se puede desembolsar en tu cuenta de nómina
+            Favor tener en cuenta que el dinero solo se puede desembolsar en tu cuenta de nómina. La transferencia se realizará en las próximas 24 horas.
             </div>
             </div>
             {

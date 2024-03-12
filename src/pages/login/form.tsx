@@ -34,11 +34,6 @@ export default function LoginForm(){
                 >
                     Ingresar
                 </Button>
-                <div style={{ margin: '20px 0' }}>
-                    <Link to={login_admin_path.full_path}>
-                        Soy administrador
-                    </Link>
-                </div>
             </div>
         </div>
     );
