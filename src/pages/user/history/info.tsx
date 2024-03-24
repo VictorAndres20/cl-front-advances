@@ -16,26 +16,26 @@ export default function InfoAdvances(){
             const state = advance.state?.cod
             if(state === 'PEND'){
                 return(
-                    <div className="flex-col flex-center" style={{ width: '40%' }}>
+                    <div className="flex-col flex-center" style={{ width: '100%' }}>
                         <div style={{ fontSize, fontWeight: 'bold' }}>
                             Transferencia
                         </div>
-                        <div style={{ fontSize, fontWeight: 'bold', color: 'orange' }}>
+                        <div style={{ fontSize, fontWeight: 'bold' }}>
                             PENDIENTE
                         </div>
-                        <LoadingOutlined style={{ color: 'orange', fontSize: '2em', marginTop: '10px' }} />
+                        <LoadingOutlined style={{ fontSize: '2em', marginTop: '10px' }} />
                     </div>
                 );
             } else if(state === 'APPR'){
                 return(
-                    <div className="flex-col flex-center" style={{ width: '40%' }}>
+                    <div className="flex-col flex-center" style={{ width: '100%' }}>
                         <div style={{ fontSize, fontWeight: 'bold' }}>
                             Transferencia
                         </div>
-                        <div style={{ fontSize, fontWeight: 'bold', color: 'green' }}>
+                        <div style={{ fontSize, fontWeight: 'bold' }}>
                             REALIZADO
                         </div>
-                        <CheckCircleOutlined style={{ color: 'green', fontSize: '2em', marginTop: '10px' }} /> 
+                        <CheckCircleOutlined style={{ fontSize: '2em', marginTop: '10px' }} /> 
                         <div style={{ fontSize, marginTop: '10px' }}>
                             {typeof advance.approved_date === 'string' ? advance.approved_date.split("T")[0] : ''}
                         </div>
@@ -46,14 +46,14 @@ export default function InfoAdvances(){
                 );
             } else if(state === 'DECL'){
                 return(
-                    <div className="flex-col flex-center" style={{ width: '40%' }}>
+                    <div className="flex-col flex-center" style={{ width: '100%' }}>
                         <div style={{ fontSize, fontWeight: 'bold' }}>
                             Transferencia
                         </div>
-                        <div style={{ fontSize, fontWeight: 'bold', color: 'red' }}>
+                        <div style={{ fontSize, fontWeight: 'bold' }}>
                             RECHAZADO
                         </div>
-                        <CloseCircleOutlined style={{ color: 'red', fontSize: '2em', marginTop: '10px' }} />
+                        <CloseCircleOutlined style={{ fontSize: '2em', marginTop: '10px' }} />
                         <div style={{ fontSize, marginTop: '10px' }}>
                             {typeof advance.declined_date === 'string' ? advance.declined_date.split("T")[0] : ''}
                         </div>
@@ -81,8 +81,8 @@ export default function InfoAdvances(){
                 :
                 dataHook.data.list.map((advance, key) => {
                     return(
-                        <div className="flex-row flex-center" style={{ width: '96%', border: '1px solid #000', margin: '10px 0', padding: '5px 0' }} key={`advance_history_${key}`}>
-                            <div className="flex-col flex-center" style={{ width: '40%', border: '1px solid #000', marginRight: '2px', padding: '5px 0px' }}>
+                        <div className="flex-row flex-center" style={{ width: '96%', margin: '10px 0', padding: '5px 0' }} key={`advance_history_${key}`}>
+                            <div className="flex-col flex-center" style={{ width: '40%', backgroundColor: '#C1C6D3', padding: '5px 0px', height: '120px', borderRadius: '15px' }}>
                                 <div style={{ fontSize, fontWeight: 'bold', marginBottom: '10px' }}>
                                     Anticipo Solicitado
                                 </div>
@@ -106,7 +106,9 @@ export default function InfoAdvances(){
                                     comprobante
                                 </div>
                             </div>
-                            {renderState(advance)}
+                            <div style={{ backgroundColor: '#658F9C', width: '40%', padding: '5px 0px', height: '120px', borderRadius: '15px', color: 'white' }}>
+                                {renderState(advance)}
+                            </div>
                         </div>
                     );
                 })

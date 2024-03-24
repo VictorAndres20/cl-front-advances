@@ -1,8 +1,6 @@
 import { LockOutlined, IdcardOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import { useLogin } from "../../_hooks/login/useLogin.hook";
-import { Link } from "react-router-dom";
-import { login_admin_path } from "../path_pages";
 import { enterKeyHandler } from "../../_utils/keyboard_events";
 
 export default function LoginForm(){
