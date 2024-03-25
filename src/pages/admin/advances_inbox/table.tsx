@@ -6,6 +6,7 @@ import { AdvanceType } from "../../../_events/advance/type";
 import { useApproveAdvance } from "../../../_hooks/advance/useApproveAdvance.hook";
 import { useDeclineAdvance } from "../../../_hooks/advance/useDeclineAdvance.hook";
 import { useFindAllPendingAdvances } from "../../../_hooks/advance/useFindAllPendingAdvance.hook";
+import { buildTZDate } from "../../../_utils/dateFormat";
 
 export default function Table(){
 
@@ -43,7 +44,9 @@ export default function Table(){
             dataIndex: 'created_date',
             key: 'created_date',
             width: '20%',
-            ...searchBox.getColumnSearchProps('created_date'),
+            render: (text: string, param: AdvanceType, key: number) => (
+                <span key={`advance_created_id_${key}`}>{buildTZDate(param.created_date)}</span>
+            )
         },
         {
             title: 'Estado',

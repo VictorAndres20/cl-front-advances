@@ -5,6 +5,7 @@ import BasicBadge from "../../../widgets /badges/basic_badge";
 import { AdvanceType } from "../../../_events/advance/type";
 import { useDownloadAdvancePdf } from "../../../_hooks/advance/useDownloadAdvancePdf.hook";
 import { useFindAllAdvances } from "../../../_hooks/advance/useFindAllAdvances.hook";
+import { buildTZDate } from "../../../_utils/dateFormat";
 
 export default function Table(){
 
@@ -62,21 +63,27 @@ export default function Table(){
             dataIndex: 'created_date',
             key: 'created_date',
             width: '10%',
-            ...searchBox.getColumnSearchProps('created_date'),
+            render: (text: string, param: AdvanceType, key: number) => (
+                <span key={`advance_created_id_${key}`}>{buildTZDate(param.created_date)}</span>
+            )
         },
         {
             title: 'Aprobado',
             dataIndex: 'approved_date',
             key: 'approved_date',
             width: '10%',
-            ...searchBox.getColumnSearchProps('approved_date'),
+            render: (text: string, param: AdvanceType, key: number) => (
+                <span key={`advance_app_id_${key}`}>{param.approved_date ? buildTZDate(param.approved_date) : ''}</span>
+            )
         },
         {
             title: 'Rechazado',
             dataIndex: 'declined_date',
             key: 'declined_date',
             width: '10%',
-            ...searchBox.getColumnSearchProps('declined_date'),
+            render: (text: string, param: AdvanceType, key: number) => (
+                <span key={`advance_dec_id_${key}`}>{param.declined_date ? buildTZDate(param.declined_date) : ''}</span>
+            )
         },
         {
             title: 'Estado',

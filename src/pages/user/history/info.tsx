@@ -33,14 +33,14 @@ export default function InfoAdvances(){
                             Transferencia
                         </div>
                         <div style={{ fontSize, fontWeight: 'bold' }}>
-                            REALIZADO
+                            REALIZADA
                         </div>
                         <CheckCircleOutlined style={{ fontSize: '2em', marginTop: '10px' }} /> 
                         <div style={{ fontSize, marginTop: '10px' }}>
-                            {typeof advance.approved_date === 'string' ? advance.approved_date.split("T")[0] : ''}
+                            {typeof advance.approved_date === 'string' ? new Date(advance.approved_date).toLocaleString('en-US', { timeZone: 'America/Bogota' }).split(",")[0] : ''}
                         </div>
                         <div style={{ fontSize }}>
-                            {typeof advance.approved_date === 'string' ? advance.approved_date.split("T")[1].split(".")[0] : ''}
+                            {typeof advance.approved_date === 'string' ? new Date(advance.approved_date).toLocaleString('en-US', { timeZone: 'America/Bogota' }).split(",")[1] : ''}
                         </div>
                     </div>
                 );
@@ -51,14 +51,14 @@ export default function InfoAdvances(){
                             Transferencia
                         </div>
                         <div style={{ fontSize, fontWeight: 'bold' }}>
-                            RECHAZADO
+                            RECHAZADA
                         </div>
                         <CloseCircleOutlined style={{ fontSize: '2em', marginTop: '10px' }} />
                         <div style={{ fontSize, marginTop: '10px' }}>
-                            {typeof advance.declined_date === 'string' ? advance.declined_date.split("T")[0] : ''}
+                            {typeof advance.declined_date === 'string' ? new Date(advance.declined_date).toLocaleString('en-US', { timeZone: 'America/Bogota' }).split(",")[0] : ''}
                         </div>
                         <div style={{ fontSize }}>
-                            {typeof advance.declined_date === 'string' ? advance.declined_date.split("T")[1].split(".")[0] : ''}
+                            {typeof advance.declined_date === 'string' ? new Date(advance.declined_date).toLocaleString('en-US', { timeZone: 'America/Bogota' }).split(",")[1] : ''}
                         </div>
                     </div>
                 );
@@ -93,10 +93,10 @@ export default function InfoAdvances(){
                                     Costo: {advance.cost}
                                 </div>
                                 <div style={{ fontSize, marginTop: '10px' }}>
-                                    {typeof advance.created_date === 'string' ? advance.created_date.split("T")[0] : ''}
+                                    {typeof advance.created_date === 'string' ? new Date(advance.created_date).toLocaleString('en-US', { timeZone: 'America/Bogota' }).split(",")[0] : ''}
                                 </div>
                                 <div style={{ fontSize }}>
-                                    {typeof advance.created_date === 'string' ? advance.created_date.split("T")[1].split(".")[0] : ''}
+                                    {typeof advance.created_date === 'string' ? new Date(advance.created_date).toLocaleString('en-US', { timeZone: 'America/Bogota' }).split(",")[1] : ''}
                                 </div>
                                 <div style={{ cursor: 'pointer', fontSize: '0.7em', color: 'blue', textDecoration: 'underline', marginTop: '10px' }}
                                     onClick={() => {
