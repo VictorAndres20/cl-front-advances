@@ -12,7 +12,9 @@ export default function LoginForm(){
     return(
         <div className="flex-col flex-center" style={{ width: '100%' }}>
             <div className="card flex-col flex-center" style={{ width: '83%', marginTop: '50px' }}>
-                <span style={{ fontSize: '1.8em', fontWeight: 'bold' }}>CintaLabs</span>
+                <div className="flex-col flex-center" style={{ width: '100%' }}>
+                    <img width={200} src={require('../../../_assets/images/nomina.png')} alt='NOMINA' />
+                </div>
                 <span style={{ fontSize: '1.1em', fontWeight: 'bold' }}>ADMINISTRADOR DE ANTICIPOS</span>
                 <Input size="middle" prefix={<UserOutlined />} style={{ margin: '7px 0' }} 
                     value={ hook.entity.identification }
