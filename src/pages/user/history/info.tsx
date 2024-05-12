@@ -1,7 +1,7 @@
 import { Col, Pagination } from "antd";
 import { useFindAllAdvancesPagedByEmployee } from "../../../_hooks/advance/useFindAllAdvancesPagedByEmployee.hook";
 import { AdvanceType } from "../../../_events/advance/type";
-import { CheckCircleOutlined, CloseCircleOutlined, LoadingOutlined } from "@ant-design/icons";
+import { DollarOutlined, CloseCircleOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import { useDownloadAdvancePdf } from "../../../_hooks/advance/useDownloadAdvancePdf.hook";
 
 const fontSize = '0.8em';
@@ -23,7 +23,16 @@ export default function InfoAdvances(){
                         <div style={{ fontSize, fontWeight: 'bold' }}>
                             PENDIENTE
                         </div>
-                        <LoadingOutlined style={{ fontSize: '2em', marginTop: '10px' }} />
+                        <ClockCircleOutlined style={{ fontSize: '2em', marginTop: '10px' }} />
+                        <div style={{ fontSize, marginTop: '10px' }}>
+                            Solicitado correctamente
+                        </div>
+                        <div style={{ fontSize: '0.7em', marginTop: '2px' }}>
+                            En 24h máximo se realizará
+                        </div>
+                        <div style={{ fontSize: '0.7em', marginTop: '2px' }}>
+                            la transferencia del dinero
+                        </div>
                     </div>
                 );
             } else if(state === 'APPR'){
@@ -35,7 +44,7 @@ export default function InfoAdvances(){
                         <div style={{ fontSize, fontWeight: 'bold' }}>
                             REALIZADA
                         </div>
-                        <CheckCircleOutlined style={{ fontSize: '2em', marginTop: '10px' }} /> 
+                        <DollarOutlined style={{ fontSize: '2em', marginTop: '10px' }} /> 
                         <div style={{ fontSize, marginTop: '10px' }}>
                             {typeof advance.approved_date === 'string' ? new Date(advance.approved_date).toLocaleString('en-US', { timeZone: 'America/Bogota' }).split(",")[0] : ''}
                         </div>
