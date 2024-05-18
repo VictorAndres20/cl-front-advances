@@ -144,7 +144,7 @@ export default function InfoAdvances(){
                 dataHook.data.list.map((advance, key) => {
                     return(
                         <div className="flex-col flex-center" style={{ width: '100%', margin: '10px 0', padding: '5px 0' }} key={`advance_history_${key}`}>
-                            <div className="flex-col flex-center" style={{ width: '350px', backgroundColor: '#C1C6D3', padding: '5px 0px', height: '100px', borderTopLeftRadius: '15px', borderTopRightRadius: '15px' }}>
+                            <div className="flex-col flex-center" style={{ width: '350px', backgroundColor: '#92B9E8', padding: '5px 0px', height: '100px', borderTopLeftRadius: '15px', borderTopRightRadius: '15px' }}>
                                 <div style={{ fontSize, fontWeight: 'bold', marginBottom: '10px' }}>
                                     Anticipo Solicitado
                                 </div>

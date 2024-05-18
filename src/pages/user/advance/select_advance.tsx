@@ -8,8 +8,8 @@ export default function SelectAdvance({ hook }: { hook: GenerateAdvacneHook }){
     const amountsHook = useFindAvalibaleAmounts();
 
     return(
-        <div style={{ width: '100%', marginTop: '30px' }}>
-            <div style={{ backgroundColor: '#A6ABB8', width: '100%', padding: '10px 0', borderRadius: '20px' }}>
+        <div style={{ width: '100%', marginTop: '20px' }}>
+            <div style={{ backgroundColor: '#92B9E8', width: '100%', padding: '10px 0', borderRadius: '20px' }}>
                 <div className="flex-col flex-center" style={{ fontSize: '1.3em', fontWeight: 'bold', margin: '10px 0', width: '100%', color: '#fff' }}>¿Cuánto deseas adelantar?</div>
                 <div className="flex-col">
                     {
