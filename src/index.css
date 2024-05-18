@@ -58,3 +58,15 @@ body{
     width: 350px;
   }
 }
+
+/* Force horizontal layout on small screens */
+@media (max-width: 600px) {
+  .ant-steps-horizontal .ant-steps-item {
+    display: inline-block;
+    vertical-align: top;
+  }
+  .ant-steps-horizontal .ant-steps-item-content {
+    display: block;
+    width: auto;
+  }
+}
