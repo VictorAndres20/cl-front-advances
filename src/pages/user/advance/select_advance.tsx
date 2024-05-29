@@ -9,16 +9,19 @@ export default function SelectAdvance({ hook }: { hook: GenerateAdvacneHook }){
 
     return(
         <div style={{ width: '100%', marginTop: '20px' }}>
-            <div style={{ backgroundColor: '#92B9E8', width: '100%', padding: '10px 0', borderRadius: '20px' }}>
-                <div className="flex-col flex-center" style={{ fontSize: '1.3em', fontWeight: 'bold', margin: '10px 0', width: '100%', color: '#fff' }}>¿Cuánto deseas adelantar?</div>
+            <div style={{ border: '1px solid #92B9E8', width: '100%', padding: '10px 0', borderRadius: '20px' }}>
+                <div className="flex-col flex-center" style={{ fontSize: '1.3em', fontWeight: 'bold', margin: '10px 0', width: '100%' }}>¿Cuánto deseas adelantar?</div>
                 <div className="flex-col">
                     {
                         amountsHook.amounts.map((a, key) => {
                             return(
-                                <div style={{ margin: '20px 0' }} className="flex-row flex-center" key={`amount_list_${key}`}>
+                                <div style={{ margin: '20px 0' }} 
+                                    className="flex-row flex-center" 
+                                    key={`amount_list_${key}`}
+                                >
                                     <Button
                                         style={{ width: '120px' }}
-                                        type={ hook.amount?.uuid === a.uuid ? "primary" : "dashed" }
+                                        type={ hook.amount?.uuid === a.uuid ? "primary" : "default" }
                                         onClick={() => {
                                             hook.updateAmountToAdvance(a);
                                         }}

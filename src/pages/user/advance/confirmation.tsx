@@ -6,7 +6,7 @@ export default function Confirmation({ hook }: { hook: GenerateAdvacneHook }){
 
     return(
         <div style={{ width: '100%', marginTop: '30px' }}>
-            <div className="flex-col flex-center" style={{ backgroundColor: '#92B9E8', width: '100%', padding: '20px 0', borderRadius: '20px', margin: '10px 0' }}>
+            <div className="flex-col flex-center" style={{ border: '1px solid #92B9E8', width: '100%', padding: '10px 0', borderRadius: '20px' }}>
                 <div className="flex-col flex-center" style={{ width: '300px', backgroundColor: '#E7E9EE', color: '#5975BB', marginBottom: '20px', padding: '18px 0', borderRadius: '20px', fontWeight: 'bold', fontSize: '2em' }}>
                     {formatToUSD(hook.advance?.value ?? 0)}
                 </div>
@@ -14,7 +14,7 @@ export default function Confirmation({ hook }: { hook: GenerateAdvacneHook }){
                     Costo Transacción {formatToUSD(hook.advance?.cost ?? 0 )}
                 </div>
             </div>
-            <div className="flex-col flex-center" style={{ backgroundColor: '#92B9E8', width: '100%', padding: '10px 0', borderRadius: '20px', margin: '10px 0' }}>
+            <div className="flex-col flex-center" style={{ border: '1px solid #92B9E8', width: '100%', padding: '10px 0', borderRadius: '20px', margin: '10px 0' }}>
                 <div>
                 <div style={{ margin: '10px 18px', fontWeight: 'bold' }}>
                     AL PRESIONAR CONFIRMAR ESTÁS AUTORIZANDO EXPRESA E IRREVOCABLEMENTE EL DESCUENTO EN EL SALARIO DE LA QUINCENA CORRIENTE POR UN VALOR DE  

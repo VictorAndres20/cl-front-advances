@@ -1,0 +1,19 @@
+.ant-steps.ant-steps-small .ant-steps-item-custom .ant-steps-item-icon {
+    width: 10%;
+    height: inherit;
+    line-height: inherit;
+    background: none;
+    border: 0;
+    border-radius: 0;
+}
+
+@media (max-width: 768px) {
+    .ant-steps.ant-steps-small .ant-steps-item-custom .ant-steps-item-icon {
+        width: 55%;
+        height: inherit;
+        line-height: inherit;
+        background: none;
+        border: 0;
+        border-radius: 0;
+    }
+}

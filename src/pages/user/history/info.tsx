@@ -3,6 +3,7 @@ import { useFindAllAdvancesPagedByEmployee } from "../../../_hooks/advance/useFi
 import { AdvanceType } from "../../../_events/advance/type";
 import { DollarOutlined, CloseCircleOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import { useDownloadAdvancePdf } from "../../../_hooks/advance/useDownloadAdvancePdf.hook";
+import './info.css';
 
 const fontSize = '0.8em';
 
@@ -44,8 +45,6 @@ export default function InfoAdvances(){
             steps[0].description = (
                 <div className="flex-col flex-center" style={{ width: '70px' }}>
                     <div style={titleFontStyle}>Recibida</div>
-                    <div style={secondaryFontStyle}>{typeof advance.created_date === 'string' ? new Date(advance.created_date).toLocaleString('en-US', { timeZone: 'America/Bogota' }).split(",")[0] : ''}</div>
-                    <div style={secondaryFontStyle}>{typeof advance.created_date === 'string' ? new Date(advance.created_date).toLocaleString('en-US', { timeZone: 'America/Bogota' }).split(",")[1] : ''}</div>
                 </div>
             );
 
@@ -116,7 +115,7 @@ export default function InfoAdvances(){
             }
 
             return(
-                <Steps 
+                <Steps
                     size="small"
                     current={current}
                     items={steps}
@@ -144,7 +143,7 @@ export default function InfoAdvances(){
                 dataHook.data.list.map((advance, key) => {
                     return(
                         <div className="flex-col flex-center" style={{ width: '100%', margin: '10px 0', padding: '5px 0' }} key={`advance_history_${key}`}>
-                            <div className="flex-col flex-center" style={{ width: '350px', backgroundColor: '#92B9E8', padding: '5px 0px', height: '100px', borderTopLeftRadius: '15px', borderTopRightRadius: '15px' }}>
+                            <div className="flex-col flex-center" style={{ width: '350px', backgroundColor: '#DDDDDD', padding: '5px 0px', height: '100px', borderTopLeftRadius: '15px', borderTopRightRadius: '15px' }}>
                                 <div style={{ fontSize, fontWeight: 'bold', marginBottom: '10px' }}>
                                     Anticipo Solicitado
                                 </div>
@@ -174,7 +173,7 @@ export default function InfoAdvances(){
                                     COMPROBANTE
                                 </div>
                             </div>
-                            <div className="flex-row" style={{ backgroundColor: '#EEE', width: '350px', padding: '5px 0px', height: '120px', color: 'white', borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px' }}>
+                            <div className="flex-row" style={{ border: 'solid 1px #DDDDDD', backgroundColor: '#FFFFFF', width: '350px', padding: '5px 0px', height: '120px', color: 'white', borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px' }}>
                                 <div style={{ width: '100%', marginTop: '5px' }}>
                                 {renderState(advance)}
                                 </div>
