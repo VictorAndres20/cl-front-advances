@@ -5,6 +5,7 @@ const COMPANY_KEY = 'advasdf';
 const COMPANY_NAME_KEY = 'advnatf';
 const USER_ID_KEY = 'advzxcv';
 const ROL_ID_KEY = 'advuiop';
+const BANK_KEY = 'advuiow';
 
 export const putValue = (key: string, value: any) => {
     window.localStorage.setItem(key, crypt(value.toString()));
@@ -62,4 +63,12 @@ export const putRol = (id: any) => {
 
 export const getRol = () => {
     return getValue(ROL_ID_KEY);
+}
+
+export const putBank = (id: any) => {
+    putValue(BANK_KEY, id);
+}
+
+export const getBank = () => {
+    return getValue(BANK_KEY);
 }

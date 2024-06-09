@@ -43,7 +43,7 @@ export default function Table(){
             title: 'Teléfono',
             dataIndex: 'phone',
             key: 'phone',
-            width: '20%',
+            width: '15%',
             ...searchBox.getColumnSearchProps('phone'),
         },
         {
@@ -69,6 +69,15 @@ export default function Table(){
             width: '10%',
             render: (text: string, param: EmployeeType, key: number) => (
                 <span key={`employee_enterprise_${key}`}>{typeof param.range === 'object' ? typeof param.range?.enterprise === 'object' ? param.range?.enterprise?.name : 'NA' : 'NA'}</span>
+            )
+        },
+        {
+            title: 'Banco',
+            dataIndex: 'bank',
+            key: 'bank',
+            width: '10%',
+            render: (text: string, param: EmployeeType, key: number) => (
+                <span key={`employee_bank_${key}`}>{typeof param.bank === 'object' ? param.bank?.name : 'NA'}</span>
             )
         },
         {

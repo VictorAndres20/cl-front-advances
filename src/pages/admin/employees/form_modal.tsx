@@ -5,6 +5,7 @@ import { useCreateEmployee } from "../../../_hooks/employees/useCreateEmployee.h
 import { useUpdateEmployee } from "../../../_hooks/employees/useUpdteEmployee.hook";
 import RangeEnterpriseSelect from "../../../widgets /selects/range_enterprise_select";
 import ChangePasswordForm from "./change_password_form";
+import BanksSelect from "../../../widgets /selects/banks_select";
 
 export default function FormModal({ id, reload }: { id?: string, reload: Function }){
 
@@ -133,6 +134,23 @@ export default function FormModal({ id, reload }: { id?: string, reload: Functio
                                     createHook.setEntity({
                                         ...createHook.entity,
                                         range: e
+                                    });
+                                }
+                            }}
+                        />
+                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Banco asociado</div>
+                        <BanksSelect 
+                            value={ id ?  (typeof updateHook.entity.bank !== 'object' ? updateHook.entity.bank : undefined) ?? '' : (typeof createHook.entity.bank !== 'object' ? createHook.entity.bank : undefined) ?? '' }
+                            onChange={(e) => {
+                                if(id){
+                                    updateHook.setEntity({
+                                        ...updateHook.entity,
+                                        bank: e
+                                    });
+                                } else {
+                                    createHook.setEntity({
+                                        ...createHook.entity,
+                                        bank: e
                                     });
                                 }
                             }}

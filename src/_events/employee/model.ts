@@ -1,7 +1,7 @@
 import { EmployeeType } from "./type";
 
 export const validateEmployee = (body: EmployeeType) => {
-    const { name, id, phone, salary, password, state, range } = body;
+    const { name, id, phone, salary, password, state, range, bank } = body;
     if(name === '' || name === undefined) throw new Error(`Nombre vacío`);
     if(id === '' || id === undefined) throw new Error(`ID vacío`);
     if(phone === '' || phone === undefined) throw new Error(`Teléfono vacío`);
@@ -9,12 +9,14 @@ export const validateEmployee = (body: EmployeeType) => {
     if(! body.uuid && (password === '' || password === undefined)) throw new Error(`Contraseña vacío`);
     if(state === undefined) throw new Error(`Estado vacío`);
     if(range === '' || range === undefined) throw new Error(`Rango asociado vacío`);
+    if(bank === '' || bank === undefined) throw new Error(`Banco asociado vacío`);
 }
 
 export const transformEntityEmployee = (entity: EmployeeType) => {
     let newEnt = {...entity}
     delete newEnt.password;
     if(typeof newEnt.range === 'object') newEnt.range = newEnt.range?.uuid;
+    if(typeof newEnt.bank === 'object') newEnt.bank = newEnt.bank?.cod;
     return newEnt;
 }
 
@@ -28,6 +30,7 @@ export const buildEmptyEmployee = (): EmployeeType => {
         password: '',
         state: 1,
         range: '',
+        bank: '',
     };
 }
 

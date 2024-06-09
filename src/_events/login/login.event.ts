@@ -1,4 +1,4 @@
-import { putCompany, putCompanyName, putRol, putToken, putUserId } from "../../_utils/storage_handler";
+import { putBank, putCompany, putCompanyName, putRol, putToken, putUserId } from "../../_utils/storage_handler";
 import {
     loginUser,
     loginEmployee,
@@ -35,4 +35,5 @@ export const putStorage = async (res: any) => {
     putUserId(res.data.uuid);
     putRol(res.data.rol);
     putToken(res.data.token);
+    putBank(res.data.bank);
 }

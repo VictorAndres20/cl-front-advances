@@ -1,3 +1,4 @@
+import { BankType } from "../bank/type";
 import { RangeType } from "../range/type";
 
 export interface EmployeeType {
@@ -9,4 +10,5 @@ export interface EmployeeType {
     password?: string,
     state: number,
     range?: string | RangeType,
+    bank?: string | BankType,
 }

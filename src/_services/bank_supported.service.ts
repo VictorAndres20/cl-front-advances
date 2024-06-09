@@ -1,4 +1,4 @@
-import { handleFetch, GET_OPTIONS, POST_OPTIONS, PUT_OPTIONS } from './base.service.js';
+import { handleFetch, GET_OPTIONS, POST_OPTIONS, PUT_OPTIONS } from './base.service';
 
 
 const BASE_PATH = '/bank-supported';
