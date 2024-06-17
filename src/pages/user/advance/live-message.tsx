@@ -9,7 +9,7 @@ const supportedMessage = (
 );
 const unsupportedMessage = (
     <div className="flex-col flex-center" style={{ fontSize: '0.9em', fontWeight: 'bold', margin: '10px 0', width: '100%' }}>
-        Funcionando de lunes a viernes de 9am a 3pm
+        Servicio disponible solamente días hábiles
     </div>
 );
 
