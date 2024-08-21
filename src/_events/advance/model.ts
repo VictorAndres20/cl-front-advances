@@ -23,6 +23,7 @@ export const buildEmptyAdvance = (): AdvanceType => {
         cost: 0,
         employee: '',
         state: 'PEND',
+        useFintech: 0,
     };
 }
 

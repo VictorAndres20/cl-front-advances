@@ -1,7 +1,8 @@
 import { EmployeeType } from "./type";
 
 export const validateEmployee = (body: EmployeeType) => {
-    const { name, id, phone, salary, password, state, range, bank } = body;
+    const { name, id, phone, salary, password, state, 
+        range, bank, bank_account_type, bank_account_number } = body;
     if(name === '' || name === undefined) throw new Error(`Nombre vacío`);
     if(id === '' || id === undefined) throw new Error(`ID vacío`);
     if(phone === '' || phone === undefined) throw new Error(`Teléfono vacío`);
@@ -10,6 +11,8 @@ export const validateEmployee = (body: EmployeeType) => {
     if(state === undefined) throw new Error(`Estado vacío`);
     if(range === '' || range === undefined) throw new Error(`Rango asociado vacío`);
     if(bank === '' || bank === undefined) throw new Error(`Banco asociado vacío`);
+    if(bank_account_type === '' || bank_account_type === undefined) throw new Error(`Tipo de cuenta vacío`);
+    if(bank_account_number === '' || bank_account_number === undefined) throw new Error(`Número de cuenta vacío`);
 }
 
 export const transformEntityEmployee = (entity: EmployeeType) => {
@@ -17,6 +20,8 @@ export const transformEntityEmployee = (entity: EmployeeType) => {
     delete newEnt.password;
     if(typeof newEnt.range === 'object') newEnt.range = newEnt.range?.uuid;
     if(typeof newEnt.bank === 'object') newEnt.bank = newEnt.bank?.cod;
+    if(newEnt.bank_account_type && typeof newEnt.bank_account_type === 'object') newEnt.bank_account_type = newEnt.bank_account_type?.cod;
+    if(newEnt.fintech && typeof newEnt.fintech === 'object') newEnt.fintech = newEnt.fintech?.cod;
     return newEnt;
 }
 
@@ -31,6 +36,8 @@ export const buildEmptyEmployee = (): EmployeeType => {
         state: 1,
         range: '',
         bank: '',
+        bank_account_type: '',
+        bank_account_number: '',
     };
 }
 
