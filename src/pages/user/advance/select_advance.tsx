@@ -22,16 +22,15 @@ export default function SelectAdvance({ hook }: { hook: GenerateAdvacneHook }){
                                     key={`amount_list_${key}`}
                                 >
                                     <Button
-                                        style={{ width: '120px' }}
+                                        style={{ width: '120px', height: '60px' }}
                                         type={ hook.amount?.uuid === a.uuid ? "primary" : "default" }
                                         onClick={() => {
                                             hook.updateAmountToAdvance(a);
                                         }}
                                     >
-                                        {formatToUSD(a.value)}
+                                        <div style={{ fontSize: '1.2em', fontWeight: 'bold' }}>{formatToUSD(a.value)}</div>
+                                        <div style={{ fontSize: '0.8em' }}>({formatToUSD(a.cost)})</div>
                                     </Button>
-                                    <span style={{ margin: '0 10px' }}>Costo:</span>
-                                    <span >{formatToUSD(a.cost)}</span>
                                 </div>
                             );
                         })

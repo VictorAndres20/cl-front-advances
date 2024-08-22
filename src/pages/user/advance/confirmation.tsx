@@ -26,17 +26,28 @@ export default function Confirmation({ hook, employee }: { hook: GenerateAdvacne
                 <div style={{ width: '90%', color: '#5975BB', fontSize: '1.3em', fontWeight: 'bold' }}>
                     Confirmación
                 </div>
-                <div style={{ width: '90%', color: '#5975BB', fontSize: '1.3em', marginTop: '15px' }}>
-                    <span style={{ margin: '0 5px' }}>Anticipo:</span><span>{formatToUSD(hook.advance?.value ?? 0)}</span>
+                <div className="flex-row" style={{ width: '90%', color: '#5975BB', fontSize: '1.3em', marginTop: '15px' }}>
+                    <div style={{ width: '40%' }}>
+                    <span style={{ margin: '0 5px' }}>Anticipo:</span>
+                    </div>
+                    <div>
+                    <span style={{fontWeight: 'bold' }}>{formatToUSD(hook.advance?.value ?? 0)}</span>
+                    </div>
                 </div>
-                <div style={{ width: '90%', color: '#5975BB', fontSize: '0.9em', marginTop: '10px' }}>
-                    <span style={{ margin: '0 5px' }}>Costo transacción:</span><span>{formatToUSD(hook.advance?.cost ?? 0 )}</span>
+                <div className="flex-row" style={{ width: '90%', color: '#5975BB', fontSize: '0.9em', marginTop: '10px' }}>
+                    <div style={{ width: '40%' }}>
+                    <span style={{ margin: '0 5px' }}>Costo transacción:</span>
+                    </div>
+                    <div><span style={{fontWeight: 'bold' }}>{formatToUSD(hook.advance?.cost ?? 0 )}</span></div>
                 </div>
-                <div style={{ width: '90%', color: '#5975BB', fontSize: '0.9em', marginTop: '10px' }}>
-                    <span style={{ margin: '0 5px' }}>Transferir a:</span><span>{hook.advance?.use_fintech ? getPlatformTransferInfo() + getPlatformTransferNumber() : getBankTransferInfo() }</span>
+                <div className="flex-row" style={{ width: '90%', color: '#5975BB', fontSize: '0.9em', marginTop: '10px' }}>
+                    <div style={{ width: '40%' }}>
+                    <span style={{ margin: '0 5px' }}>Transferir a:</span>
+                    </div>
+                    <span style={{fontWeight: 'bold' }}>{hook.advance?.use_fintech ? getPlatformTransferInfo() + getPlatformTransferNumber() : getBankTransferInfo() }</span>
                 </div>
             </div>
-            <div className="flex-col flex-center" style={{ border: '1px solid #92B9E8', width: '100%', padding: '10px 0', borderRadius: '20px', margin: '10px 0' }}>
+            <div className="flex-col flex-center" style={{ width: '100%', padding: '10px 0', borderRadius: '20px', margin: '10px 0' }}>
                 <div>
                 <div style={{ margin: '10px 18px', fontWeight: 'bold' }}>
                     AL PRESIONAR CONFIRMAR ESTÁS AUTORIZANDO EXPRESA E IRREVOCABLEMENTE EL DESCUENTO EN EL SALARIO DE LA QUINCENA CORRIENTE POR UN VALOR DE  
@@ -44,9 +55,6 @@ export default function Confirmation({ hook, employee }: { hook: GenerateAdvacne
                 </div>
                 <div style={{ margin: '10px 18px', fontWeight: 'bold' }}>
                     {messageHook.data?.find( msg => msg.cod === 'ADVA' )?.message}
-                </div>
-                <div style={{ margin: '10px 25px' }}>
-                Favor tener en cuenta que el dinero solo se puede desembolsar en tu cuenta de nómina. La transferencia se realizará en las próximas 24 horas.
                 </div>
                 </div>
                 {
