@@ -9,6 +9,8 @@ import BasicBadge from "../../../widgets /badges/basic_badge";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { useEmployeeStateChanger } from "../../../_hooks/employees/useEmployeeStateChanger.hook";
 
+const tableStyle = { fontSize: '0.8em' };
+
 export default function Table(){
 
     const dataHook = useFindAllEmployeesByEnterprise(getCompany());
@@ -77,7 +79,16 @@ export default function Table(){
             key: 'bank',
             width: '10%',
             render: (text: string, param: EmployeeType, key: number) => (
-                <span key={`employee_bank_${key}`}>{typeof param.bank === 'object' ? param.bank?.name : 'NA'}</span>
+                <span style={tableStyle} key={`employee_bank_${key}`}>{typeof param.bank === 'object' ? `${param.bank?.name}, ${typeof param.bank_account_type === 'object' && param.bank_account_type?.name} ${param.bank_account_number ?? ''}` : 'NA'}</span>
+            )
+        },
+        {
+            title: 'Plataforma',
+            dataIndex: 'fintech',
+            key: 'fintech',
+            width: '10%',
+            render: (text: string, param: EmployeeType, key: number) => (
+                <span style={tableStyle} key={`employee_fintech_${key}`}>{typeof param.fintech === 'object' ? `${param.fintech?.name ?? 'N.A.'} ${param.fintech_account_number ?? ''}` : 'NA'}</span>
             )
         },
         {

@@ -86,6 +86,51 @@ export default function Table(){
             )
         },
         {
+            title: 'Empresa',
+            dataIndex: 'enterprise',
+            key: 'enterprise',
+            width: '10%',
+            render: (text: string, param: AdvanceType, key: number) => (
+                <span key={`amount_enterprise_${key}`}>{
+                    typeof param.employee === 'object' ? 
+                    typeof param.employee?.range === 'object' ? 
+                    typeof param.employee?.range?.enterprise === 'object' ? param.employee?.range?.enterprise.name
+                    : '' : '' : ''}</span>
+            )
+        },
+        {
+            title: 'Depositar en',
+            dataIndex: 'bank',
+            key: 'bank',
+            width: '10%',
+            render: (text: string, param: AdvanceType, key: number) => (
+                <span key={`amount_bank_${key}`}>{
+                    !param.use_fintech ?
+                    typeof param.employee === 'object' ? 
+                    typeof param.employee?.bank === 'object' ? 
+                    `${
+                        param.employee?.bank?.name ?? ''
+                    }, ${
+                        typeof param.employee?.bank_account_type === 'object' ? 
+                            param.employee?.bank_account_type?.name ?? ''
+                        : ''
+                    } ${
+                        param.employee?.bank_account_number ?? ''
+                    }`
+                    : '' : ''
+                    :
+                    typeof param.employee === 'object' ? 
+                    typeof param.employee?.fintech === 'object' ? 
+                    `${
+                        param.employee?.fintech?.name ?? ''
+                    } ${
+                        param.employee?.fintech_account_number ?? ''
+                    }`
+                    : '' : ''
+                    }</span>
+            )
+        },
+        {
             title: 'Estado',
             dataIndex: 'enterprise',
             key: 'enterprise',

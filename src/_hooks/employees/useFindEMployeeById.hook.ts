@@ -5,7 +5,12 @@ import { buildEmptyEmployee } from "../../_events/employee/model";
 import { EmployeeType } from "../../_events/employee/type";
 import { getUserId } from "../../_utils/storage_handler";
 
-export const useFindEmployeeById = () => {
+export type UseFindEmployeeById = {
+    data: EmployeeType,
+    loadEmployee: (id: string) => void
+}
+
+export const useFindEmployeeById = (): UseFindEmployeeById => {
 
     const [ data, setData ] = useState<EmployeeType>(buildEmptyEmployee());
 

@@ -56,8 +56,18 @@ export const advances_path: PathType = {
     full_path: `${admin_path.full_path}/advances`,
 }
 
+export const messages_path: PathType = {
+    path: 'messages',
+    full_path: `${admin_path.full_path}/messages`,
+}
+
+export const bank_messages_path: PathType = {
+    path: 'bank-messages',
+    full_path: `${admin_path.full_path}/bank-messages`,
+}
+
 /**
- * Employee section
+ * Advances section
  */
 export const content_path: PathType = {
     path: 'content',

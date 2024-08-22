@@ -54,7 +54,7 @@ export default function Table(){
             key: 'enterprise',
             width: '10%',
             render: (text: string, param: AdvanceType, key: number) => (
-                <span key={`amount_active_${key}`}>{
+                <span key={`amount_enterprise_${key}`}>{
                     typeof param.employee === 'object' ? 
                     typeof param.employee?.range === 'object' ? 
                     typeof param.employee?.range?.enterprise === 'object' ? param.employee?.range?.enterprise.name
@@ -62,16 +62,35 @@ export default function Table(){
             )
         },
         {
-            title: 'Banco',
+            title: 'Depositar en',
             dataIndex: 'bank',
             key: 'bank',
             width: '10%',
             render: (text: string, param: AdvanceType, key: number) => (
-                <span key={`amount_active_${key}`}>{
+                <span key={`amount_bank_${key}`}>{
+                    !param.use_fintech ?
                     typeof param.employee === 'object' ? 
                     typeof param.employee?.bank === 'object' ? 
-                    param.employee?.bank?.name
-                    : '' : ''}</span>
+                    `${
+                        param.employee?.bank?.name ?? ''
+                    }, ${
+                        typeof param.employee?.bank_account_type === 'object' ? 
+                            param.employee?.bank_account_type?.name ?? ''
+                        : ''
+                    } ${
+                        param.employee?.bank_account_number ?? ''
+                    }`
+                    : '' : ''
+                    :
+                    typeof param.employee === 'object' ? 
+                    typeof param.employee?.fintech === 'object' ? 
+                    `${
+                        param.employee?.fintech?.name ?? ''
+                    } ${
+                        param.employee?.fintech_account_number ?? ''
+                    }`
+                    : '' : ''
+                    }</span>
             )
         },
         {
@@ -89,7 +108,7 @@ export default function Table(){
             key: 'uuid',
             width: '10%',
             render: (text: string, param: AdvanceType, key: number) => (
-                <div className="flex-row">
+                <div key={`amount_action_${key}`} className="flex-row">
                     <Button
                         style={{ margin: '0 5px' }}
                         type="primary"

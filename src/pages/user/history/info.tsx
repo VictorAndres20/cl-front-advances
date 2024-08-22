@@ -4,6 +4,7 @@ import { AdvanceType } from "../../../_events/advance/type";
 import { DollarOutlined, CloseCircleOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import { useDownloadAdvancePdf } from "../../../_hooks/advance/useDownloadAdvancePdf.hook";
 import './info.css';
+import { useFindEmployeeById } from "../../../_hooks/employees/useFindEMployeeById.hook";
 
 const fontSize = '0.8em';
 
@@ -18,6 +19,7 @@ const secondaryFontStyle = {
 
 export default function InfoAdvances(){
 
+    const employee = useFindEmployeeById();
     const dataHook = useFindAllAdvancesPagedByEmployee();
     const pdf = useDownloadAdvancePdf();
 
@@ -129,6 +131,14 @@ export default function InfoAdvances(){
         return(<></>);
     }
 
+    const getBankTransferInfo = () => {
+        return typeof employee.data?.bank === 'object' ? employee.data?.bank?.name : employee.data?.bank;
+    }
+
+    const getPlatformTransferInfo = () => {
+        return typeof employee.data?.fintech === 'object' ? employee.data?.fintech?.name : employee.data?.fintech;
+    }
+
     return(
         <Col lg={24} xs={24}>
             <Pagination current={dataHook.page + 1} total={dataHook.data.total} pageSize={dataHook.limit} 
@@ -154,6 +164,9 @@ export default function InfoAdvances(){
                                     </div>
                                     <div style={{ fontSize }}>
                                         Costo: {advance.cost}
+                                    </div>
+                                    <div style={{ fontSize }}>
+                                        Transferir a: {advance.use_fintech ? getPlatformTransferInfo() : getBankTransferInfo() }
                                     </div>
                                 </div>
                                 <div className="flex-col flex-center" style={{ width: '50%' }}>

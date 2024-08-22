@@ -10,5 +10,5 @@ export interface AdvanceType {
     cost: number,
     employee?: string | EmployeeType | null,
     state?: string | AdvanceStateType,
-    useFintech: number,
+    use_fintech: number,
 }

@@ -1,7 +1,7 @@
 import { Menu } from "antd";
 import { Link, Outlet } from "react-router-dom";
-import { advances_inbox_path, advances_path, amounts_path, employees_path, enterprises_path, ranges_path, users_path } from "../path_pages";
-import { ClusterOutlined, DollarOutlined, IdcardOutlined, LogoutOutlined, ScheduleOutlined, ShopOutlined, SolutionOutlined, TeamOutlined } from "@ant-design/icons";
+import { advances_inbox_path, advances_path, amounts_path, bank_messages_path, employees_path, enterprises_path, messages_path, ranges_path, users_path } from "../path_pages";
+import { MessageOutlined, ClusterOutlined, DollarOutlined, IdcardOutlined, LogoutOutlined, ScheduleOutlined, ShopOutlined, SolutionOutlined, TeamOutlined } from "@ant-design/icons";
 import { useLogout } from "../../_hooks/login/useLogout.hook";
 import { roles } from "../../_config/roles";
 import { getRol } from "../../_utils/storage_handler";
@@ -51,9 +51,31 @@ const items = [
     },
     {
         label: (
-            <span><DollarOutlined /> Anticipos</span>
+            <span><MessageOutlined /> Mensajes</span>
         ),
         key: 'group2',
+        type: 'divider',
+        roles: [roles.root],
+        children: [
+            {
+                label: (
+                    <Link to={messages_path.full_path}><MessageOutlined /> Anticipos</Link>
+                ),
+                key: 'messages',
+            },
+            {
+                label: (
+                    <Link to={bank_messages_path.full_path}><MessageOutlined /> Hor. bancarios</Link>
+                ),
+                key: 'bank_messages',
+            },
+        ]
+    },
+    {
+        label: (
+            <span><DollarOutlined /> Anticipos</span>
+        ),
+        key: 'group3',
         type: 'divider',
         roles: [roles.root],
         children: [

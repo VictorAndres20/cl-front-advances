@@ -12,7 +12,7 @@ export const validateEmployee = (body: EmployeeType) => {
     if(range === '' || range === undefined) throw new Error(`Rango asociado vacío`);
     if(bank === '' || bank === undefined) throw new Error(`Banco asociado vacío`);
     if(bank_account_type === '' || bank_account_type === undefined) throw new Error(`Tipo de cuenta vacío`);
-    if(bank_account_number === '' || bank_account_number === undefined) throw new Error(`Número de cuenta vacío`);
+    if(bank_account_number === '' || bank_account_number === undefined || bank_account_number === null) throw new Error(`Número de cuenta vacío`);
 }
 
 export const transformEntityEmployee = (entity: EmployeeType) => {

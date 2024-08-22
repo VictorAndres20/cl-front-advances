@@ -2,6 +2,7 @@ import { Button } from "antd";
 import { useFindAvalibaleAmounts } from "../../../_hooks/amount/useFindAvailableAmounts.hook";
 import { formatToUSD } from "../../../_utils/format_currency";
 import { GenerateAdvacneHook } from "../../../_hooks/advance/useGenerateAdvance.hook";
+import Live from "./live";
 
 export default function SelectAdvance({ hook }: { hook: GenerateAdvacneHook }){
 
@@ -9,7 +10,8 @@ export default function SelectAdvance({ hook }: { hook: GenerateAdvacneHook }){
 
     return(
         <div style={{ width: '100%', marginTop: '20px' }}>
-            <div style={{ border: '1px solid #92B9E8', width: '100%', padding: '10px 0', borderRadius: '20px' }}>
+            <Live />
+            <div style={{ width: '100%', padding: '10px 0', borderRadius: '20px' }}>
                 <div className="flex-col flex-center" style={{ fontSize: '1.3em', fontWeight: 'bold', margin: '10px 0', width: '100%' }}>¿Cuánto deseas adelantar?</div>
                 <div className="flex-col">
                     {
@@ -34,6 +36,27 @@ export default function SelectAdvance({ hook }: { hook: GenerateAdvacneHook }){
                             );
                         })
                     }
+                </div>
+            </div>
+            <div className="flex-col flex-center" style={{ width: '100%', padding: '10px 0', borderRadius: '20px' }}>
+                <div className="flex-col flex-center" style={{ width: '300px', backgroundColor: '#E7E9EE', color: '#5975BB', marginBottom: '20px', padding: '18px 0', borderRadius: '20px', fontWeight: 'bold', fontSize: '2em' }}>
+                    {formatToUSD(hook.advance?.value ?? 0)}
+                    <div style={{ fontSize: '0.5em' }}>
+                    Costo Transacción {formatToUSD(hook.advance?.cost ?? 0 )}
+                    </div>
+                </div>
+            </div>
+            <div className="flex-row" style={{ width: '100%', margin: '20px 0' }}>
+                <div className="flex-col flex-center" style={{ width: '100%' }}>
+                    <Button
+                        style={{ width: '90%' }}
+                        type="primary"
+                        onClick={() => {
+                            if(hook.amount) hook.setPanel(2);
+                        }}
+                    >
+                        Confirmar
+                    </Button>
                 </div>
             </div>
         </div>

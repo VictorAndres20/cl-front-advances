@@ -9,17 +9,24 @@ import { history_path } from "../../pages/path_pages";
 
 export interface GenerateAdvacneHook {
     amount?: Amount | null, 
+    confirm: boolean,
+    panel: number,
     advance: AdvanceType,
     updateAmountToAdvance: ((amount: Amount | null) => void), 
-    generate: (() => void), 
-    loading: Boolean
+    generate: (() => void),
+    loading: Boolean,
+    setConfirm: ((confirm: boolean) => void),
+    setPanel: ((panel: number) => void),
+    updateUseFintech: ((useFintech: number) => void),
 }
 
 export const useGenerateAdvacne = (): GenerateAdvacneHook => {
 
     const navigate = useNavigate();
 
+    const [ panel, setPanel ] = useState<number>(1);
     const [ amount, setAmount ] = useState<Amount | null>(null);
+    const [ confirm, setConfirm ] = useState<boolean>(false);
     const [ advance, setAdvance ] = useState<AdvanceType>(buildEmptyAdvance());
     const [ loading, setLoading ] = useState(false);
 
@@ -27,6 +34,13 @@ export const useGenerateAdvacne = (): GenerateAdvacneHook => {
         setAmount(amount);
         if(amount) setAdvance(buildAdvanceValueCostEmployee(amount.value, amount.cost));
         else setAdvance(buildEmptyAdvance());
+    }
+
+    const updateUseFintech = (use_fintech: number) => {
+        setAdvance({
+            ...advance,
+            use_fintech
+        });
     }
 
     const generate = () => {
@@ -45,6 +59,6 @@ export const useGenerateAdvacne = (): GenerateAdvacneHook => {
     }
 
     return {
-        amount, advance, updateAmountToAdvance, generate, loading
+        amount, advance, confirm, panel, updateAmountToAdvance, generate, loading, setConfirm, setPanel, updateUseFintech
     }
 }

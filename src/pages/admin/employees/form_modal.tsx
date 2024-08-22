@@ -6,6 +6,8 @@ import { useUpdateEmployee } from "../../../_hooks/employees/useUpdteEmployee.ho
 import RangeEnterpriseSelect from "../../../widgets /selects/range_enterprise_select";
 import ChangePasswordForm from "./change_password_form";
 import BanksSelect from "../../../widgets /selects/banks_select";
+import BanksAccountTypeSelect from "../../../widgets /selects/bank_account_type_select";
+import FintechSelect from "../../../widgets /selects/fintech_select";
 
 export default function FormModal({ id, reload }: { id?: string, reload: Function }){
 
@@ -151,6 +153,74 @@ export default function FormModal({ id, reload }: { id?: string, reload: Functio
                                     createHook.setEntity({
                                         ...createHook.entity,
                                         bank: e
+                                    });
+                                }
+                            }}
+                        />
+                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Tipo de cuenta</div>
+                        <BanksAccountTypeSelect 
+                            value={ id ?  (typeof updateHook.entity.bank_account_type !== 'object' ? updateHook.entity.bank_account_type : undefined) ?? '' : (typeof createHook.entity.bank_account_type !== 'object' ? createHook.entity.bank_account_type : undefined) ?? '' }
+                            onChange={(e) => {
+                                if(id){
+                                    updateHook.setEntity({
+                                        ...updateHook.entity,
+                                        bank_account_type: e
+                                    });
+                                } else {
+                                    createHook.setEntity({
+                                        ...createHook.entity,
+                                        bank_account_type: e
+                                    });
+                                }
+                            }}
+                        />
+                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Número de cuenta</div>
+                        <Input
+                            value={ id ? updateHook.entity.bank_account_number ?? '' : createHook.entity.bank_account_number ?? '' }
+                            onChange={(e) => {
+                                if(id){
+                                    updateHook.setEntity({
+                                        ...updateHook.entity,
+                                        bank_account_number: e.target.value
+                                    });
+                                } else {
+                                    createHook.setEntity({
+                                        ...createHook.entity,
+                                        bank_account_number: e.target.value
+                                    });
+                                }
+                            }}
+                        />
+                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>Plataforma financiera</div>
+                        <FintechSelect 
+                            value={ id ?  (typeof updateHook.entity.fintech !== 'object' ? updateHook.entity.fintech : undefined) ?? '' : (typeof createHook.entity.fintech !== 'object' ? createHook.entity.fintech : undefined) ?? '' }
+                            onChange={(e) => {
+                                if(id){
+                                    updateHook.setEntity({
+                                        ...updateHook.entity,
+                                        fintech: e
+                                    });
+                                } else {
+                                    createHook.setEntity({
+                                        ...createHook.entity,
+                                        fintech: e
+                                    });
+                                }
+                            }}
+                        />
+                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>Número</div>
+                        <Input
+                            value={ id ? updateHook.entity.fintech_account_number ?? '' : createHook.entity.fintech_account_number ?? '' }
+                            onChange={(e) => {
+                                if(id){
+                                    updateHook.setEntity({
+                                        ...updateHook.entity,
+                                        fintech_account_number: e.target.value
+                                    });
+                                } else {
+                                    createHook.setEntity({
+                                        ...createHook.entity,
+                                        fintech_account_number: e.target.value
                                     });
                                 }
                             }}
