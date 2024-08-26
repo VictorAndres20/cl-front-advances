@@ -3,17 +3,17 @@ import { BasicDatatable } from "../../../widgets /antd_table/basic_datatable";
 import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTableSearchBox.hook";
 import FormModal from "./form_modal";
 import { EmployeeType } from "../../../_events/employee/type";
-import { getCompany } from "../../../_utils/storage_handler";
-import { useFindAllEmployeesByEnterprise } from "../../../_hooks/employees/useFindAllEmployeesByEnterprise.hook";
+import { getCompany, getRol } from "../../../_utils/storage_handler";
 import BasicBadge from "../../../widgets /badges/basic_badge";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { useEmployeeStateChanger } from "../../../_hooks/employees/useEmployeeStateChanger.hook";
+import { useEmployeesByRol } from "../../../_hooks/employees/use-employees-by-rol.hook";
 
 const tableStyle = { fontSize: '0.8em' };
 
 export default function Table(){
 
-    const dataHook = useFindAllEmployeesByEnterprise(getCompany());
+    const dataHook = useEmployeesByRol(getRol() ?? '', getCompany());
     const searchBox = useBasicTableSearchBox<EmployeeType>();
     const stateChanger = useEmployeeStateChanger();
     

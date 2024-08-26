@@ -1,7 +1,8 @@
 import { EnterpriseType } from "./type";
 
 export const validateEnterprise = (body: EnterpriseType) => {
-    const { name } = body;
+    const { nit, name } = body;
+    if(nit === undefined || nit === '') throw new Error(`NIT vacío`);
     if(name === undefined || name === '') throw new Error(`Nombre vacío`);
 }
 
@@ -13,6 +14,7 @@ export const transformEntityEnterprise = (entity: EnterpriseType) => {
 export const buildEmptyEnterprise = (): EnterpriseType => {
     return {
         name: '',
+        nit: '',
         address: '',
     };
 }

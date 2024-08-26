@@ -33,6 +33,23 @@ export default function FormModal({ id, reload }: { id?: number, reload: Functio
             <Modal title="Formulario" open={isModalOpen} footer={<Button onClick={handleCancel}>Cancelar</Button>} onCancel={handleCancel}>
                 <Row>
                     <Col lg={24} xs={24}>
+                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) NIT</div>
+                        <Input 
+                            value={ id ? updateHook.entity.nit : createHook.entity.nit }
+                            onChange={(e) => {
+                                if(id){
+                                    updateHook.setEntity({
+                                        ...updateHook.entity,
+                                        nit: e.target.value
+                                    });
+                                } else {
+                                    createHook.setEntity({
+                                        ...createHook.entity,
+                                        nit: e.target.value
+                                    });
+                                }
+                            }}
+                        />
                         <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Nombre de la empresa</div>
                         <Input 
                             value={ id ? updateHook.entity.name : createHook.entity.name }

@@ -3,12 +3,12 @@ import { BasicDatatable } from "../../../widgets /antd_table/basic_datatable";
 import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTableSearchBox.hook";
 import FormModal from "./form_modal";
 import { RangeType } from "../../../_events/range/type";
-import { useFindAllRangeByEnterprise } from "../../../_hooks/range/useFindAllRangeByEnterprise.hook";
-import { getCompany } from "../../../_utils/storage_handler";
+import { getCompany, getRol } from "../../../_utils/storage_handler";
+import { useRangesByRol } from "../../../_hooks/range/use-ranges-by-rol.hook";
 
 export default function Table(){
 
-    const dataHook = useFindAllRangeByEnterprise(getCompany());
+    const dataHook = useRangesByRol(getRol() ?? '', getCompany());
     const searchBox = useBasicTableSearchBox<RangeType>();
     
     const columns: TableColumnsType<RangeType> = [

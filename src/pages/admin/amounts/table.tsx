@@ -2,15 +2,16 @@ import { TableColumnsType } from "antd";
 import { BasicDatatable } from "../../../widgets /antd_table/basic_datatable";
 import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTableSearchBox.hook";
 import FormModal from "./form_modal";
-import { useFindAllAmountsByEnterprise } from "../../../_hooks/amount/useFindAllAmountsByEnterprise.hook";
-import { getCompany } from "../../../_utils/storage_handler";
+import { getCompany, getRol } from "../../../_utils/storage_handler";
 import { Amount } from "../../../_events/amount/type";
-import BasicBadge from "../../../widgets /badges/basic_badge";
+import { useAmountsByRol } from "../../../_hooks/amount/use-ammounts-by-rol.hook";
 
 export default function Table(){
 
-    const dataHook = useFindAllAmountsByEnterprise(getCompany());
+    const dataHook = useAmountsByRol(getRol() ?? '', getCompany());
     const searchBox = useBasicTableSearchBox<Amount>();
+
+    console.log(dataHook.data);
     
     const columns: TableColumnsType<Amount> = [
         {
@@ -42,7 +43,7 @@ export default function Table(){
             key: 'enterprise',
             width: '20%',
             render: (text: string, param: Amount, key: number) => (
-                <span key={`amount_active_${key}`}>{param.active === 1 ? <BasicBadge text="Activo" color="success" /> : <BasicBadge text="Inactivo" color="danger" />}</span>
+                <span key={`amount_enterprise_${key}`}>{typeof param.range === 'object' && typeof param.range?.enterprise === 'object' && param.range?.enterprise?.name}</span>
             )
         },
         {

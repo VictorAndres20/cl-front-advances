@@ -3,7 +3,9 @@ import { useState } from "react";
 import { useCreateRange } from "../../../_hooks/range/useCreateRange.hook";
 import { EditOutlined } from "@ant-design/icons";
 import { useUpdateRange } from "../../../_hooks/range/useUpdateRange.hook";
-import { getCompanyName } from "../../../_utils/storage_handler";
+import { getCompanyName, getRol } from "../../../_utils/storage_handler";
+import { roles } from "../../../_config/roles";
+import EnterpriseSelect from "../../../widgets /selects/enterprise_select";
 
 export default function FormModal({ id, reload }: { id?: string, reload: Function }){
 
@@ -52,7 +54,27 @@ export default function FormModal({ id, reload }: { id?: string, reload: Functio
                             }}
                         />
                         <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Empresa asociada</div>
-                        <span>{getCompanyName()}</span>
+                        {
+                        getRol() === roles.root ?
+                            <EnterpriseSelect 
+                                value={id ? (typeof updateHook.entity.enterprise === 'object' ? updateHook.entity.enterprise.id ?? 0 : updateHook.entity.enterprise ?? 0) : (typeof createHook.entity.enterprise === 'object' ? createHook.entity.enterprise.id ?? 0 : createHook.entity.enterprise ?? 0)} 
+                                onChange={(enterprise) => {
+                                    if(id){
+                                        updateHook.setEntity({
+                                            ...updateHook.entity,
+                                            enterprise
+                                        });
+                                    } else {
+                                        createHook.setEntity({
+                                            ...createHook.entity,
+                                            enterprise
+                                        });
+                                    }
+                                }} 
+                            />
+                        : 
+                            <span>{getCompanyName()}</span>
+                        }
                         <div className="flex-col flex-center" style={{ margin: '25px 0' }}>
                             {
                                 createHook.loading || updateHook.loading ?

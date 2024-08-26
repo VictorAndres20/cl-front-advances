@@ -12,6 +12,13 @@ export default function Table(){
     
     const columns: TableColumnsType<EnterpriseType> = [
         {
+            title: 'NIT',
+            dataIndex: 'nit',
+            key: 'nit',
+            width: '20%',
+            ...searchBox.getColumnSearchProps('nit'),
+            },
+        {
         title: 'Nombre',
         dataIndex: 'name',
         key: 'name',
