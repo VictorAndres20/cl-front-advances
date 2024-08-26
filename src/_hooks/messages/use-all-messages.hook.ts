@@ -7,7 +7,7 @@ export const useAllMessages = () => {
 
     const [ data, setData ] = useState<Messages[]>([]);
 
-    useEffect(() => {
+    const loadData = () => {
         findAllMessagesEvent()
         .then(json => {
             setData(json.list);
@@ -15,9 +15,13 @@ export const useAllMessages = () => {
         .catch((err: Error) => {
             message.error(err.message);
         });
+    }
+
+    useEffect(() => {
+        loadData();
     }, []);
 
     return {
-        data
+        data, loadData
     }
 }

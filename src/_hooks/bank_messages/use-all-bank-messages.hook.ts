@@ -7,7 +7,7 @@ export const useAllBankMessages = () => {
 
     const [ data, setData ] = useState<BankMessages[]>([]);
 
-    useEffect(() => {
+    const loadData = () => {
         findAllBankMessagesEvent()
         .then(json => {
             setData(json.list);
@@ -15,9 +15,13 @@ export const useAllBankMessages = () => {
         .catch((err: Error) => {
             message.error(err.message);
         });
+    }
+
+    useEffect(() => {
+        loadData();
     }, []);
 
     return {
-        data
+        data, loadData
     }
 }

@@ -3,6 +3,7 @@ import { BasicDatatable } from "../../../widgets /antd_table/basic_datatable";
 import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTableSearchBox.hook";
 import { Messages } from "../../../_events/messages/type";
 import { useAllMessages } from "../../../_hooks/messages/use-all-messages.hook";
+import FormModal from "./form_modal";
 
 export default function Table(){
 
@@ -31,6 +32,15 @@ export default function Table(){
             key: 'message',
             width: '80%',
             ...searchBox.getColumnSearchProps('message'),
+        },
+        {
+            title: 'Acciones',
+            dataIndex: 'uuid',
+            key: 'uuid',
+            width: '10%',
+            render: (text: string, param: Messages, key: number) => (
+                <FormModal key={`form_edit_${key}`} id={param.cod} reload={dataHook.loadData} />
+            )
         },
     ];
 
