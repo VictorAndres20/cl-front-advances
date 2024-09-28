@@ -5,13 +5,14 @@ import AdvancesInboxPage from "./admin/advances_inbox";
 import AmountsPage from "./admin/amounts";
 import BankMessagesPage from "./admin/bank_messages";
 import EmployeesPage from "./admin/employees";
+import BulkEmployeesPage from "./admin/employees/bulk-employees";
 import EnterprisesPage from "./admin/enterprises";
 import LoginAdminPage from "./admin/login";
 import MessagesPage from "./admin/messages";
 import RangesPage from "./admin/ranges";
 import UsersPage from "./admin/users";
 import LoginPage from "./login";
-import { admin_path, advance_path, advances_inbox_path, advances_path, amounts_path, bank_messages_path, content_path, employees_path, enterprises_path, history_path, login_admin_path, login_page_path, messages_path, ranges_path, users_path } from "./path_pages";
+import { admin_path, advance_path, advances_inbox_path, advances_path, amounts_path, bank_messages_path, bulk_employees_path, content_path, employees_path, enterprises_path, history_path, login_admin_path, login_page_path, messages_path, ranges_path, users_path } from "./path_pages";
 import AdvancePage from "./user/advance";
 import HistoryPage from "./user/history";
 import UserTemplate from "./user/user_template";
@@ -54,6 +55,10 @@ export const router_pages: RouterPage[] = [
             {
                 path: `${employees_path.path}`, 
                 component: EmployeesPage,
+            },
+            {
+                path: `${bulk_employees_path.path}`, 
+                component: BulkEmployeesPage,
             },
             {
                 path: `${advances_inbox_path.path}`, 

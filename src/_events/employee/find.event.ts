@@ -3,6 +3,7 @@ import {
     findEmployeeById,
     findAllEmployeePaged,
     findAllEmployeeByEnterprise,
+    readEmployeesExcel,
 } from '../../_services/employee.service';
 
 export const findAllEmployeeEvent = async () => {
@@ -19,6 +20,10 @@ export const findAllEmployeePagedEvent = async (page: number, limit: number = 8)
 
 export const findAllEmployeeByEnterpriseEvent = async (enterprise: number) => {
     return await findAllEmployeeByEnterprise(enterprise);
+}
+
+export const readEmployeesExcelEvent = async (bytes: string) => {
+    return await readEmployeesExcel({bytes})
 }
 
 

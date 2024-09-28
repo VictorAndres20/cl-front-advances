@@ -17,3 +17,12 @@ export const downloadExcelFile = (base64bytes: string, fileName: string) => {
     a.click();
     document.body.removeChild(a);
 }
+
+export const openNewTab = (path: string) => {
+    let a: any = document.createElement('A');
+    a.href = path;
+    a.target = '_blank';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}

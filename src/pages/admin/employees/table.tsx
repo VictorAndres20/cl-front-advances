@@ -8,6 +8,8 @@ import BasicBadge from "../../../widgets /badges/basic_badge";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { useEmployeeStateChanger } from "../../../_hooks/employees/useEmployeeStateChanger.hook";
 import { useEmployeesByRol } from "../../../_hooks/employees/use-employees-by-rol.hook";
+import { Link } from "react-router-dom";
+import { bulk_employees_path } from "../../path_pages";
 
 const tableStyle = { fontSize: '0.8em' };
 
@@ -112,7 +114,12 @@ export default function Table(){
 
     return(
         <div style={{ width: '100%' }}>
-            <div style={{ width: '90%', display: 'flex', flexDirection: 'row-reverse' }}>
+            <div style={{ width: '90%', display: 'flex', flexDirection: 'row-reverse', marginBottom: '10px' }}>
+                <Link style={{ marginLeft: '10px' }} to={bulk_employees_path.full_path}>
+                    <Button type="primary">
+                        Importar empleados
+                    </Button>
+                </Link>
                 <FormModal reload={dataHook.loadData} />
             </div>
             <BasicDatatable columns={columns} data={dataHook.data} pagination={true} />

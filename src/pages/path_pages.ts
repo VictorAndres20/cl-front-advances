@@ -46,6 +46,11 @@ export const employees_path: PathType = {
     full_path: `${admin_path.full_path}/employees`,
 }
 
+export const bulk_employees_path: PathType = {
+    path: 'bulk-employees',
+    full_path: `${admin_path.full_path}/bulk-employees`,
+}
+
 export const advances_inbox_path: PathType = {
     path: 'advances-inbox',
     full_path: `${admin_path.full_path}/advances-inbox`,

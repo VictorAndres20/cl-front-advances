@@ -10,8 +10,6 @@ export default function Table(){
 
     const dataHook = useAmountsByRol(getRol() ?? '', getCompany());
     const searchBox = useBasicTableSearchBox<Amount>();
-
-    console.log(dataHook.data);
     
     const columns: TableColumnsType<Amount> = [
         {
@@ -59,7 +57,7 @@ export default function Table(){
 
     return(
         <div style={{ width: '100%' }}>
-            <div style={{ width: '90%', display: 'flex', flexDirection: 'row-reverse' }}>
+            <div style={{ width: '90%', display: 'flex', flexDirection: 'row-reverse', marginBottom: '10px' }}>
                 <FormModal reload={() => dataHook.loadData(getCompany())} />
             </div>
             <BasicDatatable columns={columns} data={dataHook.data} pagination={true} />
