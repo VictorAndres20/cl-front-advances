@@ -1,4 +1,4 @@
-import { EmployeeType } from "./type";
+import { EmployeeExcelType, EmployeeType } from "./type";
 
 export const validateEmployee = (body: EmployeeType) => {
     const { name, id, phone, salary, password, state, 
@@ -38,6 +38,24 @@ export const buildEmptyEmployee = (): EmployeeType => {
         bank: '',
         bank_account_type: '',
         bank_account_number: '',
+    };
+}
+
+export const buildEmployeeFromExcel = (employeeExcel: EmployeeExcelType): EmployeeType => {
+    return {
+        uuid: '',
+        name: employeeExcel.NOMBRE,
+        id: employeeExcel.CEDULA,
+        phone: employeeExcel.TELEFONO,
+        salary: employeeExcel.SALARIO_QUNCENAL && ! isNaN(Number(employeeExcel.SALARIO_QUNCENAL)) ? Number(employeeExcel.SALARIO_QUNCENAL) : 0,
+        password: '',
+        state: 1,
+        range: '',
+        bank: employeeExcel.BANCO,
+        bank_account_type: employeeExcel.TIPO_CUENTA_BANCO,
+        bank_account_number: employeeExcel.NUMERO_CUENTA_BANCO,
+        fintech: employeeExcel.PLATAFORMA_FINANCIERA ?? undefined,
+        fintech_account_number: employeeExcel.NUMERO_PLATAFORMA_FINANCIERA ?? undefined,
     };
 }
 

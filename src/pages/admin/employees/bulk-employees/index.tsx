@@ -4,8 +4,8 @@ import AdminTitle from "../../../../widgets /titles/admin_title";
 import Table from "./table";
 import DownloadEmployeesTemplate from "./download-employees-template";
 import { LoadingOutlined, UploadOutlined } from '@ant-design/icons';
-import { useState } from "react";
-import { EmployeeType } from "../../../../_events/employee/type";
+import { useCallback, useState } from "react";
+import { EmployeeExcelType } from "../../../../_events/employee/type";
 import { readEmployeesExcelEvent } from "../../../../_events/employee/find.event";
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
@@ -33,7 +33,16 @@ const beforeUpload = (file: FileType) => {
 export default function BulkEmployeesPage(){
 
     const [loading, setLoading] = useState(false);
-    const [employees, setEmployees] = useState<EmployeeType[]>([]);
+    const [employees, setEmployees] = useState<EmployeeExcelType[]>([]);
+
+    const removeEmployee = useCallback((index: number, employees: EmployeeExcelType[]) => {
+        console.log(employees);
+        console.log(index);
+        const newEmployees = [...employees];
+        newEmployees.splice(index, 1);
+        console.log(newEmployees);
+        setEmployees([...newEmployees]);
+    }, [])
 
     const handleChange: UploadProps['onChange'] = (info) => {
         if (info.file.status === 'uploading') {
@@ -49,17 +58,21 @@ export default function BulkEmployeesPage(){
         if (info.file.status === 'done') {
             getBase64(info.file.originFileObj as FileType, (url) => {
                 const bytes = url;
-                console.log(bytes);
-                // TODO - Format bytes to get only base 64
-                readEmployeesExcelEvent(bytes)
-                .then(json => {
+                const bytesParts = bytes.split(",");
+                if(bytesParts.length !== 2){
+                    message.error("Bytes not found");
                     setLoading(false);
-                    setEmployees([]);
-                })
-                .catch(error => {
-                    setLoading(false);
-                    message.error(error.message);
-                });
+                } else {
+                    readEmployeesExcelEvent(bytesParts[1])
+                    .then(json => {
+                        setLoading(false);
+                        setEmployees(json.list);
+                    })
+                    .catch(error => {
+                        setLoading(false);
+                        message.error(error.message);
+                    });
+                }
             });
         }
     };
@@ -89,7 +102,7 @@ export default function BulkEmployeesPage(){
                     </Upload>
                     <DownloadEmployeesTemplate />
                 </div>
-                <Table employees={employees} />
+                <Table removeEmployee={removeEmployee} employees={employees} />
             </Col>
         </Row>
     );

@@ -6,7 +6,8 @@ import {
     findAllAdvanceByEnterprise,
     findAllPendingAdvanceByEnterprise,
     pdfAdvanceById,
-    findAllPendingAdvance
+    findAllPendingAdvance,
+    findAllAdvanceByPeriod,
 } from '../../_services/advance.service';
 
 export const findAllAdvanceEvent = async () => {
@@ -39,6 +40,10 @@ export const pdfAdvanceByIdEvent = async (id: string) => {
 
 export const findAllPendingAdvanceEvent = async () => {
     return await findAllPendingAdvance();
+}
+
+export const findAllAdvanceByPeriodEvent = async (period: string) => {
+    return await findAllAdvanceByPeriod(period);
 }
 
 

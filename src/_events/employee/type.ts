@@ -18,3 +18,15 @@ export interface EmployeeType {
     fintech?: null | string | Fintech,
     fintech_account_number?: string | null
 }
+
+export interface EmployeeExcelType {
+    NOMBRE: string;
+    CEDULA: string;
+    TELEFONO: string;
+    SALARIO_QUNCENAL: Number;
+    BANCO: string;
+    TIPO_CUENTA_BANCO: string;
+    NUMERO_CUENTA_BANCO: string;
+    PLATAFORMA_FINANCIERA: string;
+    NUMERO_PLATAFORMA_FINANCIERA: string;
+}

@@ -1,20 +1,24 @@
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { createEmployeeEvent } from "../../_events/employee/create.event";
 import { message } from "antd";
-import { EmployeeType } from "../../_events/employee/type";
-import { buildEmptyEmployee } from "../../_events/employee/model";
+import { EmployeeExcelType, EmployeeType } from "../../_events/employee/type";
+import { buildEmployeeFromExcel, buildEmptyEmployee } from "../../_events/employee/model";
 import { getCompany } from "../../_utils/storage_handler";
 
-export const useCreateEmployee = (reload: Function = () => {}) => {
+export const useCreateEmployee = (reload: Function = () => {}, employeeExcel?: EmployeeExcelType) => {
 
-    const [ entity, setEntity ] = useState<EmployeeType>(buildEmptyEmployee());
+    const [ entity, setEntity ] = useState<EmployeeType>(employeeExcel ? buildEmployeeFromExcel(employeeExcel) : buildEmptyEmployee());
     const [ loading, setLoading ] = useState<boolean>(false);
 
-    const cleanEntity = () => {
-        setEntity(buildEmptyEmployee());
-    }
+    const cleanEntity = useCallback(() => {
+        setEntity(employeeExcel ? buildEmployeeFromExcel(employeeExcel) : buildEmptyEmployee());
+    }, [employeeExcel]);
 
-    const create = () => {
+    useEffect(() => {
+        setEntity(employeeExcel ? buildEmployeeFromExcel(employeeExcel) : buildEmptyEmployee());
+    }, [employeeExcel]);
+
+    const create = useCallback(() => {
         setLoading(true);
         createEmployeeEvent(entity)
         .then(() => {
@@ -27,7 +31,7 @@ export const useCreateEmployee = (reload: Function = () => {}) => {
             message.error(err.message);
             setLoading(false);
         });
-    }
+    }, [cleanEntity, entity, reload])
 
     return {
         loading, entity, setEntity, create, cleanEntity

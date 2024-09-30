@@ -1,149 +1,217 @@
-import { Button, TableColumnsType } from "antd";
-import { BasicDatatable } from "../../../widgets /antd_table/basic_datatable";
-import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTableSearchBox.hook";
-import BasicBadge from "../../../widgets /badges/basic_badge";
-import { AdvanceType } from "../../../_events/advance/type";
+import { Button, Col, Row, Spin } from "antd";
 import { useDownloadAdvancePdf } from "../../../_hooks/advance/useDownloadAdvancePdf.hook";
-import { useFindAllAdvances } from "../../../_hooks/advance/useFindAllAdvances.hook";
 import { buildTZDate } from "../../../_utils/dateFormat";
+import BasicBadge from "../../../widgets /badges/basic_badge";
+import { useAdvancePeriodsFilter } from "../../../_hooks/advance_period/use-advance-periods-filter.hook";
+import SearchSelect from "../../../widgets /selects/search_select";
+import { formatToUSD } from "../../../_utils/format_currency";
+
+const columns = [
+    '#',
+    'PDF',
+    'Empleado',
+    'Identificación',
+    'Valor',
+    'Costo',
+    'Solicitado',
+    'Aprobado',
+    'Rechazado',
+    'Empresa',
+    'Depositar en',
+    'Estado',
+];
 
 export default function Table(){
 
-    const dataHook = useFindAllAdvances();
     const pdf = useDownloadAdvancePdf();
-    const searchBox = useBasicTableSearchBox<AdvanceType>();
-    
-    const columns: TableColumnsType<AdvanceType> = [
-        {
-            title: '',
-            dataIndex: 'uuid',
-            key: 'uuid',
-            width: '3%',
-            render: (text: string, param: AdvanceType, key: number) => (
-                <Button
-                    key={`advance_pdf_${key}`}
-                    onClick={() => pdf.download(param.uuid ?? '')}
-                >PDF</Button>
-            )
-        },
-        {
-            title: 'Empleado',
-            dataIndex: 'employee',
-            key: 'employee',
-            width: '10%',
-            render: (text: string, param: AdvanceType, key: number) => (
-                <span key={`advance_employee_${key}`}>{typeof param.employee === 'object' ? param.employee?.name : 'NA'}</span>
-            )
-        },
-        {
-            title: 'Identificación',
-            dataIndex: 'employee.id',
-            key: 'employee.id',
-            width: '10%',
-            render: (text: string, param: AdvanceType, key: number) => (
-                <span key={`advance_employee_id_${key}`}>{typeof param.employee === 'object' ? param.employee?.id : 'NA'}</span>
-            )
-        },
-        {
-            title: 'Valor',
-            dataIndex: 'value',
-            key: 'value',
-            width: '10%',
-            ...searchBox.getColumnSearchProps('value'),
-        },
-        {
-            title: 'Costo',
-            dataIndex: 'cost',
-            key: 'cost',
-            width: '10%',
-            ...searchBox.getColumnSearchProps('cost'),
-        },
-        {
-            title: 'Solicitado',
-            dataIndex: 'created_date',
-            key: 'created_date',
-            width: '10%',
-            render: (text: string, param: AdvanceType, key: number) => (
-                <span key={`advance_created_id_${key}`}>{buildTZDate(param.created_date)}</span>
-            )
-        },
-        {
-            title: 'Aprobado',
-            dataIndex: 'approved_date',
-            key: 'approved_date',
-            width: '10%',
-            render: (text: string, param: AdvanceType, key: number) => (
-                <span key={`advance_app_id_${key}`}>{param.approved_date ? buildTZDate(param.approved_date) : ''}</span>
-            )
-        },
-        {
-            title: 'Rechazado',
-            dataIndex: 'declined_date',
-            key: 'declined_date',
-            width: '10%',
-            render: (text: string, param: AdvanceType, key: number) => (
-                <span key={`advance_dec_id_${key}`}>{param.declined_date ? buildTZDate(param.declined_date) : ''}</span>
-            )
-        },
-        {
-            title: 'Empresa',
-            dataIndex: 'enterprise',
-            key: 'enterprise',
-            width: '10%',
-            render: (text: string, param: AdvanceType, key: number) => (
-                <span key={`amount_enterprise_${key}`}>{
-                    typeof param.employee === 'object' ? 
-                    typeof param.employee?.range === 'object' ? 
-                    typeof param.employee?.range?.enterprise === 'object' ? param.employee?.range?.enterprise.name
-                    : '' : '' : ''}</span>
-            )
-        },
-        {
-            title: 'Depositar en',
-            dataIndex: 'bank',
-            key: 'bank',
-            width: '10%',
-            render: (text: string, param: AdvanceType, key: number) => (
-                <span key={`amount_bank_${key}`}>{
-                    !param.use_fintech ?
-                    typeof param.employee === 'object' ? 
-                    typeof param.employee?.bank === 'object' ? 
-                    `${
-                        param.employee?.bank?.name ?? ''
-                    }, ${
-                        typeof param.employee?.bank_account_type === 'object' ? 
-                            param.employee?.bank_account_type?.name ?? ''
-                        : ''
-                    } ${
-                        param.employee?.bank_account_number ?? ''
-                    }`
-                    : '' : ''
-                    :
-                    typeof param.employee === 'object' ? 
-                    typeof param.employee?.fintech === 'object' ? 
-                    `${
-                        param.employee?.fintech?.name ?? ''
-                    } ${
-                        param.employee?.fintech_account_number ?? ''
-                    }`
-                    : '' : ''
-                    }</span>
-            )
-        },
-        {
-            title: 'Estado',
-            dataIndex: 'enterprise',
-            key: 'enterprise',
-            width: '10%',
-            render: (text: string, param: AdvanceType, key: number) => (
-                <span key={`amount_active_${key}`}>{(typeof param.state === 'object' && param.state.cod === 'PEND') ? <BasicBadge text="PENDIENTE" color="warning" /> : (typeof param.state === 'object' && param.state.cod === 'APPR') ? <BasicBadge text="Aprobado" color="success" /> : <BasicBadge text="No aprobado" color="danger" />}</span>
-            )
-        },
-    ];
+    const hook = useAdvancePeriodsFilter();
+
+    console.log(hook.enterprises);
+    console.log(hook.selectedEnterprise);
+    console.log(hook.periods);
+    console.log(hook.selectedPeriod);
+    console.log(hook.advances);
 
     return(
-        <div style={{ width: '100%' }}>
-            <BasicDatatable columns={columns} data={dataHook.data} pagination={true} />
-        </div>
+        <Row>
+            <Col xs={4} md={4} lg={4}>
+                <div
+                    style={{ 
+                        margin: '10px 15px',
+                    }}
+                >
+                    <SearchSelect 
+                        options={ hook.enterprises.map( e => ({ value: e.id, label: `${e.name}` }) ) }
+                        placeholder="Empresa"
+                        value={ hook.selectedEnterprise?.id ?? 0 }
+                        onChange={(id) => {
+                            const enterprise = hook.enterprises.find(e => e.id === id);
+                            if(enterprise) hook.setSelectedEnterprise(enterprise);
+                        }}
+                    />
+                </div>
+            </Col>
+            <Col xs={20} md={20} lg={20}>
+                {
+                    hook.selectedPeriod && 
+                    <div className="flex-row">
+                        <div
+                            style={{ width: '250px', padding: '20px 10px' }}
+                        >
+                            <div style={{ fontSize: '0.8em', height: '25px' }}>Inicio: {buildTZDate(hook.selectedPeriod.created_date)}</div>
+                            <div style={{ fontWeight: 'bold' }}>Total anticipados: {formatToUSD(hook.advances.reduce((sum, advance) => sum + advance.value + advance.cost , 0))}</div>
+                        </div>
+                        <div style={{ width: '250px', padding: '20px 10px' }}
+                        >
+                            <div style={{ fontSize: '0.8em', height: '25px' }}>
+                                {
+                                    hook.selectedPeriod.finished_date ?
+                                    'Finaliza: ' + buildTZDate(hook.selectedPeriod.finished_date) :
+                                    <Button size="small">
+                                        Finalizar
+                                    </Button>
+                                }
+                            </div>
+                            <div style={{ fontWeight: 'bold' }}>Cantidad anticipos: {hook.advances.length}</div>
+                        </div>
+                        <div style={{ width: '200px', padding: '20px 10px' }}
+                        >
+                            
+                        </div>
+                    </div>
+                }
+            </Col>
+            <Col xs={4} md={4} lg={4}>
+                {
+                    hook.periods.map((period, index) => (
+                        <div 
+                            key={index}
+                            style={{ 
+                                margin: '10px 15px', 
+                                border: '1px solid #000', 
+                                borderRadius: '15px', 
+                                cursor: 'pointer',
+                                color: '#ddd',
+                                backgroundColor: '#001529' 
+                            }}
+                            onClick={() => {
+                                hook.setSelectedPeriod(period);
+                            }}
+                        >
+                            <div className="flex-col flex-center" style={{ padding: '10px 5px' }}>
+                                <div>{period.name}</div>
+                                <div style={{ fontSize: '0.8em' }}>{buildTZDate(period.created_date)}</div>
+                                <div style={{ fontSize: '0.8em' }}>{period.finished_date ? buildTZDate(period.finished_date) : 'ACTIVO'}</div>
+                            </div>
+                        </div>
+                    ))
+                }
+            </Col>
+            <Col xs={20} md={20} lg={20}>
+                <div style={{ width: '100%', overflowX: 'auto' }}>
+                    <table className="employees-bulk-table">
+                        <thead>
+                            <tr>
+                            {columns.map((col, index) => (<th key={index}>{col}</th>))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                            hook.loading ? 
+                            <tr>
+                                <td colSpan={12}>
+                                    <div className="flex-col flex-center"><Spin /></div>
+                                </td>
+                            </tr> 
+                            :
+                            hook.advances.length === 0 ? 
+                            <tr>
+                                <td colSpan={12}>
+                                    Sin datos
+                                </td>
+                            </tr> 
+                            :
+                            hook.advances.map((param, index) => (
+                                <tr key={index}>
+                                    <td>
+                                        {index + 1}
+                                    </td>
+                                    <td>
+                                        <Button
+                                            size="small"
+                                            onClick={() => pdf.download(param.uuid ?? '')}
+                                        >
+                                            PDF
+                                        </Button>
+                                    </td>
+                                    <td>
+                                        <span className="advance-span">{typeof param.employee === 'object' ? param.employee?.name : 'NA'}</span>
+                                    </td>
+                                    <td>
+                                        <span className="advance-span">{typeof param.employee === 'object' ? param.employee?.id : 'NA'}</span>
+                                    </td>
+                                    <td>
+                                        <span className="advance-span">{param.value}</span>
+                                    </td>
+                                    <td>
+                                        <span className="advance-span">{param.cost}</span>
+                                    </td>
+                                    <td>
+                                        <span className="advance-span">{buildTZDate(param.created_date)}</span>
+                                    </td>
+                                    <td>
+                                        <span className="advance-span">{param.approved_date ? buildTZDate(param.approved_date) : ''}</span>
+                                    </td>
+                                    <td>
+                                        <span className="advance-span">{param.declined_date ? buildTZDate(param.declined_date) : ''}</span>
+                                    </td>
+                                    <td>
+                                        <span className="advance-span">{
+                                        typeof param.employee === 'object' ? 
+                                        typeof param.employee?.range === 'object' ? 
+                                        typeof param.employee?.range?.enterprise === 'object' ? param.employee?.range?.enterprise.name
+                                        : '' : '' : ''}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span className="advance-span">
+                                        {
+                                            !param.use_fintech ?
+                                            typeof param.employee === 'object' ? 
+                                            typeof param.employee?.bank === 'object' ? 
+                                            `${
+                                                param.employee?.bank?.name ?? ''
+                                            }, ${
+                                                typeof param.employee?.bank_account_type === 'object' ? 
+                                                    param.employee?.bank_account_type?.name ?? ''
+                                                : ''
+                                            } ${
+                                                param.employee?.bank_account_number ?? ''
+                                            }`
+                                            : '' : ''
+                                            :
+                                            typeof param.employee === 'object' ? 
+                                            typeof param.employee?.fintech === 'object' ? 
+                                            `${
+                                                param.employee?.fintech?.name ?? ''
+                                            } ${
+                                                param.employee?.fintech_account_number ?? ''
+                                            }`
+                                            : '' : ''
+                                        }
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span>
+                                            {(typeof param.state === 'object' && param.state.cod === 'PEND') ? <BasicBadge text="PENDIENTE" color="warning" /> : (typeof param.state === 'object' && param.state.cod === 'APPR') ? <BasicBadge text="Aprobado" color="success" /> : <BasicBadge text="No aprobado" color="danger" />}
+                                        </span>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </Col>
+        </Row>
     );
 }
