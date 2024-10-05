@@ -1,7 +1,8 @@
 import { AdvancePeriodType } from "./type";
 
 export const validateAdvancePeriod = (body: AdvancePeriodType) => {
-    const { created_date, finished_date, enterprise_id, period_to_finish } = body;
+    const { name, created_date, finished_date, enterprise_id, period_to_finish } = body;
+    if(name === null || name === undefined || name === '') throw new Error(`Nombre de nuevo periodo vacío`);
     if(created_date === null || created_date === undefined || created_date === '') throw new Error(`Fecha de creación vacío`);
     if(finished_date === null || finished_date === undefined || finished_date === '') throw new Error(`Fecha de finalización vacío`);
     if(enterprise_id === null || enterprise_id === undefined || enterprise_id === 0) throw new Error(`Empresa vacío`);

@@ -5,6 +5,7 @@ import BasicBadge from "../../../widgets /badges/basic_badge";
 import { useAdvancePeriodsFilter } from "../../../_hooks/advance_period/use-advance-periods-filter.hook";
 import SearchSelect from "../../../widgets /selects/search_select";
 import { formatToUSD } from "../../../_utils/format_currency";
+import FinishPeriodModal from "./finish_period_modal";
 
 const columns = [
     '#',
@@ -26,11 +27,11 @@ export default function Table(){
     const pdf = useDownloadAdvancePdf();
     const hook = useAdvancePeriodsFilter();
 
-    console.log(hook.enterprises);
-    console.log(hook.selectedEnterprise);
-    console.log(hook.periods);
-    console.log(hook.selectedPeriod);
-    console.log(hook.advances);
+    //console.log(hook.enterprises);
+    //console.log(hook.selectedEnterprise);
+    //console.log(hook.periods);
+    //console.log(hook.selectedPeriod);
+    //console.log(hook.advances);
 
     return(
         <Row>
@@ -52,6 +53,9 @@ export default function Table(){
                 </div>
             </Col>
             <Col xs={20} md={20} lg={20}>
+                <div style={{ width: '500px', padding: '0 10px' }}>
+                    <span style={{ fontWeight: 'bold', fontSize: '1.3em' }}>{hook.selectedPeriod?.name}</span>
+                </div>
                 {
                     hook.selectedPeriod && 
                     <div className="flex-row">
@@ -59,7 +63,7 @@ export default function Table(){
                             style={{ width: '250px', padding: '20px 10px' }}
                         >
                             <div style={{ fontSize: '0.8em', height: '25px' }}>Inicio: {buildTZDate(hook.selectedPeriod.created_date)}</div>
-                            <div style={{ fontWeight: 'bold' }}>Total anticipados: {formatToUSD(hook.advances.reduce((sum, advance) => sum + advance.value + advance.cost , 0))}</div>
+                            <div style={{ fontWeight: 'bold' }}>Total anticipado: {formatToUSD(hook.advances.filter(advance => (typeof advance.state === 'object' && advance.state.cod === 'APPR') ? true : false).reduce((sum, advance) => sum + advance.value + advance.cost , 0))}</div>
                         </div>
                         <div style={{ width: '250px', padding: '20px 10px' }}
                         >
@@ -67,9 +71,14 @@ export default function Table(){
                                 {
                                     hook.selectedPeriod.finished_date ?
                                     'Finaliza: ' + buildTZDate(hook.selectedPeriod.finished_date) :
-                                    <Button style={{ width: '180px' }} size="small" type="primary">
-                                        Finalizar periodo
-                                    </Button>
+                                    
+                                    <FinishPeriodModal 
+                                        enterprise={hook.selectedEnterprise?.id} 
+                                        period={hook.selectedPeriod?.uuid}
+                                        reload={() => {
+                                            hook.loadPeriodsData(hook.selectedEnterprise);
+                                        }}
+                                    />
                                 }
                             </div>
                             <div style={{ fontWeight: 'bold' }}>Cantidad anticipos: {hook.advances.length}</div>
@@ -91,8 +100,8 @@ export default function Table(){
                                 border: '1px solid #000', 
                                 borderRadius: '15px', 
                                 cursor: 'pointer',
-                                color: '#ddd',
-                                backgroundColor: '#001529' 
+                                color: hook.selectedPeriod?.uuid === period.uuid ? '#ddd' : '#000',
+                                backgroundColor: hook.selectedPeriod?.uuid === period.uuid ? '#001529' : '#eee' 
                             }}
                             onClick={() => {
                                 hook.setSelectedPeriod(period);
