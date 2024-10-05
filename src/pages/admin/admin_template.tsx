@@ -5,8 +5,13 @@ import { MessageOutlined, ClusterOutlined, DollarOutlined, IdcardOutlined, Logou
 import { useLogout } from "../../_hooks/login/useLogout.hook";
 import { roles } from "../../_config/roles";
 import { getRol } from "../../_utils/storage_handler";
+import { ItemType, MenuItemType } from "antd/es/menu/hooks/useItems";
 
-const items = [
+type MenuItem = ItemType<MenuItemType> & {roles?: string[]};
+type Item = ItemType<MenuItemType> & 
+    {label?: React.ReactNode; roles?: string[], children?: MenuItem[]};
+
+const items: Item[] = [
     {
         label: (
             <Link to={enterprises_path.full_path}><ShopOutlined /> Empresas</Link>
@@ -34,18 +39,21 @@ const items = [
                     <Link to={ranges_path.full_path}><ClusterOutlined /> Rangos</Link>
                 ),
                 key: 'ranges',
+                roles: [roles.root],
             },
             {
                 label: (
                     <Link to={amounts_path.full_path}><ClusterOutlined /> Montos</Link>
                 ),
                 key: 'amounts',
+                roles: [roles.root],
             },
             {
                 label: (
                     <Link to={employees_path.full_path}><TeamOutlined /> Empleados</Link>
                 ),
                 key: 'employees',
+                roles: [roles.root, roles.admin],
             },
         ]
     },
@@ -62,12 +70,14 @@ const items = [
                     <Link to={messages_path.full_path}><MessageOutlined /> Anticipos</Link>
                 ),
                 key: 'messages',
+                roles: [roles.root],
             },
             {
                 label: (
                     <Link to={bank_messages_path.full_path}><MessageOutlined /> Hor. bancarios</Link>
                 ),
                 key: 'bank_messages',
+                roles: [roles.root],
             },
         ]
     },
@@ -77,19 +87,21 @@ const items = [
         ),
         key: 'group3',
         type: 'divider',
-        roles: [roles.root],
+        roles: [roles.root, roles.admin],
         children: [
             {
                 label: (
                     <Link to={advances_inbox_path.full_path}><ScheduleOutlined /> Solicitudes</Link>
                 ),
                 key: 'advances-inbox',
+                roles: [roles.root],
             },
             {
                 label: (
                     <Link to={advances_path.full_path}><SolutionOutlined /> Historial</Link>
                 ),
                 key: 'advances',
+                roles: [roles.root, roles.admin],
             },
         ]
     },
@@ -116,7 +128,16 @@ export default function AdminTemplate(){
     return(
         <div>
             <div style={{ backgroundColor: '#0BA8E8', height: '3px' }}></div>
-            <Menu onClick={clickMenu} defaultSelectedKeys={[`${currentPaths[currentPaths.length - 1]}`]} mode="horizontal" items={items.filter( i => i.roles.some( r => r === getRol()) )} theme="dark" />
+            <Menu 
+                onClick={clickMenu} 
+                defaultSelectedKeys={[`${currentPaths[currentPaths.length - 1]}`]} 
+                mode="horizontal" 
+                items={
+                    items.filter( i => i.roles ? i.roles.some( r => r === getRol()) : true )
+                    .map((i) => ({...i, children: i.children?.filter(i => i.roles ? i.roles.some( r => r === getRol()) : true)}))
+                } 
+                theme="dark" 
+            />
             <div style={{ backgroundColor: '#0BA8E8', height: '3px', marginBottom: '20px' }}></div>
             <Outlet />
         </div>

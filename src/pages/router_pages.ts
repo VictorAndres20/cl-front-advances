@@ -38,43 +38,43 @@ export const router_pages: RouterPage[] = [
         children: [
             {
                 path: `${enterprises_path.path}`, 
-                component: EnterprisesPage,
+                component: AuthWrapper(EnterprisesPage),
             },
             {
                 path: `${users_path.path}`, 
-                component: UsersPage,
+                component: AuthWrapper(UsersPage),
             },
             {
                 path: `${ranges_path.path}`, 
-                component: RangesPage,
+                component: AuthWrapper(RangesPage),
             },
             {
                 path: `${amounts_path.path}`, 
-                component: AmountsPage,
+                component: AuthWrapper(AmountsPage),
             },
             {
                 path: `${employees_path.path}`, 
-                component: EmployeesPage,
+                component: AuthWrapper(EmployeesPage),
             },
             {
                 path: `${bulk_employees_path.path}`, 
-                component: BulkEmployeesPage,
+                component: AuthWrapper(BulkEmployeesPage),
             },
             {
                 path: `${advances_inbox_path.path}`, 
-                component: AdvancesInboxPage,
+                component: AuthWrapper(AdvancesInboxPage),
             },
             {
                 path: `${advances_path.path}`, 
-                component: AdvancesPage,
+                component: AuthWrapper(AdvancesPage),
             },
             {
                 path: `${messages_path.path}`, 
-                component: MessagesPage,
+                component: AuthWrapper(MessagesPage),
             },
             {
                 path: `${bank_messages_path.path}`, 
-                component: BankMessagesPage,
+                component: AuthWrapper(BankMessagesPage),
             },
         ],
    }, 

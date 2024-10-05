@@ -1,6 +1,6 @@
 interface PathType {
     path: string,
-    full_path: string
+    full_path: string,
 };
 
 export const login_page_path: PathType = {

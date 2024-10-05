@@ -67,8 +67,8 @@ export default function Table(){
                                 {
                                     hook.selectedPeriod.finished_date ?
                                     'Finaliza: ' + buildTZDate(hook.selectedPeriod.finished_date) :
-                                    <Button size="small">
-                                        Finalizar
+                                    <Button style={{ width: '180px' }} size="small" type="primary">
+                                        Finalizar periodo
                                     </Button>
                                 }
                             </div>
