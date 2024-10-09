@@ -10,6 +10,7 @@ import { useEmployeeStateChanger } from "../../../_hooks/employees/useEmployeeSt
 import { useEmployeesByRol } from "../../../_hooks/employees/use-employees-by-rol.hook";
 import { Link } from "react-router-dom";
 import { bulk_employees_path } from "../../path_pages";
+import { roles } from "../../../_config/roles";
 
 const tableStyle = { fontSize: '0.8em' };
 
@@ -100,7 +101,10 @@ export default function Table(){
             width: '20%',
             render: (text: string, param: EmployeeType, key: number) => (
                 <div  key={`edit_employee_${key}`} className="flex-row">
-                    <FormModal id={param.uuid} reload={dataHook.loadData} />
+                    {
+                        getRol() === roles.root &&
+                        <FormModal id={param.uuid} reload={dataHook.loadData} />
+                    }
                     {
                         param.state === 1 ?
                         <Button onClick={() => stateChanger.blocker.block(param.uuid, () => dataHook.loadData(getCompany()))} style={{ margin: '0 20px' }} danger shape="circle" icon={<CloseCircleOutlined />} />
@@ -114,14 +118,17 @@ export default function Table(){
 
     return(
         <div style={{ width: '100%' }}>
-            <div style={{ width: '90%', display: 'flex', flexDirection: 'row-reverse', marginBottom: '10px' }}>
-                <Link style={{ marginLeft: '10px' }} to={bulk_employees_path.full_path}>
-                    <Button type="primary">
-                        Importar empleados
-                    </Button>
-                </Link>
-                <FormModal reload={dataHook.loadData} />
-            </div>
+            {
+                getRol() === roles.root && 
+                <div style={{ width: '90%', display: 'flex', flexDirection: 'row-reverse', marginBottom: '10px' }}>
+                    <Link style={{ marginLeft: '10px' }} to={bulk_employees_path.full_path}>
+                        <Button type="primary">
+                            Importar empleados
+                        </Button>
+                    </Link>
+                    <FormModal reload={dataHook.loadData} />
+                </div>
+            }
             <BasicDatatable columns={columns} data={dataHook.data} pagination={true} />
         </div>
     );
