@@ -6,6 +6,8 @@ import { useAdvancePeriodsFilter } from "../../../_hooks/advance_period/use-adva
 import SearchSelect from "../../../widgets /selects/search_select";
 import { formatToUSD } from "../../../_utils/format_currency";
 import FinishPeriodModal from "./finish_period_modal";
+import { getRol } from "../../../_utils/storage_handler";
+import { roles } from "../../../_config/roles";
 
 const columns = [
     '#',
@@ -72,6 +74,7 @@ export default function Table(){
                                     hook.selectedPeriod.finished_date ?
                                     'Finaliza: ' + buildTZDate(hook.selectedPeriod.finished_date) :
                                     
+                                    getRol() === roles.root && 
                                     <FinishPeriodModal 
                                         enterprise={hook.selectedEnterprise?.id} 
                                         period={hook.selectedPeriod?.uuid}
