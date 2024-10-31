@@ -53,6 +53,24 @@ export default function FormModal({ id, reload }: { id?: string, reload: Functio
                                 }
                             }}
                         />
+                        <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Tope de dinero de anticipo</div>
+                        <Input 
+                            type="number"
+                            value={ id ? updateHook.entity.money_limit : createHook.entity.money_limit }
+                            onChange={(e) => {
+                                if(id){
+                                    updateHook.setEntity({
+                                        ...updateHook.entity,
+                                        money_limit: Number(e.target.value)
+                                    });
+                                } else {
+                                    createHook.setEntity({
+                                        ...createHook.entity,
+                                        money_limit: Number(e.target.value)
+                                    });
+                                }
+                            }}
+                        />
                         <div style={{ fontSize: '0.9em', fontWeight: 'bold', marginTop: '25px' }}>(*) Empresa asociada</div>
                         {
                         getRol() === roles.root ?

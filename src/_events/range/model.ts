@@ -2,9 +2,10 @@ import { getCompany } from "../../_utils/storage_handler";
 import { RangeType } from "./type";
 
 export const validateRange = (body: RangeType) => {
-    const { id, enterprise } = body;
+    const { id, enterprise, money_limit } = body;
     if(id === '' || id === undefined) throw new Error(`ID vacío`);
     if(enterprise === 0 || enterprise === undefined) throw new Error(`Empresa vacío`);
+    if(money_limit === 0 || money_limit === undefined) throw new Error(`Tope vacío`);
 }
 
 export const transformEntityRange = (entity: RangeType) => {
@@ -19,6 +20,7 @@ export const buildEmptyRange = (): RangeType => {
     return {
         uuid: '',
         id: '',
+        money_limit: 0,
         enterprise: 0,
     };
 }

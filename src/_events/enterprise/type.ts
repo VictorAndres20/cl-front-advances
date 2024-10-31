@@ -3,4 +3,5 @@ export interface EnterpriseType {
     nit: string;
     name: string,
     address?: string | null,
+    date_limit: string,
 }

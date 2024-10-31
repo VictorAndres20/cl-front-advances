@@ -5,6 +5,7 @@ import { EnterpriseType } from "../enterprise/type";
 export interface RangeType {
     uuid: string,
     id: string,
+    money_limit: number,
     enterprise?: number | EnterpriseType,
     amounts?: Amount[],
     employees?: EmployeeType[],

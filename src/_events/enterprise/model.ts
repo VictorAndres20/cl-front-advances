@@ -16,6 +16,7 @@ export const buildEmptyEnterprise = (): EnterpriseType => {
         name: '',
         nit: '',
         address: '',
+        date_limit: new Date().toISOString(),
     };
 }
 

@@ -16,7 +16,7 @@ export default function Table(){
         title: 'Id',
         dataIndex: 'id',
         key: 'id',
-        width: '30%',
+        width: '10%',
         ...searchBox.getColumnSearchProps('id'),
         },
         {
@@ -27,6 +27,13 @@ export default function Table(){
         render: (text: string, param: RangeType, key: number) => (
             <span key={`range_enterprise_${key}`}>{typeof param.enterprise === 'object' ? param.enterprise.name : 'NA'}</span>
         )
+        },
+        {
+            title: 'Tope',
+            dataIndex: 'money_limit',
+            key: 'money_limit',
+            width: '5%',
+            ...searchBox.getColumnSearchProps('money_limit'),
         },
         {
             title: 'Montos',
@@ -52,7 +59,7 @@ export default function Table(){
             title: 'Acciones',
             dataIndex: 'uuid',
             key: 'uuid',
-            width: '10%',
+            width: '5%',
             render: (text: string, param: RangeType, key: number) => (
                 <FormModal key={`edit_range_${key}`} id={param.uuid} reload={() => dataHook.loadData(getCompany())} />
             )
