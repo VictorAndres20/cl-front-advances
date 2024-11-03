@@ -5,6 +5,8 @@ import { BasicDatatable } from "../../../widgets /antd_table/basic_datatable";
 import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTableSearchBox.hook";
 import FormModal from "./form_modal";
 import { useResetLimitDateEnterprise } from "../../../_hooks/enterprise/use-reset-limit-date-enterprise.hook";
+import { ReloadOutlined } from "@ant-design/icons";
+import { buildTZDate } from "../../../_utils/dateFormat";
 
 export default function Table(){
 
@@ -17,14 +19,14 @@ export default function Table(){
             title: 'NIT',
             dataIndex: 'nit',
             key: 'nit',
-            width: '20%',
+            width: '15%',
             ...searchBox.getColumnSearchProps('nit'),
             },
         {
         title: 'Nombre',
         dataIndex: 'name',
         key: 'name',
-        width: '30%',
+        width: '25%',
         ...searchBox.getColumnSearchProps('name'),
         },
         {
@@ -35,11 +37,20 @@ export default function Table(){
         ...searchBox.getColumnSearchProps('address'),
         },
         {
+            title: 'Fecha de tope',
+            dataIndex: 'date_limit',
+            key: 'date_limit',
+            width: '20%',
+            render: (_text: string, param: EnterpriseType, key: number) => (
+                <span key={`date_limit_${key}`}>{buildTZDate(param.date_limit)}</span>
+            )
+            },
+        {
             title: 'Acciones',
             dataIndex: 'uuid',
             key: 'uuid',
             width: '10%',
-            render: (text: string, param: EnterpriseType, key: number) => (
+            render: (_text: string, param: EnterpriseType, key: number) => (
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <FormModal key={`form_edit_enterprise_${key}`} id={param.id} reload={dataHook.loadData} />
                     {
@@ -53,7 +64,7 @@ export default function Table(){
                                 resetLimitDateHook.resetLimitDate(param.id ?? 0)
                             }}
                         >
-                            <Button color="red" style={{ marginLeft: '5px' }} size="small">Reestablecer fecha de tope</Button>
+                            <Button danger style={{ marginLeft: '5px' }}>Actualizar fecha de tope <ReloadOutlined /></Button>
                         </Popconfirm> 
                     }
                 </div>
