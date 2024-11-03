@@ -8,6 +8,7 @@ import {
     pdfAdvanceById,
     findAllPendingAdvance,
     findAllAdvanceByPeriod,
+    getEmployeeAdvanceLimitInfoByEmployeeId
 } from '../../_services/advance.service';
 
 export const findAllAdvanceEvent = async () => {
@@ -44,6 +45,10 @@ export const findAllPendingAdvanceEvent = async () => {
 
 export const findAllAdvanceByPeriodEvent = async (period: string) => {
     return await findAllAdvanceByPeriod(period);
+}
+
+export const getEmployeeAdvanceLimitInfoByEmployeeIdEvent = async (id: string) => {
+    return await getEmployeeAdvanceLimitInfoByEmployeeId(id);
 }
 
 

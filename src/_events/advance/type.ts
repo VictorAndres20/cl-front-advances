@@ -12,3 +12,8 @@ export interface AdvanceType {
     state?: string | AdvanceStateType,
     use_fintech: number,
 }
+
+export interface AdvanceLimitInfo {
+    total: number, 
+    limit: number
+};

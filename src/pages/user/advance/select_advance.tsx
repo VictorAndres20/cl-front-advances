@@ -3,6 +3,7 @@ import { useFindAvalibaleAmounts } from "../../../_hooks/amount/useFindAvailable
 import { formatToUSD } from "../../../_utils/format_currency";
 import { GenerateAdvacneHook } from "../../../_hooks/advance/useGenerateAdvance.hook";
 import Live from "./live";
+import LimitInfo from "./limit-info";
 
 export default function SelectAdvance({ hook }: { hook: GenerateAdvacneHook }){
 
@@ -11,6 +12,7 @@ export default function SelectAdvance({ hook }: { hook: GenerateAdvacneHook }){
     return(
         <div style={{ width: '100%', marginTop: '20px' }}>
             <Live />
+            <LimitInfo />
             <div style={{ width: '100%', padding: '10px 0', borderRadius: '20px' }}>
                 <div className="flex-col flex-center" style={{ fontSize: '1.3em', fontWeight: 'bold', margin: '10px 0', width: '100%' }}>¿Cuánto deseas adelantar?</div>
                 <div className="flex-col">

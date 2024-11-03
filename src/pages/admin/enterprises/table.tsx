@@ -1,14 +1,16 @@
-import { TableColumnsType } from "antd";
+import { Button, Popconfirm, Spin, TableColumnsType } from "antd";
 import { EnterpriseType } from "../../../_events/enterprise/type";
 import { useFindAllEnterprises } from "../../../_hooks/enterprise/useFindAllEnterprises.hook";
 import { BasicDatatable } from "../../../widgets /antd_table/basic_datatable";
 import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTableSearchBox.hook";
 import FormModal from "./form_modal";
+import { useResetLimitDateEnterprise } from "../../../_hooks/enterprise/use-reset-limit-date-enterprise.hook";
 
 export default function Table(){
 
     const dataHook = useFindAllEnterprises();
     const searchBox = useBasicTableSearchBox<EnterpriseType>();
+    const resetLimitDateHook = useResetLimitDateEnterprise();
     
     const columns: TableColumnsType<EnterpriseType> = [
         {
@@ -38,7 +40,23 @@ export default function Table(){
             key: 'uuid',
             width: '10%',
             render: (text: string, param: EnterpriseType, key: number) => (
-                <FormModal key={`form_edit_enterprise_${key}`} id={param.id} reload={dataHook.loadData} />
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <FormModal key={`form_edit_enterprise_${key}`} id={param.id} reload={dataHook.loadData} />
+                    {
+                        resetLimitDateHook.loading ? 
+                        <Spin /> 
+                        :
+                        <Popconfirm
+                            title='Reestablecer fecha de tope'
+                            description='La fecha de tope de este cliente se reestablecerá al día de hoy. De esta manera se habilitarán ciertos montos a los empleados para generar anticipos más grandes.'
+                            onConfirm={() => {
+                                resetLimitDateHook.resetLimitDate(param.id ?? 0)
+                            }}
+                        >
+                            <Button color="red" style={{ marginLeft: '5px' }} size="small">Reestablecer fecha de tope</Button>
+                        </Popconfirm> 
+                    }
+                </div>
             )
         },
     ];
