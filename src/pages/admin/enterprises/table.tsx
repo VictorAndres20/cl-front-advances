@@ -12,7 +12,7 @@ export default function Table(){
 
     const dataHook = useFindAllEnterprises();
     const searchBox = useBasicTableSearchBox<EnterpriseType>();
-    const resetLimitDateHook = useResetLimitDateEnterprise();
+    const resetLimitDateHook = useResetLimitDateEnterprise(dataHook.loadData);
     
     const columns: TableColumnsType<EnterpriseType> = [
         {
