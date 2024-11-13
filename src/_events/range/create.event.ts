@@ -1,6 +1,8 @@
 import {
     createRange,
     editRange,
+    activateRange,
+    blockRange
 } from '../../_services/range.service';
 import { validateRange } from './model';
 import { RangeType } from './type';
@@ -13,6 +15,14 @@ export const createRangeEvent = async (body: RangeType) => {
 export const editRangeEvent = async (id: string, body: RangeType) => {
     validateRange(body);
     return await editRange(id, body);
+}
+
+export const activateRangeEvent = async (id: string) => {
+    return await activateRange(id);
+}
+
+export const blockRangeEvent = async (id: string) => {
+    return await blockRange(id);
 }
 
 

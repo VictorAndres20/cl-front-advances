@@ -1,15 +1,18 @@
-import { TableColumnsType } from "antd";
+import { Button, Popconfirm, TableColumnsType } from "antd";
 import { BasicDatatable } from "../../../widgets /antd_table/basic_datatable";
 import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTableSearchBox.hook";
 import FormModal from "./form_modal";
 import { RangeType } from "../../../_events/range/type";
 import { getCompany, getRol } from "../../../_utils/storage_handler";
 import { useRangesByRol } from "../../../_hooks/range/use-ranges-by-rol.hook";
+import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { useRangeStateChanger } from "../../../_hooks/enterprise/use-range-state-changer.hook";
 
 export default function Table(){
 
     const dataHook = useRangesByRol(getRol() ?? '', getCompany());
     const searchBox = useBasicTableSearchBox<RangeType>();
+    const stateChanger = useRangeStateChanger();
     
     const columns: TableColumnsType<RangeType> = [
         {
@@ -61,7 +64,21 @@ export default function Table(){
             key: 'uuid',
             width: '5%',
             render: (text: string, param: RangeType, key: number) => (
-                <FormModal key={`edit_range_${key}`} id={param.uuid} reload={() => dataHook.loadData(getCompany())} />
+                <div  key={`edit_range_${key}`} className="flex-row">
+                    <FormModal key={`edit_range_${key}`} id={param.uuid} reload={() => dataHook.loadData(getCompany())} />
+                    {
+                        param.active === 1 ?
+                        <Popconfirm
+                            title='Eliminar rango'
+                            description='¿Estás seguro de eliminar este rango?'
+                            onConfirm={() => stateChanger.blocker.block(param.uuid, () => dataHook.loadData(getCompany()))}
+                        >
+                            <Button style={{ margin: '0 20px' }} danger shape="circle" icon={<CloseCircleOutlined />} />
+                        </Popconfirm>
+                        :
+                        <Button onClick={() => stateChanger.activate.activate(param.uuid, () => dataHook.loadData(getCompany()))} style={{ margin: '0 20px' }}  type="primary" shape="circle" icon={<CheckCircleOutlined />} />
+                    }
+                </div>
             )
         },
     ];

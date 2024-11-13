@@ -6,6 +6,7 @@ export interface RangeType {
     uuid: string,
     id: string,
     money_limit: number,
+    active: number,
     enterprise?: number | EnterpriseType,
     amounts?: Amount[],
     employees?: EmployeeType[],

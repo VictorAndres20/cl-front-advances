@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { findAllRangeByEnterpriseEvent, findAllRangeEvent } from "../../_events/range/find.event";
 import { message } from "antd";
 import { RangeType } from "../../_events/range/type";
@@ -8,7 +8,7 @@ export const useRangesByRol = (rol: string, enterprise: number) => {
 
     const [ data, setData ] = useState<RangeType[]>([]);
 
-    const loadData = (enterpriseParam: number) => {
+    const loadData = useCallback((enterpriseParam: number) => {
         if(rol === roles.root){
             findAllRangeEvent()
             .then(json => {
@@ -26,11 +26,11 @@ export const useRangesByRol = (rol: string, enterprise: number) => {
                 message.error(err.message);
             });
         }
-    }
+    }, [rol]);
 
     useEffect(() => {
         loadData(enterprise);
-    }, [enterprise]);
+    }, [enterprise, loadData]);
 
     return{
         data, loadData

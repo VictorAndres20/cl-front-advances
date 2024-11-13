@@ -20,6 +20,7 @@ export const buildEmptyRange = (): RangeType => {
     return {
         uuid: '',
         id: '',
+        active: 1,
         money_limit: 0,
         enterprise: 0,
     };
