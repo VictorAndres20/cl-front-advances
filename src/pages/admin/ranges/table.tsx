@@ -70,7 +70,7 @@ export default function Table(){
                         param.active === 1 ?
                         <Popconfirm
                             title='Eliminar rango'
-                            description='¿Estás seguro de eliminar este rango?'
+                            description='¿Estás seguro de eliminar este rango? Los montos del rango también serán elminados'
                             onConfirm={() => stateChanger.blocker.block(param.uuid, () => dataHook.loadData(getCompany()))}
                         >
                             <Button style={{ margin: '0 20px' }} danger shape="circle" icon={<CloseCircleOutlined />} />

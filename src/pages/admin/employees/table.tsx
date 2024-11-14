@@ -64,7 +64,15 @@ export default function Table(){
             key: 'range',
             width: '5%',
             render: (text: string, param: EmployeeType, key: number) => (
-                <span key={`employee_range_${key}`}>{typeof param.range === 'object' ? param.range?.id : 'NA'}</span>
+                <div className="flex-col">
+                    <span key={`employee_range_${key}`}>{typeof param.range === 'object' ? param.range?.id : 'NA'}</span>
+                    {
+                        typeof param.range === 'object' && param.range?.active === 0 &&
+                        <div className="flex-col flex-center">
+                            <span style={{ padding: '5px 5px', border: '1px solid red', fontSize: '0.6em', borderRadius: '20px' }}>Rango eliminado</span>
+                        </div>
+                    }
+                </div>
             )
         },
         {

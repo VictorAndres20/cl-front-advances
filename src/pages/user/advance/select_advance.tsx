@@ -4,22 +4,24 @@ import { formatToUSD } from "../../../_utils/format_currency";
 import { GenerateAdvacneHook } from "../../../_hooks/advance/useGenerateAdvance.hook";
 import Live from "./live";
 import LimitInfo from "./limit-info";
+import { useFindEmployeeById } from "../../../_hooks/employees/useFindEMployeeById.hook";
 
 export default function SelectAdvance({ hook }: { hook: GenerateAdvacneHook }){
 
     const amountsHook = useFindAvalibaleAmounts();
+    const employeeHook = useFindEmployeeById();
 
     return(
         <div style={{ width: '100%', marginTop: '20px' }}>
-            <Live />
+            <Live hook={employeeHook} />
             <LimitInfo />
             <div style={{ width: '100%', padding: '10px 0', borderRadius: '20px' }}>
                 <div className="flex-col flex-center" style={{ fontSize: '1.3em', fontWeight: 'bold', margin: '10px 0', width: '100%' }}>¿Cuánto deseas adelantar?</div>
-                <div className="flex-col">
+                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', width: '100%', justifyContent: 'center', alignItems: 'cener' }}>
                     {
                         amountsHook.amounts.map((a, key) => {
                             return(
-                                <div style={{ margin: '20px 0' }} 
+                                <div style={{ margin: '20px 20px' }} 
                                     className="flex-row flex-center" 
                                     key={`amount_list_${key}`}
                                 >
@@ -50,6 +52,7 @@ export default function SelectAdvance({ hook }: { hook: GenerateAdvacneHook }){
             <div className="flex-row" style={{ width: '100%', margin: '20px 0' }}>
                 <div className="flex-col flex-center" style={{ width: '100%' }}>
                     <Button
+                        disabled = {employeeHook.data?.state === 0}
                         style={{ width: '90%' }}
                         type="primary"
                         onClick={() => {
