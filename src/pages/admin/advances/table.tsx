@@ -1,6 +1,6 @@
 import { Button, Col, Row, Spin } from "antd";
 import { useDownloadAdvancePdf } from "../../../_hooks/advance/useDownloadAdvancePdf.hook";
-import { buildTZDate } from "../../../_utils/dateFormat";
+import { buildDateByUTCString, buildTZDate } from "../../../_utils/dateFormat";
 import BasicBadge from "../../../widgets /badges/basic_badge";
 import { useAdvancePeriodsFilter } from "../../../_hooks/advance_period/use-advance-periods-filter.hook";
 import SearchSelect from "../../../widgets /selects/search_select";
@@ -13,6 +13,7 @@ const columns = [
     '#',
     'PDF',
     'Empleado',
+    'Activo',
     'Identificación',
     'Valor',
     'Costo',
@@ -158,6 +159,18 @@ export default function Table(){
                                     </td>
                                     <td>
                                         <span className="advance-span">{typeof param.employee === 'object' ? param.employee?.name : 'NA'}</span>
+                                    </td>
+                                    <td>
+                                        <div className="flex-col">
+                                            {
+                                                typeof param.employee === 'object' && param.employee?.retired_date ?
+                                                <span className="advance-span">
+                                                    Empleado retirado el <strong>{ typeof param.employee === 'object' ? buildTZDate(param.employee?.retired_date) : '' }</strong> por { typeof param.employee === 'object' ? typeof param.employee?.retired_by === 'object' ? `${param.employee?.retired_by?.name} ${param.employee?.retired_by?.email}` : '' : '' }
+                                                </span>
+                                                :
+                                                <span className="advance-span">SÍ</span>
+                                            }
+                                        </div>
                                     </td>
                                     <td>
                                         <span className="advance-span">{typeof param.employee === 'object' ? param.employee?.id : 'NA'}</span>

@@ -1,9 +1,9 @@
-import { Button, TableColumnsType } from "antd";
+import { Button, Popconfirm, TableColumnsType } from "antd";
 import { BasicDatatable } from "../../../widgets /antd_table/basic_datatable";
 import { useBasicTableSearchBox } from "../../../widgets /antd_table/useBasicTableSearchBox.hook";
 import FormModal from "./form_modal";
 import { EmployeeType } from "../../../_events/employee/type";
-import { getCompany, getRol } from "../../../_utils/storage_handler";
+import { getCompany, getRol, getUserId } from "../../../_utils/storage_handler";
 import BasicBadge from "../../../widgets /badges/basic_badge";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { useEmployeeStateChanger } from "../../../_hooks/employees/useEmployeeStateChanger.hook";
@@ -11,6 +11,8 @@ import { useEmployeesByRol } from "../../../_hooks/employees/use-employees-by-ro
 import { Link } from "react-router-dom";
 import { bulk_employees_path } from "../../path_pages";
 import { roles } from "../../../_config/roles";
+import { useUpdateRetireEmployee } from "../../../_hooks/employees/use-update-retire-employee";
+import { buildDateByUTCString, buildTZDate, getNowUTCString } from "../../../_utils/dateFormat";
 
 const tableStyle = { fontSize: '0.8em' };
 
@@ -19,6 +21,7 @@ export default function Table(){
     const dataHook = useEmployeesByRol(getRol() ?? '', getCompany());
     const searchBox = useBasicTableSearchBox<EmployeeType>();
     const stateChanger = useEmployeeStateChanger();
+    const retireStateChanger = useUpdateRetireEmployee();
     
     const columns: TableColumnsType<EmployeeType> = [
         {
@@ -27,7 +30,15 @@ export default function Table(){
             key: 'active',
             width: '5%',
             render: (text: string, param: EmployeeType, key: number) => (
-                <span key={`active_user_${key}`}>{param.state === 1 ? <BasicBadge text="Activo" color="success" /> : <BasicBadge text="Inactivo" color="danger" /> }</span>
+                <div key={`active_user_${key}`} className="flex-col">
+                    <span>{param.state === 1 ? <BasicBadge text="Activo" color="success" /> : <BasicBadge text="Inactivo" color="danger" /> }</span>
+                    {
+                        param.retired_date &&
+                        <div>
+                            <span><BasicBadge text='Retirado' color="danger" /></span>
+                        </div>
+                    }
+                </div>
             )
         },
         {
@@ -110,14 +121,47 @@ export default function Table(){
             render: (text: string, param: EmployeeType, key: number) => (
                 <div  key={`edit_employee_${key}`} className="flex-row">
                     {
+                        
                         getRol() === roles.root &&
-                        <FormModal id={param.uuid} reload={dataHook.loadData} />
+                        <div className="flex-row">
+                            <FormModal id={param.uuid} reload={dataHook.loadData} />
+                            {
+                                param.state === 1 ?
+                                <Popconfirm
+                                    title="Bloquear empleado"
+                                    description="¿Quieres bloquear a este empleado?"
+                                    onConfirm={() => stateChanger.blocker.block(param.uuid, () => dataHook.loadData(getCompany()))}
+                                >
+                                    <Button style={{ marginLeft: '10px' }} danger icon={<CloseCircleOutlined />} >Bloquear</Button>
+                                </Popconfirm>
+                                :
+                                <Popconfirm
+                                    title="Activar empleado"
+                                    description="¿Quieres activar a este empleado?"
+                                    onConfirm={() => stateChanger.activate.activate(param.uuid, () => dataHook.loadData(getCompany()))}
+                                >
+                                    <Button style={{ marginLeft: '10px' }}  type="primary" icon={<CheckCircleOutlined />} >Activar</Button>
+                                </Popconfirm> 
+                            }
+                        </div>
                     }
                     {
-                        param.state === 1 ?
-                        <Button onClick={() => stateChanger.blocker.block(param.uuid, () => dataHook.loadData(getCompany()))} style={{ margin: '0 20px' }} danger shape="circle" icon={<CloseCircleOutlined />} />
+                        param.retired_date ?
+                        <Popconfirm
+                            title="Volver a incorporar a empleado"
+                            description="¿Quieres volver a incorporar a este empleado?"
+                            onConfirm={() => retireStateChanger.unretire.unretire({uuid: param.uuid}, () => dataHook.loadData(getCompany()))}
+                        >
+                            <Button style={{ marginLeft: '10px' }} type="primary" icon={<CheckCircleOutlined />} >Incorporar</Button>
+                        </Popconfirm>
                         :
-                        <Button onClick={() => stateChanger.activate.activate(param.uuid, () => dataHook.loadData(getCompany()))} style={{ margin: '0 20px' }}  type="primary" shape="circle" icon={<CheckCircleOutlined />} />
+                        <Popconfirm
+                            title="Retirar a empleado"
+                            description="¿Quieres retirar a este empleado?"
+                            onConfirm={() => retireStateChanger.retire.retire({uuid: param.uuid, retired_date: getNowUTCString(), retired_by: getUserId()}, () => dataHook.loadData(getCompany()))}
+                        >
+                            <Button style={{ marginLeft: '10px' }}  danger icon={<CloseCircleOutlined />} >Retirar</Button>
+                        </Popconfirm>
                     }
                 </div>
             )

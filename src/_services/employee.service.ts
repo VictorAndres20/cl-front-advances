@@ -40,6 +40,14 @@ export const blockEmployee = async (id: any) => {
     return await handleFetch(`${BASE_PATH}/block/${id}`, PUT_OPTIONS, null);
 }
 
+export const retireEmployee = async (body: any) => {
+    return await handleFetch(`${BASE_PATH}/retire`, PUT_OPTIONS, body);
+}
+
+export const unretireEmployee = async (body: any) => {
+    return await handleFetch(`${BASE_PATH}/unretire`, PUT_OPTIONS, body);
+}
+
 export const readEmployeesExcel = async (body: {bytes: string}) => {
     return await handleFetch(`${BASE_PATH}/read-excel`, POST_OPTIONS, body);
 }

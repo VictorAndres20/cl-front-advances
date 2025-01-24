@@ -4,6 +4,8 @@ import {
     editPasswordEmployee,
     activateEmployee,
     blockEmployee,
+    unretireEmployee,
+    retireEmployee
 } from '../../_services/employee.service';
 import { validateEmployee } from './model';
 import { EmployeeType } from './type';
@@ -28,6 +30,14 @@ export const activateEmployeeEvent = async (id: string) => {
 
 export const blockEmployeeEvent = async (id: string) => {
     return await blockEmployee(id);
+}
+
+export const unretireEmployeeEvent = async (body: any) => {
+    return await unretireEmployee(body);
+}
+
+export const retireEmployeeEvent = async (body: any) => {
+    return await retireEmployee(body);
 }
 
 
